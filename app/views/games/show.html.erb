@@ -1,8 +1,8 @@
 <% title "Game" %>
 
-<div id="board" data-moves="<%= @game.moves %>">
-<% for y in 'a'..'s' %>
-  <% for x in 'a'..'s' %>
+<div id="board" class="boardsize<%= @game.board_size %>" data-moves="<%= @game.moves %>">
+<% for y in ('a'..'s').first(@game.board_size) %>
+  <% for x in ('a'..'s').first(@game.board_size) %>
     <% vertex = x + y %>
     <div class="<%= color_at vertex %>" id="<%= vertex %>"></div>
   <% end %>

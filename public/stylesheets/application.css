@@ -74,10 +74,22 @@ a {
   margin: 0;
 }
 
-#board {
+.boardsize19 {
   background-image: url(/images/simple_board_19.png);
   width: 575px; /* add 5 for quick float hack */
   height: 575px;
+}
+
+.boardsize13 {
+  background-image: url(/images/simple_board_13.png);
+  width: 425px; /* add 5 for quick float hack */
+  height: 425px;
+}
+
+.boardsize9 {
+  background-image: url(/images/simple_board_9.png);
+  width: 305px; /* add 5 for quick float hack */
+  height: 305px;
 }
 
 #board div {

@@ -1,13 +1,13 @@
 class GameEngine
-  def self.run(options = {}, &block)
-    arguments = options.map { |name, setting| "--#{name} #{setting}" unless setting.blank? }.join(" ")
+  def self.run(options = { }, &block)
+    arguments = options.map { |k, v| "--#{k} #{v}" unless v.blank? }.join(" ")
     Go::GTP.run_gnugo(arguments: arguments) do |gtp|
       yield GameEngine.new(gtp, options)
     end
   end
   
   def initialize(gtp, options = {})
-    @gtp = gtp
+    @gtp        = gtp
     @board_size = options[:boardsize] || 19
   end
   
@@ -23,7 +23,7 @@ class GameEngine
       vertex = sgf_point(@gtp.genmove(color))
     end
     captured = other_stones - @gtp.list_stones(opposite(color))
-    vertex + captured.map { |v| sgf_point(v) }.join
+    vertex   + captured.map { |v| sgf_point(v) }.join
   end
   
   def positions(color)
@@ -32,12 +32,12 @@ class GameEngine
   
   private
   
-  def opposite(color)
-    color == :black ? :white : :black
-  end
-  
   def point(vertex)
-    Go::GTP::Point.new(vertex)
+    args = [ ]
+    if vertex =~ /\A[A-HJ-T](?:1\d|[1-9])\z/
+      args << {board_size: board_size}
+    end
+    Go::GTP::Point.new(*args)
   end
   
   def gnugo_point(vertex)
@@ -46,5 +46,9 @@ class GameEngine
   
   def sgf_point(vertex)
     point(vertex).to_sgf
+  end
+  
+  def opposite(color)
+    color == :black ? :white : :black
   end
 end

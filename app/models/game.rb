@@ -1,13 +1,17 @@
 class Game < ActiveRecord::Base
-  belongs_to :black_player, :class_name => "User"
-  belongs_to :white_player, :class_name => "User"
+  ####################
+  ### Associations ###
+  ####################
+  
+  belongs_to :black_player,   :class_name => "User"
+  belongs_to :white_player,   :class_name => "User"
   belongs_to :current_player, :class_name => "User"
   
   ###################
   ### Validations ###
   ###################
   
-  validates_inclusion_of :board_size, in: (1..19).to_a,    allow_nil: true
+  validates_inclusion_of :board_size, in: [9, 13, 19],     allow_nil: true
   validates_inclusion_of :handicap,   in: (0..9).to_a,     allow_nil: true
   validates_inclusion_of :komi,       in: [0.5, 5.5, 6.5], allow_nil: true
   validates_format_of    :moves,
@@ -49,9 +53,13 @@ class Game < ActiveRecord::Base
   end
   
   def move(vertex)
-    GameEngine.run(boardsize: board_size, handicap: handicap, komi: komi) do |engine|
+    GameEngine.run( boardsize: board_size,
+                    handicap:  handicap,
+                    komi:      komi ) do |engine|
       engine.replay(moves)
-      self.moves = [moves, engine.move(:black, vertex), engine.move(:white)].reject(&:blank?).join('-')
+      self.moves           = [ moves,
+                               engine.move(:black, vertex),
+                               engine.move(:white) ].reject(&:blank?).join('-')
       self.black_positions = engine.positions(:black)
       self.white_positions = engine.positions(:white)
     end
