@@ -7,9 +7,6 @@ $(function() {
       moves = $("#board").attr("data-moves").split("-");
     }
     current_move = moves.length;
-    if ($("#board").attr("data-handicap") != "0") {
-      current_move += 1
-    }
     $("#board .e").live("click", function() {
       $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
       // Show updating graphic here

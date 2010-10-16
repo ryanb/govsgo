@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
                          with:      /\A(?:[a-s]{2})+(?:-(?:[a-s]{2})+)*\z/,
                          allow_nil: true
   
-  attr_accessible :komi, :handicap, :board_size
+  attr_accessible :komi, :handicap, :board_size, :chosen_color
   
   ########################
   ### Instance Methods ###
@@ -85,6 +85,8 @@ class Game < ActiveRecord::Base
       else
         self.moves           = moves.blank? ? played : [moves, played].join("-")
         self.black_positions = engine.positions(:black)
+        self.white_positions = engine.positions(:white)
+        p self
         response             = engine.move(:white)
         self.current_player  = next_player
         if response == "RESIGN"
@@ -94,7 +96,9 @@ class Game < ActiveRecord::Base
           finish_game(engine.final_score)
         else
           self.moves           = [moves, response].join("-")
+          self.black_positions = engine.positions(:black)
           self.white_positions = engine.positions(:white)
+          p self
           self.black_score     = engine.captures(:black)
           self.white_score     = engine.captures(:white)
         end
