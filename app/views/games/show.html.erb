@@ -1,6 +1,6 @@
 <% title "Game" %>
 
-<div id="board">
+<div id="board" data-moves="<%= @game.moves %>">
 <% for y in 'a'..'s' %>
   <% for x in 'a'..'s' %>
     <% vertex = x + y %>

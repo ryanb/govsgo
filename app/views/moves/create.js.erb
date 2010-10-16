@@ -1,1 +1,1 @@
-updateBoard(<%= @game.moves.inspect %>);
+addMoves("<%= @game.moves_after(params[:last].to_i) %>");
