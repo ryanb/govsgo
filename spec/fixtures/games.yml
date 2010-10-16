@@ -11,9 +11,9 @@ one:
   komi: 1.5
   handicap: 1
   board_size: 1
-  last_move_at: 2010-10-15 17:07:01
-  started_at: 2010-10-15 17:07:01
-  finished_at: 2010-10-15 17:07:01
+  last_move_at: 2010-10-15 17:15:53
+  started_at: 2010-10-15 17:15:53
+  finished_at: 2010-10-15 17:15:53
 
 two:
   black_player_id: 1
@@ -28,6 +28,6 @@ two:
   komi: 1.5
   handicap: 1
   board_size: 1
-  last_move_at: 2010-10-15 17:07:01
-  started_at: 2010-10-15 17:07:01
-  finished_at: 2010-10-15 17:07:01
+  last_move_at: 2010-10-15 17:15:53
+  started_at: 2010-10-15 17:15:53
+  finished_at: 2010-10-15 17:15:53
