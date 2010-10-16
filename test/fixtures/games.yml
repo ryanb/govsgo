@@ -1,0 +1,33 @@
+one:
+  black_player_id: 1
+  white_player_id: 1
+  current_player_id: 1
+  black_score: 1.5
+  white_score: 1.5
+  black_positions: MyText
+  white_positions: MyText
+  moves: MyText
+  valid_positions: MyText
+  komi: 1.5
+  handicap: 1
+  board_size: 1
+  last_move_at: 2010-10-15 17:07:01
+  started_at: 2010-10-15 17:07:01
+  finished_at: 2010-10-15 17:07:01
+
+two:
+  black_player_id: 1
+  white_player_id: 1
+  current_player_id: 1
+  black_score: 1.5
+  white_score: 1.5
+  black_positions: MyText
+  white_positions: MyText
+  moves: MyText
+  valid_positions: MyText
+  komi: 1.5
+  handicap: 1
+  board_size: 1
+  last_move_at: 2010-10-15 17:07:01
+  started_at: 2010-10-15 17:07:01
+  finished_at: 2010-10-15 17:07:01

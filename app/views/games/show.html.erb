@@ -1,0 +1,66 @@
+<% title "Game" %>
+
+<p>
+  <strong>Black Player:</strong>
+  <%= @game.black_player_id %>
+</p>
+<p>
+  <strong>White Player:</strong>
+  <%= @game.white_player_id %>
+</p>
+<p>
+  <strong>Current Player:</strong>
+  <%= @game.current_player_id %>
+</p>
+<p>
+  <strong>Black Score:</strong>
+  <%= @game.black_score %>
+</p>
+<p>
+  <strong>White Score:</strong>
+  <%= @game.white_score %>
+</p>
+<p>
+  <strong>Black Positions:</strong>
+  <%= @game.black_positions %>
+</p>
+<p>
+  <strong>White Positions:</strong>
+  <%= @game.white_positions %>
+</p>
+<p>
+  <strong>Moves:</strong>
+  <%= @game.moves %>
+</p>
+<p>
+  <strong>Valid Positions:</strong>
+  <%= @game.valid_positions %>
+</p>
+<p>
+  <strong>Komi:</strong>
+  <%= @game.komi %>
+</p>
+<p>
+  <strong>Handicap:</strong>
+  <%= @game.handicap %>
+</p>
+<p>
+  <strong>Board Size:</strong>
+  <%= @game.board_size %>
+</p>
+<p>
+  <strong>Last Move At:</strong>
+  <%= @game.last_move_at %>
+</p>
+<p>
+  <strong>Started At:</strong>
+  <%= @game.started_at %>
+</p>
+<p>
+  <strong>Finished At:</strong>
+  <%= @game.finished_at %>
+</p>
+
+<p>
+  <%= link_to "View All", games_path %>
+</p>
