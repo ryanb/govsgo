@@ -13,6 +13,8 @@ group :development, :test do
   gem 'mocha'
   gem 'rspec-rails', '>= 2.0.1'
   gem 'factory_girl_rails'
+  gem 'autotest'
+  gem 'autotest-rails'
 end
 
 gem 'capistrano', :group => :development

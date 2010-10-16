@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    ZenTest (4.4.0)
     abstract (1.0.0)
     actionmailer (3.0.0)
       actionpack (= 3.0.0)
@@ -30,6 +31,9 @@ GEM
     activesupport (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
+    autotest (4.4.1)
+    autotest-rails (4.1.0)
+      ZenTest
     bcrypt-ruby (2.1.2)
     builder (2.1.2)
     capistrano (2.5.19)
@@ -113,6 +117,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autotest
+  autotest-rails
   bcrypt-ruby
   capistrano
   factory_girl_rails
