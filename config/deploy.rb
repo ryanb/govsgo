@@ -2,10 +2,10 @@ require "bundler/capistrano"
 
 default_run_options[:pty] = true
 
-set :application, "govsgo.com"
-role :app, application
-role :web, application
-role :db,  application, primary: true
+set  :application, "govsgo.com"
+role :app,         application
+role :web,         application
+role :db,          application, primary: true
 
 set :user,        "deploy"
 set :deploy_to,   "/var/apps/govsgo"

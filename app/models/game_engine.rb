@@ -1,4 +1,8 @@
 class GameEngine
+  def self.sgf_to_gnugo(sgf_moves)
+    sgf_moves.to_s.split("-").map { |move| gnugo_point(move[0..1]) }
+  end
+  
   def self.run(options = { }, &block)
     Go::GTP.run_gnugo do |gtp|
       gtp.boardsize(options[:boardsize])     unless options[:boardsize].blank?
@@ -14,8 +18,7 @@ class GameEngine
   end
   
   def replay(moves, first_color)
-    @gtp.replay( moves.to_s.split("-").map { |move| gnugo_point(move[0..1]) },
-                 first_color )
+    @gtp.replay(self.class.sgf_to_gnugo(moves), first_color)
   end
   
   def move(color, vertex = nil)
