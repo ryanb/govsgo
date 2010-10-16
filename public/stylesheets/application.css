@@ -2,6 +2,9 @@ body {
   background-color: #4B7399;
   font-family: Verdana, Helvetica, Arial;
   font-size: 14px;
+  margin: 0;
+  padding: 0;
+  background-image: url(/images/layout/background.png);
 }
 
 a img {
@@ -109,4 +112,155 @@ a {
 #user_nav {
   float: right;
   font-size: 12px;
+}
+
+/*** Logo ***/
+
+#logo {
+  float: left;
+  margin-left: 80px;
+  margin-top: 20px;
+}
+
+
+
+/*** Navigation ***/
+
+#nav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100px;
+  margin-left: 450px;
+}
+
+#nav li {
+  float: left;
+}
+
+#nav li.gap {
+  width: 8px;
+  height: 65px;
+  background-color: #12111B;
+  box-shadow: 7px 7px 8px #000;
+  -webkit-box-shadow: 7px 7px 8px #000;
+  -moz-box-shadow: 7px 7px 8px #000;
+  filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000, offX=7, offY=7, positive=true);
+}
+
+#nav li.banner {
+  background-position: bottom left;
+  box-shadow: 7px 7px 30px #000;
+  -webkit-box-shadow: 7px 7px 30px #000;
+  -moz-box-shadow: 7px 7px 30px #000;
+  filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000, offX=7, offY=7, positive=true);
+  margin-bottom: 10px;
+}
+
+#nav li a {
+  display: block;
+  padding-top: 50px;
+  padding-bottom: 12px;
+  width: 150px;
+  text-align: center;
+  color: #FFF;
+  text-decoration: none;
+  margin-top: -10px;
+  -webkit-transition: margin 0.1s linear;
+  -moz-transition: margin 0.1s linear;
+  -o-transition: margin 0.1s linear;
+}
+
+#nav li a:hover {
+  margin-top: 0;
+}
+
+#nav li.blue {
+  background-color: #463B8C;
+  background: -webkit-gradient(linear, left bottom, left top, from(#463B8C), to(#181430));
+  background: -moz-linear-gradient(center bottom, #463B8C 0%, #181430 100%);
+}
+
+#nav li.purple {
+  background-color: #663A86;
+  background: -webkit-gradient(linear, left bottom, left top, from(#663A86), to(#24122F));
+  background: -moz-linear-gradient(center bottom, #663A86 0%, #24122F 100%);
+}
+
+#nav li.red {
+  background-color: #7A394E;
+  background: -webkit-gradient(linear, left bottom, left top, from(#7A394E), to(#251018));
+  background: -moz-linear-gradient(center bottom, #7A394E 0%, #251018 100%);
+}
+
+#nav li.brown {
+  background-color: #7D4C39;
+  background: -webkit-gradient(linear, left bottom, left top, from(#7D4C39), to(#2A131B));
+  background: -moz-linear-gradient(center bottom, #7D4C39 0%, #2A131B 100%);
+}
+
+
+
+/*** Authentications ***/
+
+.authentications {
+  margin-bottom: 30px;
+}
+
+.authentication {
+  float: left;
+  background-color: #EEE;
+  border: solid 1px #999;
+  padding: 5px 10px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  position: relative;
+  margin-right: 10px;
+}
+
+.authentication .remove {
+  text-decoration: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: #333;
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+.authentication .remove:hover {
+  color: #FFF;
+  background-color: #777;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+}
+
+.authentication img {
+  float: left;
+}
+
+.authentication .provider, .authentication .uid {
+  margin-left: 38px;
+  margin-right: 20px;
+}
+
+.authentication .provider {
+  font-weight: bold;
+}
+
+.authentication .uid {
+  color: #666;
+  font-size: 11px;
+}
+
+.auth_provider img {
+  display: block;
+}
+
+.auth_provider {
+  float: left;
+  text-decoration: none;
+  margin-right: 20px;
+  text-align: center;
+  margin-bottom: 10px;
 }

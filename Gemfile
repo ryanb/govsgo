@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.0'
 gem 'mysql2'
 gem 'nifty-generators'
-
+gem 'omniauth'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
@@ -18,5 +18,7 @@ group :development, :test do
   gem 'autotest-rails'
 end
 
-gem 'capistrano', :group => :development
-gem 'thin',       :group => :development
+group :development do
+  gem 'capistrano'
+  gem 'thin'
+end

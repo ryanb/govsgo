@@ -45,6 +45,10 @@ class Game < ActiveRecord::Base
   def current_player_is_human?
     not current_player_id.blank?
   end
+
+  def player?(user)
+    user && (white_player == user || black_player == user)
+  end
   
   def black_positions_list
     if black_positions       and
@@ -140,7 +144,7 @@ class Game < ActiveRecord::Base
   end
   
   def moves_after(index)
-    moves.split('-')[index..-1].join('-') unless moves.nil?
+    (moves.to_s.split('-')[index..-1] || []).join('-')
   end
   
   def first_color
