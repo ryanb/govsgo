@@ -36,7 +36,8 @@ function addMoves(new_moves) {
 
 function stepMove(step) {
   current_move += step;
-  var color = (current_move % 2 ? "b" : "w");
+  var offset = ($("#board").attr("data-handicap") > 0 ? 1 : 0)
+  var color = (current_move + offset) % 2 ? "b" : "w";
   $.each(moves[step > 0 ? current_move-1 : current_move].match(/../g), function(index, position) {
     if (index == 0) {
       $("#" + position).attr("class", (step > 0 ? color : "e"));
