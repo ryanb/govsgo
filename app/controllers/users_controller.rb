@@ -22,7 +22,9 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if @user.update_attributes(params[:user])
+    @user.attributes = params[:user]
+    @user.guest = false
+    if @user.save
       flash[:notice] = "Your profile has been updated."
       redirect_to "/"
     else

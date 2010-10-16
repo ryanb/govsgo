@@ -13,7 +13,7 @@ class GamesController < ApplicationController
   
   def create
     @game            = Game.new
-    @game.creator    = current_user
+    @game.creator    = current_user_or_guest
     @game.attributes = params[:game]
     @game.prepare
     if @game.save

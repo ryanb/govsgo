@@ -87,7 +87,7 @@ class Game < ActiveRecord::Base
   end
   
   def moves_after(index)
-    moves.split('-')[index..-1].join('-')
+    moves.split('-')[index..-1].join('-') unless moves.nil?
   end
   
   private

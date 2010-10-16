@@ -11,9 +11,14 @@
     <div id="container">
       <div id="user_nav">
         <% if logged_in? %>
-          Welcome <%= current_user.username %>.
-          <%= link_to "Edit profile", edit_current_user_path %> or
-          <%= link_to "Log out", logout_path %>
+          <% if current_user.guest? %>
+            Currently logged in as a guest.
+            Please <%= link_to "setup your account", edit_current_user_path %> to save your games.
+          <% else %>
+            Welcome <%= current_user.username %>.
+            <%= link_to "Edit profile", edit_current_user_path %> or
+            <%= link_to "Log out", logout_path %>
+          <% end %>
         <% else %>
           <%= link_to "Sign up", signup_path %> or
           <%= link_to "Log in", login_path %>.

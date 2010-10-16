@@ -24,6 +24,14 @@ module ControllerAuthentication
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
+  def current_user_or_guest
+    unless logged_in?
+      @current_user = User.create!(:guest => true)
+      remember_user(@current_user)
+    end
+    current_user
+  end
+
   def logged_in?
     current_user
   end
@@ -39,6 +47,10 @@ module ControllerAuthentication
   def redirect_to_target_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
+  end
+  
+  def remember_user(user)
+    session[:user_id] = user.id
   end
 
   private
