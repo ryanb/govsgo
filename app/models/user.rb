@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
   
   def password_required?
-    (new_record? && !guest?) || (guest? && !new_record?)
+    !guest? && (new_record? || password_hash.blank?)
   end
 
   private

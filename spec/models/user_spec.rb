@@ -14,7 +14,9 @@ describe User do
   end
 
   it "guest should require password when updating" do
-    User.create!(:guest => true).should have(1).error_on(:password)
+    user = User.create!(:guest => true)
+    user.guest = false
+    user.should have(1).error_on(:password)
   end
 
   it "should require username" do
