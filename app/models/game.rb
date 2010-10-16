@@ -41,6 +41,10 @@ class Game < ActiveRecord::Base
     not white_player_id.blank?
   end
   
+  def player?(user)
+    user && (white_player == user || black_player == user)
+  end
+  
   def black_positions_list
     if black_positions       and
        @black_positions_list and

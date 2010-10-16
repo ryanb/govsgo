@@ -69,4 +69,12 @@ describe Game do
     @game.white_player.should == user
     @game.chosen_color.should == "white"
   end
+  
+  it "should know if a given user is a player" do
+    user = Factory(:user)
+    @game.should_not be_player(nil)
+    @game.should_not be_player(user)
+    @game.white_player = user
+    @game.should be_player(user)
+  end
 end
