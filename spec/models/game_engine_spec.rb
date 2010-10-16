@@ -25,13 +25,13 @@ describe GameEngine do
   end
   
   it "pass replay to gtp splitting moves into points" do
-    @gtp.expects(:replay).with(%w[A17 A16])
-    @engine.replay("acff-ad")
+    @gtp.expects(:replay).with(%w[A17 A16], "black")
+    @engine.replay("acff-ad", "black")
   end
   
   it "pass empty array of replay points when nil" do
-    @gtp.expects(:replay).with([])
-    @engine.replay(nil)
+    @gtp.expects(:replay).with([], "black")
+    @engine.replay(nil, "black")
   end
   
   it "should move stone and return point back" do

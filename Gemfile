@@ -7,7 +7,7 @@ gem 'nifty-generators'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
-gem 'go_gtp', '0.0.3', :require => 'go/gtp'
+gem 'go_gtp', '0.0.4', :require => 'go/gtp'
 
 group :development, :test do
   gem 'mocha'

@@ -6,7 +6,12 @@ class MovesController < ApplicationController
   
   def create
     @game = Game.find(params[:game_id])
-    @game.move(params[:move])
-    @game.save!
+    if current_user == @game.current_player and
+       @game.valid_positions_list.include?(params[:move])
+      @game.move(params[:move])
+      @game.save!
+    else
+      head 409
+    end
   end
 end

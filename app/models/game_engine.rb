@@ -13,8 +13,9 @@ class GameEngine
     @board_size = options[:boardsize] || 19
   end
   
-  def replay(moves)
-    @gtp.replay(moves.to_s.split("-").map { |move| gnugo_point(move[0..1]) })
+  def replay(moves, first_color)
+    @gtp.replay( moves.to_s.split("-").map { |move| gnugo_point(move[0..1]) },
+                 first_color )
   end
   
   def move(color, vertex = nil)
@@ -30,6 +31,10 @@ class GameEngine
   
   def positions(color)
     @gtp.list_stones(color).map { |v| sgf_point(v) }.join
+  end
+  
+  def legal_moves(color)
+    @gtp.all_legal(color).map { |v| sgf_point(v) }.join
   end
   
   def captures(color)
@@ -51,6 +56,7 @@ class GameEngine
   end
   
   def gnugo_point(vertex)
+    return "PASS"             if vertex.blank?
     return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
     point(vertex).to_gnugo(@board_size)
   end
