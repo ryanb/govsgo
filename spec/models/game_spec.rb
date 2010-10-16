@@ -83,8 +83,16 @@ describe Game do
     @game.moves_after(2).should == "cc-dd"
   end
   
-  it "should set creator to black when choosing that color" do
-    @game.moves = "aa-bb-cc-dd"
-    @game.moves_after(2).should == "cc-dd"
+  it "should set creator to black or white when choosing that color" do
+    user = Factory(:user)
+    @game.creator = user
+    @game.chosen_color.should be_nil
+    @game.chosen_color = "black"
+    @game.black_player.should == user
+    @game.chosen_color.should == "black"
+    @game.black_player = nil
+    @game.chosen_color = "white"
+    @game.white_player.should == user
+    @game.chosen_color.should == "white"
   end
 end

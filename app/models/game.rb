@@ -1,4 +1,8 @@
 class Game < ActiveRecord::Base
+  belongs_to :black_player, :class_name => "User"
+  belongs_to :white_player, :class_name => "User"
+  belongs_to :current_player, :class_name => "User"
+  
   ###################
   ### Validations ###
   ###################
@@ -10,7 +14,7 @@ class Game < ActiveRecord::Base
                          with:      /\A(?:[a-s]{2})+(?:-(?:[a-s]{2})+)*\z/,
                          allow_nil: true
   
-  attr_accessible :komi, :handicap, :board_size, :chosen_color
+  attr_accessible :komi, :handicap, :board_size
   
   ########################
   ### Instance Methods ###
@@ -90,6 +94,22 @@ class Game < ActiveRecord::Base
   
   def moves_after(index)
     moves.split('-')[index..-1].join('-')
+  end
+  
+  def chosen_color=(color)
+    color = %w[white black].sample if color.blank?
+    case color
+    when "black" then self.black_player = creator
+    when "white" then self.white_player = creator
+    end
+  end
+  
+  def chosen_color
+    if creator == black_player
+      "black"
+    elsif creator == white_player
+      "white"
+    end
   end
   
   private
