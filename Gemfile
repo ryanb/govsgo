@@ -16,3 +16,4 @@ group :development, :test do
 end
 
 gem 'capistrano', :group => :development
+gem 'thin',       :group => :development
