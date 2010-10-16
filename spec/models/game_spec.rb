@@ -45,39 +45,6 @@ describe Game do
     @game.should be_white_player_is_human
   end
   
-  it "should be able to convert a move capture list for GNU Go" do
-    @game.board_size = 19
-    @game.moves      = "acbbccdd-ad"
-    @game.moves_for_gnugo.should eq(%w[A17 A16])
-  end
-  
-  it "should invoke GNU Go with game arguments" do
-    @game.board_size = 13
-    Go::GTP.expects(:run_gnugo).with(arguments: "--boardsize 13")
-    @game.gnugo { }
-  end
-  
-  it "should allow for multiple arguments" do
-    @game.board_size = 9
-    @game.handicap   = 2
-    @game.komi       = 6.5
-    Go::GTP.expects(:run_gnugo).with do |args|
-      args.include?(:arguments)             and
-      args[:arguments] =~ /--boardsize 9\b/ and
-      args[:arguments] =~ /--handicap 2\b/  and
-      args[:arguments] =~ /--komi 6\.5\b/
-    end
-    @game.gnugo { }
-  end
-  
-  it "should replay moves when connecting to GNU Go" do
-    @game.board_size = 19
-    @game.moves      = "ac-ad"
-    Go::GTP.expects(:run_gnugo).yields(gtp = mock)
-    gtp.expects(:replay).with(%w[A17 A16])
-    @game.gnugo { }
-  end
-  
   it "should report moves after a position index" do
     @game.moves = "aa-bb-cc-dd"
     @game.moves_after(2).should == "cc-dd"

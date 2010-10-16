@@ -48,47 +48,12 @@ class Game < ActiveRecord::Base
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
   
-  def moves_for_gnugo
-    moves.to_s.split("-").map { |move| point(move[0..1]).to_gnugo(board_size) }
-  end
-  
-  # 
-  # Open a connection to GNU Go and reply the current game to the latest
-  # position.  The block is passed this context.
-  # 
-  def gnugo
-    arguments = {boardsize: board_size, handicap: handicap, komi: komi}
-                .select { |_, setting|    not setting.nil?       }
-                .map    { |name, setting| "--#{name} #{setting}" }
-                .join(" ")
-    Go::GTP.run_gnugo(arguments: arguments) do |gnugo|
-      if moves_for_gnugo.empty? or gnugo.replay(moves_for_gnugo)
-        yield gnugo
-      end
-    end
-  end
-  
   def move(vertex)
-    gnugo do |go|
-      updated_moves = moves || ""
-      whites_stones = go.list_stones(:white)
-      if go.play(:black, point(vertex).to_gnugo(board_size))
-        self.black_positions =  "#{black_positions}#{vertex}"
-        captures             =  whites_stones - go.list_stones(:white)
-        updated_moves        << "-" unless updated_moves.blank?
-        updated_moves        << point(vertex).to_sgf
-        updated_moves        << captures.map { |c| point(c).to_sgf }.join
-        black_stones         =  go.list_stones(:black)
-        computers_move       =  go.genmove(:white)
-        if go.success?
-          sgf                  =  point(computers_move).to_sgf
-          self.white_positions =  "#{white_positions}#{sgf}"
-          captures             =  black_stones - go.list_stones(:black)
-          updated_moves        << "-#{point(computers_move).to_sgf}"
-          updated_moves        << captures.map { |c| point(c).to_sgf }.join
-        end
-      end
-      self.moves = updated_moves if moves != updated_moves
+    GameEngine.run(boardsize: board_size, handicap: handicap, komi: komi) do |engine|
+      engine.replay(moves)
+      self.moves = [moves, engine.move(:black, vertex), engine.move(:white)].reject(&:blank?).join('-')
+      self.black_positions = engine.positions(:black)
+      self.white_positions = engine.positions(:white)
     end
   end
   
@@ -110,14 +75,5 @@ class Game < ActiveRecord::Base
     elsif creator == white_player
       "white"
     end
-  end
-  
-  private
-  
-  def point(*args)
-    if args.size == 1 and /\A([A-HJ-T])(\d{1,2})\z/i # this is causing a warning: regex literal in condition
-      args << {board_size: board_size}
-    end
-    Go::GTP::Point.new(*args)
   end
 end
