@@ -14,3 +14,5 @@ group :development, :test do
   gem 'rspec-rails', '>= 2.0.1'
   gem 'factory_girl_rails'
 end
+
+gem 'capistrano', :group => :development
