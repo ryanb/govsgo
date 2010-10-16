@@ -27,7 +27,8 @@ class Game < ActiveRecord::Base
   end
   
   def black_positions_list
-    if @black_positions_list and
+    if black_positions       and
+       @black_positions_list and
        @black_positions_list.size != black_positions.size / 2
        @black_positions_list = nil
     end
@@ -35,7 +36,8 @@ class Game < ActiveRecord::Base
   end
   
   def white_positions_list
-    if @white_positions_list and
+    if white_positions       and
+       @white_positions_list and
        @white_positions_list.size != white_positions.size / 2
        @white_positions_list = nil
     end
