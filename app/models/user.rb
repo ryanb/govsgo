@@ -22,6 +22,18 @@ class User < ActiveRecord::Base
   def matching_password?(pass)
     self.password_hash == encrypt_password(pass)
   end
+  
+  def games
+    Game.where("black_player_id = ? or white_player_id = ?", id, id)
+  end
+  
+  def games_my_turn
+    games.active.where("current_player_id = ?", id)
+  end
+  
+  def games_their_turn
+    games.active.where("current_player_id != ? or current_player_id is null", id)
+  end
 
   private
 
