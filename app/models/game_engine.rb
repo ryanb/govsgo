@@ -25,7 +25,7 @@ class GameEngine
       vertex = sgf_point(@gtp.genmove(color))
     end
     captured = other_stones - @gtp.list_stones(opposite(color))
-    vertex   + captured.map { |v| sgf_point(v) }.join
+    sgf_point(vertex)   + captured.map { |v| sgf_point(v) }.join
   end
   
   def positions(color)
@@ -34,6 +34,10 @@ class GameEngine
   
   def captures(color)
     @gtp.captures(color)
+  end
+  
+  def final_score
+    @gtp.final_score
   end
   
   private
@@ -47,11 +51,12 @@ class GameEngine
   end
   
   def gnugo_point(vertex)
-    return vertex if %w[PASS RESIGN].include? vertex
+    return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
     point(vertex).to_gnugo(@board_size)
   end
   
   def sgf_point(vertex)
+    return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
     point(vertex).to_sgf
   end
   
