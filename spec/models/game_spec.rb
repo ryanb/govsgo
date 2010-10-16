@@ -70,11 +70,11 @@ describe Game do
     @game.gnugo { }
   end
   
-  it "should reply moves when connecting to GNU Go" do
+  it "should replay moves when connecting to GNU Go" do
     @game.board_size = 19
     @game.moves      = "ac-ad"
     Go::GTP.expects(:run_gnugo).yields(gtp = mock)
-    gtp.expects(:reply).with(%w[A17 A16])
+    gtp.expects(:replay).with(%w[A17 A16])
     @game.gnugo { }
   end
 end
