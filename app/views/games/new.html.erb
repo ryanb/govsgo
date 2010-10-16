@@ -3,16 +3,20 @@
 <%= form_for @game do |f| %>
   <%= f.error_messages %>
   <p>
+    <%= f.label :chosen_color, "Play as" %><br />
+    <%= f.select :chosen_color, [["Random", ""], ["Black", "black"], ["White", "white"]] %>
+  </p>
+  <p>
     <%= f.label :komi %><br />
-    <%= f.text_field :komi %>
+    <%= f.select :komi, [0.5, 5.5, 6.5] %>
   </p>
   <p>
     <%= f.label :handicap %><br />
-    <%= f.text_field :handicap %>
+    <%= f.select :board_size, [0, 2, 3, 4, 5, 6, 7, 8, 9] %>
   </p>
   <p>
     <%= f.label :board_size %><br />
-    <%= f.text_field :board_size %>
+    <%= f.select :board_size, [["19 x 19", 19], ["13 x 13", 13], ["9 x 9", 9]] %>
   </p>
   <p><%= f.submit %></p>
 <% end %>
