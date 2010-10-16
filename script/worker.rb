@@ -65,7 +65,8 @@ job "Game.move" do |args|
     mysql.query(
       "UPDATE games SET "                                             +
       sql_update.map { |col, val| "%s = %p" % [col, val] }.join(", ") +
-      " WHERE id = #{args['id']} AND current_player_id IS NULL"
+      " WHERE id = #{args['id']} AND current_player_id IS NULL "      +
+      "finished_at IS NULL"
     )
   end
 end
