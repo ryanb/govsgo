@@ -1,5 +1,6 @@
 var moves = new Array();
 var current_move = 0;
+var pollTimer = null;
 $(function() {
   if ($("#board").length > 0) {
     if ($("#board").attr("data-moves").length != "") {
@@ -22,6 +23,8 @@ $(function() {
       }
       return false;
     });
+    resetPollTimer();
+    setTimeout(pollMoves, pollTimer);
   }
 });
 
@@ -45,4 +48,14 @@ function stepMove(step) {
       $("#" + position).attr("class", (step > 0 ? "e" : color));
     }
   });
+}
+
+function pollMoves() {
+  pollTimer *= 2;
+  $.getScript(window.location.pathname + '/moves?after=' + moves.length);
+  setTimeout(pollMoves, pollTimer);
+}
+
+function resetPollTimer() {
+  pollTimer = 1000;
 }

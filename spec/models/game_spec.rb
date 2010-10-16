@@ -50,6 +50,10 @@ describe Game do
     @game.moves_after(2).should == "cc-dd"
   end
   
+  it "should report no moves when nil" do
+    @game.moves_after(2).should be_nil
+  end
+  
   it "should set creator to black or white when choosing that color" do
     user = Factory(:user)
     @game.creator = user
