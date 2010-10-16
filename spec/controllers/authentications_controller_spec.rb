@@ -45,22 +45,12 @@ describe AuthenticationsController do
     session[:omniauth].should be_nil
   end
   
-  # it "create action should render new template when model is invalid" do
-  #   Authentication.any_instance.stubs(:valid?).returns(false)
-  #   post :create
-  #   response.should render_template(:new)
-  # end
-  # 
-  # it "create action should redirect when model is valid" do
-  #   Authentication.any_instance.stubs(:valid?).returns(true)
-  #   post :create
-  #   response.should redirect_to(authentications_url)
-  # end
-  # 
-  # it "destroy action should destroy model and redirect to index action" do
-  #   authentication = Authentication.first
-  #   delete :destroy, :id => authentication
-  #   response.should redirect_to(authentications_url)
-  #   Authentication.exists?(authentication.id).should be_false
-  # end
+  it "destroy action should destroy model and redirect edit user path" do
+    user = Factory(:user)
+    @controller.stubs(:current_user).returns(user)
+    authentication = user.authentications.create!(:provider => 1, :uid => 2)
+    delete :destroy, :id => authentication
+    response.should redirect_to(edit_current_user_path)
+    Authentication.exists?(authentication.id).should be_false
+  end
 end
