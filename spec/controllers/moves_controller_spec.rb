@@ -1,9 +1,12 @@
 require 'spec_helper'
 
 describe MovesController do
+  fixtures :all
+  render_views
+  
   it "should show moves in game" do
-    game = Game.create!(board_size: 19, moves: "aa-bb-cc")
-    post "index", :game_id => game.id, :format => "js", :after => 1
+    game = Factory(:game, board_size: 19, moves: "aa-bb-cc")
+    get "index", :game_id => game.id, :format => "js", :after => 1
     response.body.should include("\"bb-cc\"")
   end
 
