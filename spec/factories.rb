@@ -4,3 +4,6 @@ Factory.define :user do |f|
   f.password "foobar"
   f.password_confirmation { |u| u.password }
 end
+
+Factory.define :game do |f|
+end

@@ -54,7 +54,10 @@ function stepMove(step) {
 }
 
 function pollMoves() {
-  pollTimer *= 2;
+  // Slow down polling until it's 30 seconds apart
+  if (pollTimer < 30000) {
+    pollTimer += 1000;
+  }
   $.getScript(window.location.pathname + '/moves?after=' + moves.length);
   setTimeout(pollMoves, pollTimer);
 }
