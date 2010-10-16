@@ -55,11 +55,13 @@ describe Game do
     @game.creator = user
     @game.chosen_color.should be_nil
     @game.chosen_color = "black"
+    @game.prepare
     @game.black_player.should == user
     @game.chosen_color.should == "black"
     @game.current_player.should == user
     @game.black_player = nil
     @game.chosen_color = "white"
+    @game.prepare
     @game.white_player.should == user
     @game.chosen_color.should == "white"
   end

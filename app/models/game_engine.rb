@@ -1,12 +1,14 @@
 class GameEngine
   def self.run(options = { }, &block)
-    arguments = options.map { |k, v| "--#{k} #{v}" unless v.blank? }.join(" ")
-    Go::GTP.run_gnugo(arguments: arguments) do |gtp|
+    Go::GTP.run_gnugo do |gtp|
+      gtp.boardsize(options[:boardsize])     unless options[:boardsize].blank?
+      gtp.fixed_handicap(options[:handicap]) if options[:handicap].to_i.nonzero?
+      gtp.komi(options[:komi])               unless options[:komi].blank?
       yield GameEngine.new(gtp, options)
     end
   end
   
-  def initialize(gtp, options = {})
+  def initialize(gtp, options = { })
     @gtp        = gtp
     @board_size = options[:boardsize] || 19
   end

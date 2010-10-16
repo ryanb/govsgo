@@ -52,10 +52,28 @@ class Game < ActiveRecord::Base
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
   
+  def prepare
+    color = chosen_color.blank? ? %w[white black].sample : chosen_color
+    case color
+    when "black"
+      self.black_player = creator
+    when "white"
+      self.white_player = creator
+    end
+    if handicap.to_i.nonzero?
+      game_engine do |engine|
+        self.moves           = engine.move(:white)
+        self.black_positions = engine.positions(:black)
+        self.white_positions = engine.positions(:white)
+      end
+      self.current_player = white_player
+    else
+      self.current_player = black_player
+    end
+  end
+  
   def move(vertex)
-    GameEngine.run( boardsize: board_size,
-                    handicap:  handicap,
-                    komi:      komi ) do |engine|
+    game_engine do |engine|
       engine.replay(moves)
       self.moves           = [ moves,
                                engine.move(:black, vertex),
@@ -69,19 +87,13 @@ class Game < ActiveRecord::Base
     moves.split('-')[index..-1].join('-')
   end
   
-  def chosen_color=(color)
-    color = %w[white black].sample if color.blank?
-    case color
-    when "black" then self.black_player = self.current_player = creator
-    when "white" then self.white_player = creator
-    end
-  end
+  private
   
-  def chosen_color
-    if creator == black_player
-      "black"
-    elsif creator == white_player
-      "white"
+  def game_engine
+    GameEngine.run( boardsize: board_size,
+                    handicap:  handicap,
+                    komi:      komi ) do |engine|
+      yield engine
     end
   end
 end
