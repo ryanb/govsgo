@@ -8,6 +8,7 @@
     <%= yield(:head) %>
   </head>
   <body>
+    <a href="/" id="logo"><img src="/images/layout/logo.png" width="282" height="112" alt="Go vs Go" /></a>
     <ul id="nav">
       <li class="banner blue"><%= link_to "Start a Game" %></li>
       <li class="gap"></li>
@@ -18,6 +19,7 @@
       <li class="banner brown"><%= link_to "Log Out" %></li>
       <div class="clear">
     </ul>
+    <div class="clear"></div>
     <div id="container">
       <div id="user_nav">
         <% if logged_in? %>

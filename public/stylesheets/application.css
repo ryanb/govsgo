@@ -114,12 +114,24 @@ a {
   font-size: 12px;
 }
 
+/*** Logo ***/
+
+#logo {
+  float: left;
+  margin-left: 80px;
+  margin-top: 20px;
+}
+
+
+
+/*** Navigation ***/
+
 #nav {
   list-style: none;
   margin: 0;
   padding: 0;
   height: 100px;
-  margin-left: 400px;
+  margin-left: 450px;
 }
 
 #nav li {
@@ -128,7 +140,7 @@ a {
 
 #nav li.gap {
   width: 8px;
-  height: 60px;
+  height: 65px;
   background-color: #12111B;
   box-shadow: 7px 7px 8px #000;
   -webkit-box-shadow: 7px 7px 8px #000;
@@ -147,7 +159,7 @@ a {
 
 #nav li a {
   display: block;
-  padding-top: 45px;
+  padding-top: 50px;
   padding-bottom: 12px;
   width: 150px;
   text-align: center;
@@ -187,3 +199,68 @@ a {
   background: -moz-linear-gradient(center bottom, #7D4C39 0%, #2A131B 100%);
 }
 
+
+
+/*** Authentications ***/
+
+.authentications {
+  margin-bottom: 30px;
+}
+
+.authentication {
+  float: left;
+  background-color: #EEE;
+  border: solid 1px #999;
+  padding: 5px 10px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  position: relative;
+  margin-right: 10px;
+}
+
+.authentication .remove {
+  text-decoration: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: #333;
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+.authentication .remove:hover {
+  color: #FFF;
+  background-color: #777;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+}
+
+.authentication img {
+  float: left;
+}
+
+.authentication .provider, .authentication .uid {
+  margin-left: 38px;
+  margin-right: 20px;
+}
+
+.authentication .provider {
+  font-weight: bold;
+}
+
+.authentication .uid {
+  color: #666;
+  font-size: 11px;
+}
+
+.auth_provider img {
+  display: block;
+}
+
+.auth_provider {
+  float: left;
+  text-decoration: none;
+  margin-right: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
