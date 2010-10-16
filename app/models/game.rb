@@ -31,7 +31,7 @@ class Game < ActiveRecord::Base
        @black_positions_list.size != black_positions.size / 2
        @black_positions_list = nil
     end
-    @black_positions_list ||= black_positions.scan(/[a-s]{2}/)
+    @black_positions_list ||= black_positions.to_s.scan(/[a-s]{2}/)
   end
   
   def white_positions_list
@@ -39,7 +39,7 @@ class Game < ActiveRecord::Base
        @white_positions_list.size != white_positions.size / 2
        @white_positions_list = nil
     end
-    @white_positions_list ||= white_positions.scan(/[a-s]{2}/)
+    @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
   
   def moves_for_gnugo
