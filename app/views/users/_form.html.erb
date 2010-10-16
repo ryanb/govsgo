@@ -8,6 +8,7 @@
     <%= f.label :email, "Email Address" %><br />
     <%= f.text_field :email %>
   </p>
+  <% unless session[:omniauth] %>
   <p>
     <%= f.label :password %><br />
     <%= f.password_field :password %>
@@ -16,5 +17,6 @@
     <%= f.label :password_confirmation, "Confirm Password" %><br />
     <%= f.password_field :password_confirmation %>
   </p>
+  <% end %>
   <p><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
 <% end %>

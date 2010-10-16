@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "Thank you for signing up! You are now logged in."
-      redirect_to "/"
+      redirect_to root_url
     else
       render :action => 'new'
     end
@@ -18,6 +18,10 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    if session[:omniauth]
+      @user.apply_omniauth(omniauth)
+      @user.valid?
+    end
   end
 
   def update
@@ -25,8 +29,9 @@ class UsersController < ApplicationController
     @user.attributes = params[:user]
     @user.guest = false
     if @user.save
+      session[:omniauth] = nil
       flash[:notice] = "Your profile has been updated."
-      redirect_to "/"
+      redirect_to root_url
     else
       render :action => 'edit'
     end

@@ -37,7 +37,12 @@ class User < ActiveRecord::Base
   end
   
   def password_required?
-    !guest? && (new_record? || password_hash.blank?)
+    !guest? && (new_record? || password_hash.blank?) && authentications.empty?
+  end
+
+  def apply_omniauth(omniauth)
+    self.email = omniauth['user_info']['email'] if email.blank?
+    self.username = omniauth['user_info']['nickname'] if username.blank?
   end
 
   private

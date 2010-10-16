@@ -19,6 +19,13 @@ describe User do
     user.should have(1).error_on(:password)
   end
 
+  it "should not require password when using other forms of authentication" do
+    user = Factory(:user, :guest => true, :password => nil)
+    user.authentications.create!(:provider => "foo", :uid => 123)
+    user.guest = false
+    user.should have(0).errors_on(:password)
+  end
+
   it "should require username" do
     Factory.build(:user, :username => '').should have(1).error_on(:username)
   end
