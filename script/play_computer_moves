@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+Dir.chdir(File.dirname(__FILE__))
+ENV["RUBYLIB"] = "."
+exec("stalk worker Game.move")

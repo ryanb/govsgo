@@ -10,14 +10,14 @@ class GamesController < ApplicationController
   def new
     @game = Game.new
     if params[:username]
-      @game.chosen_opponent = "user"
+      @game.chosen_opponent   = "user"
       @game.opponent_username = params[:username]
     else
       @game.chosen_opponent = "gnugo"
-      @game.chosen_color = "black"
+      @game.chosen_color    = "black"
     end
-    @game.komi = params[:komi] || 6.5
-    @game.handicap = params[:handicap] || 0
+    @game.komi       = params[:komi]       || 6.5
+    @game.handicap   = params[:handicap]   || 0
     @game.board_size = params[:board_size] || 19
   end
   
@@ -27,6 +27,7 @@ class GamesController < ApplicationController
     @game.attributes = params[:game]
     @game.prepare
     if @game.save
+      @game.queue_computer_move
       flash[:notice] = "Successfully created game."
       redirect_to @game
     else

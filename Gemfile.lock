@@ -36,6 +36,7 @@ GEM
     autotest-rails (4.1.0)
       ZenTest
     bcrypt-ruby (2.1.2)
+    beanstalk-client (1.1.0)
     builder (2.1.2)
     capistrano (2.5.19)
       highline
@@ -43,7 +44,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
-    daemons (1.0.10)
+    daemons (1.1.0)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -60,6 +61,7 @@ GEM
     i18n (0.4.1)
     jquery-rails (0.2.3)
       rails (~> 3.0)
+    json_pure (1.4.6)
     mail (2.2.7)
       activesupport (>= 2.3.6)
       mime-types
@@ -152,6 +154,9 @@ GEM
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
     rubyntlm (0.1.1)
+    stalker (0.5.0)
+      beanstalk-client
+      json_pure
     thin (1.2.7)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -178,4 +183,5 @@ DEPENDENCIES
   omniauth
   rails (= 3.0.0)
   rspec-rails (>= 2.0.1)
+  stalker (= 0.5.0)
   thin

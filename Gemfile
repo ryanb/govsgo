@@ -7,7 +7,8 @@ gem 'omniauth'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 
-gem 'go_gtp', '0.0.4', :require => 'go/gtp'
+gem 'go_gtp',  '0.0.4', :require => 'go/gtp'
+gem 'stalker', '0.5.0'
 
 group :development, :test do
   gem 'mocha'

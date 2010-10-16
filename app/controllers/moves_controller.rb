@@ -10,6 +10,7 @@ class MovesController < ApplicationController
        @game.valid_positions_list.include?(params[:move])
       @game.move(params[:move])
       @game.save!
+      @game.queue_computer_move
     else
       head 409
     end

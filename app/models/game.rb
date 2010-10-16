@@ -18,14 +18,15 @@ class Game < ActiveRecord::Base
                          with:      /\A(?:-|[a-s]{2})*\z/,
                          allow_nil: true
   
-  attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
+  attr_accessible :komi, :handicap, :board_size,
+                  :chosen_color, :chosen_opponent, :opponent_username
   
   ##############
   ### Scopes ###
   ##############
   
   scope :finished, where("finished_at is not null")
-  scope :active, where("finished_at is null")
+  scope :active,   where("finished_at is null")
   
   ########################
   ### Instance Methods ###
@@ -41,6 +42,10 @@ class Game < ActiveRecord::Base
     not white_player_id.blank?
   end
   
+  def current_player_is_human?
+    not current_player_id.blank?
+  end
+
   def player?(user)
     user && (white_player == user || black_player == user)
   end
@@ -77,12 +82,11 @@ class Game < ActiveRecord::Base
     end
     if handicap.to_i.nonzero?
       game_engine do |engine|
-        self.moves           = engine.move(:white)
         self.valid_positions = engine.legal_moves(:black)
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
       end
-      self.current_player = black_player  # FIXME
+      self.current_player = white_player
     else
       self.current_player = black_player
     end
@@ -104,23 +108,25 @@ class Game < ActiveRecord::Base
         self.moves           = moves.blank? ? played : [moves, played].join("-")
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
-        response             = engine.move(:white)
-        self.valid_positions = engine.legal_moves(:black)
-        self.current_player  = next_player
-        if response == "RESIGN"
-          finish_game(engine.final_score)
-        elsif response == "PASS" and vertex == "PASS"
-          self.moves = [moves, ""].join("-")
-          finish_game(engine.final_score)
-        else
-          response             = "" if response == "PASS"
-          self.moves           = [moves, response].join("-")
-          self.black_positions = engine.positions(:black)
-          self.white_positions = engine.positions(:white)
-          self.black_score     = engine.captures(:black)
-          self.white_score     = engine.captures(:white)
-        end
+        self.black_score     = engine.captures(:black)
+        self.white_score     = engine.captures(:white)
       end
+    end
+  end
+  
+  def queue_computer_move
+    unless current_player_is_human?
+      Stalker.enqueue( "Game.move",
+                       id:                id,
+                       next_player_id:    next_player.id,
+                       boardsize:         board_size,
+                       handicap:          handicap,
+                       komi:              komi,
+                       moves_for_gnugo:   GameEngine.sgf_to_gnugo( moves,
+                                                                   board_size ),
+                       moves_for_db:      moves,
+                       first_color:       first_color,
+                       current_color:     current_color )
     end
   end
   
@@ -130,6 +136,10 @@ class Game < ActiveRecord::Base
   
   def first_color
     handicap.to_i.nonzero? ? "white" : "black"
+  end
+  
+  def current_color
+    current_player == black_player ? "black" : "white"
   end
   
   def next_player
