@@ -73,3 +73,28 @@ a {
 .error_messages ul {
   margin: 0;
 }
+
+#board {
+  background-image: url(/images/simple_board_19.png);
+  width: 575px; /* add 5 for quick float hack */
+  height: 575px;
+}
+
+#board div {
+  float: left;
+  width: 30px;
+  height: 30px;
+}
+
+#board .w {
+  background-image: url(/images/simple_white_stone.png);
+}
+
+#board .b {
+  background-image: url(/images/simple_black_stone.png);
+}
+
+#user_nav {
+  float: right;
+  font-size: 12px;
+}

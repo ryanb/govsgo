@@ -1,43 +1,7 @@
 <% title "Games" %>
 
-<table>
-  <tr>
-    <th>Black Player</th>
-    <th>White Player</th>
-    <th>Current Player</th>
-    <th>Black Score</th>
-    <th>White Score</th>
-    <th>Black Positions</th>
-    <th>White Positions</th>
-    <th>Moves</th>
-    <th>Valid Positions</th>
-    <th>Komi</th>
-    <th>Handicap</th>
-    <th>Board Size</th>
-    <th>Last Move At</th>
-    <th>Started At</th>
-    <th>Finished At</th>
-  </tr>
-  <% for game in @games %>
-    <tr>
-      <td><%= game.black_player_id %></td>
-      <td><%= game.white_player_id %></td>
-      <td><%= game.current_player_id %></td>
-      <td><%= game.black_score %></td>
-      <td><%= game.white_score %></td>
-      <td><%= game.black_positions %></td>
-      <td><%= game.white_positions %></td>
-      <td><%= game.moves %></td>
-      <td><%= game.valid_positions %></td>
-      <td><%= game.komi %></td>
-      <td><%= game.handicap %></td>
-      <td><%= game.board_size %></td>
-      <td><%= game.last_move_at %></td>
-      <td><%= game.started_at %></td>
-      <td><%= game.finished_at %></td>
-      <td><%= link_to "Show", game %></td>
-    </tr>
-  <% end %>
-</table>
+<% for game in @games %>
+  <h2><%= link_to "Game ##{game.id}", game %></h2>
+<% end %>
 
 <p><%= link_to "New Game", new_game_path %></p>

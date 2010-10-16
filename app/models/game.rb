@@ -10,11 +10,13 @@ class Game < ActiveRecord::Base
                          with:      /\A(?:[a-s]{2})+(?:-(?:[a-s]{2})+)*\z/,
                          allow_nil: true
   
-  attr_accessible :komi, :handicap, :board_size
+  attr_accessible :komi, :handicap, :board_size, :chosen_color
   
   ########################
   ### Instance Methods ###
   ########################
+
+  attr_accessor :chosen_color, :creator
   
   def black_player_is_human?
     not black_player_id.blank?

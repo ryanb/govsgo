@@ -1,5 +1,13 @@
 <% title "Game" %>
 
+<div id="board">
+<% for y in ('a'..'s').to_a.reverse %>
+  <% for x in 'a'..'s' %>
+    <div class="e" id="<%= x+y %>"></div>
+  <% end %>
+<% end %>
+</div>
+
 <p>
   <strong>Black Player:</strong>
   <%= @game.black_player_id %>
