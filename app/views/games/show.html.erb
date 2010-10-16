@@ -1,12 +1,14 @@
 <% title "Game" %>
 
-<div id="board" class="boardsize<%= @game.board_size %>" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>">
-<% for y in ('a'..'s').first(@game.board_size) %>
-  <% for x in ('a'..'s').first(@game.board_size) %>
-    <% vertex = x + y %>
-    <div class="<%= color_at vertex %>" id="<%= vertex %>"></div>
+<div id="board" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>">
+  <div id="board_spaces" class="boardsize<%= @game.board_size %>">
+  <% for y in ('a'..'s').first(@game.board_size) %>
+    <% for x in ('a'..'s').first(@game.board_size) %>
+      <% vertex = x + y %>
+      <div class="<%= color_at vertex %>" id="<%= vertex %>"></div>
+    <% end %>
   <% end %>
-<% end %>
+  </div>
 </div>
 
 <p>

@@ -78,7 +78,7 @@ a {
 }
 
 .boardsize19 {
-  background-image: url(/images/simple_board_19.png);
+  background-image: url(/images/game/board_19.png);
   width: 575px; /* add 5 for quick float hack */
   height: 575px;
 }
@@ -95,18 +95,26 @@ a {
   height: 275px;
 }
 
-#board div {
+#board_spaces.boardsize19 {
+  padding-left: 24px;
+  padding-top: 24px;
+  padding-bottom: 22px;
+  padding-right: 22px;
+}
+
+#board_spaces div {
   float: left;
   width: 30px;
   height: 30px;
+  background-repeat: no-repeat;
 }
 
 #board .w {
-  background-image: url(/images/simple_white_stone.png);
+  background-image: url(/images/game/white.png);
 }
 
 #board .b {
-  background-image: url(/images/simple_black_stone.png);
+  background-image: url(/images/game/black.png);
 }
 
 #user_nav {
