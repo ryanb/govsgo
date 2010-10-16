@@ -51,7 +51,12 @@ describe Game do
   end
   
   it "should report no moves when nil" do
-    @game.moves_after(2).should be_nil
+    @game.moves_after(2).should == ""
+  end
+  
+  it "should report no moves when out of range" do
+    @game.moves = "aa-bb-cc-dd"
+    @game.moves_after(8).should == ""
   end
   
   it "should set creator to black or white when choosing that color" do
