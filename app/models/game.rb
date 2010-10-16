@@ -108,22 +108,8 @@ class Game < ActiveRecord::Base
         self.moves           = moves.blank? ? played : [moves, played].join("-")
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
-        response             = engine.move(:white)
-        self.valid_positions = engine.legal_moves(:black)
-        self.current_player  = next_player
-        if response == "RESIGN"
-          finish_game(engine.final_score)
-        elsif response == "PASS" and vertex == "PASS"
-          self.moves = [moves, ""].join("-")
-          finish_game(engine.final_score)
-        else
-          response             = "" if response == "PASS"
-          self.moves           = [moves, response].join("-")
-          self.black_positions = engine.positions(:black)
-          self.white_positions = engine.positions(:white)
-          self.black_score     = engine.captures(:black)
-          self.white_score     = engine.captures(:white)
-        end
+        self.black_score     = engine.captures(:black)
+        self.white_score     = engine.captures(:white)
       end
     end
   end
@@ -136,7 +122,8 @@ class Game < ActiveRecord::Base
                        boardsize:         board_size,
                        handicap:          handicap,
                        komi:              komi,
-                       moves_for_gnugo:   GameEngine.sgf_to_gnugo(moves),
+                       moves_for_gnugo:   GameEngine.sgf_to_gnugo( moves,
+                                                                   board_size ),
                        moves_for_db:      moves,
                        first_color:       first_color,
                        current_color:     current_color )

@@ -1,6 +1,25 @@
 class GameEngine
-  def self.sgf_to_gnugo(sgf_moves)
-    sgf_moves.to_s.split("-").map { |move| gnugo_point(move[0..1]) }
+  def self.sgf_to_gnugo(sgf_moves, board_size)
+    sgf_moves.to_s.split("-").map { |move| gnugo_point(move[0..1], board_size) }
+  end
+  
+  def self.point(vertex, board_size)
+    args = [vertex]
+    if vertex =~ /\A[A-HJ-T](?:1\d|[1-9])\z/
+      args << {board_size: board_size}
+    end
+    Go::GTP::Point.new(*args)
+  end
+  
+  def self.gnugo_point(vertex, board_size)
+    return "PASS"             if vertex.blank?
+    return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
+    point(vertex, board_size).to_gnugo(board_size)
+  end
+
+  def self.sgf_point(vertex, board_size)
+    return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
+    point(vertex, board_size).to_sgf
   end
   
   def self.run(options = { }, &block)
@@ -18,7 +37,7 @@ class GameEngine
   end
   
   def replay(moves, first_color)
-    @gtp.replay(self.class.sgf_to_gnugo(moves), first_color)
+    @gtp.replay(self.class.sgf_to_gnugo(moves, @board_size), first_color)
   end
   
   def move(color, vertex = nil)
@@ -51,22 +70,15 @@ class GameEngine
   private
   
   def point(vertex)
-    args = [vertex]
-    if vertex =~ /\A[A-HJ-T](?:1\d|[1-9])\z/
-      args << {board_size: @board_size}
-    end
-    Go::GTP::Point.new(*args)
+    self.class.point(vertex, @board_size)
   end
   
   def gnugo_point(vertex)
-    return "PASS"             if vertex.blank?
-    return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
-    point(vertex).to_gnugo(@board_size)
+    self.class.gnugo_point(vertex, @board_size)
   end
   
   def sgf_point(vertex)
-    return vertex.to_s.upcase if %w[PASS RESIGN].include? vertex.to_s.upcase
-    point(vertex).to_sgf
+    self.class.sgf_point(vertex, @board_size)
   end
   
   def opposite(color)

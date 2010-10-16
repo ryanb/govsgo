@@ -5,7 +5,7 @@ def gnugo_to_sgf(vertices, boardsize)
   if vertices.is_a? Array
     vertices.map { |v| gnugo_to_sgf(v, boardsize) }.join
   else
-    Go::GTP::Point.new(vertices, boardsize: boardsize).to_sgf
+    Go::GTP::Point.new(vertices, board_size: boardsize).to_sgf
   end
 end
 
@@ -31,7 +31,7 @@ mysql       = Mysql2::Client.new(config)
 
 job "Game.move" do |args|
   Go::GTP.run_gnugo do |gtp|
-    boardsize  = args["boardsize"]
+    boardsize  = args["boardsize"].to_i
     color      = args["current_color"]
     next_color = color == "black" ? "white" : "black"
     moves      = args["moves_for_db"]
