@@ -77,4 +77,14 @@ describe Game do
     gtp.expects(:replay).with(%w[A17 A16])
     @game.gnugo { }
   end
+  
+  it "should report moves after a position index" do
+    @game.moves = "aa-bb-cc-dd"
+    @game.moves_after(2).should == "cc-dd"
+  end
+  
+  it "should set creator to black when choosing that color" do
+    @game.moves = "aa-bb-cc-dd"
+    @game.moves_after(2).should == "cc-dd"
+  end
 end

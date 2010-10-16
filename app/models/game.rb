@@ -88,10 +88,14 @@ class Game < ActiveRecord::Base
     end
   end
   
+  def moves_after(index)
+    moves.split('-')[index..-1].join('-')
+  end
+  
   private
   
   def point(*args)
-    if args.size == 1 and /\A([A-HJ-T])(\d{1,2})\z/i
+    if args.size == 1 and /\A([A-HJ-T])(\d{1,2})\z/i # this is causing a warning: regex literal in condition
       args << {board_size: board_size}
     end
     Go::GTP::Point.new(*args)
