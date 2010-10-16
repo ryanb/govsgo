@@ -31,7 +31,7 @@
   <% end %>
   
   <h3>Finished Games</h3>
-  <% for game in current_user.games_their_turn %>
+  <% for game in current_user.games.finished %>
     <h4><%= link_to "Game ##{game.id}", game %></h4>
   <% end %>
 <% end %>
