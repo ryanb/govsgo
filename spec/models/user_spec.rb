@@ -9,6 +9,10 @@ describe User do
     Factory.build(:user).should be_valid
   end
 
+  it "guest should be valid when empty" do
+    User.new(:guest => true).should have(0).errors
+  end
+
   it "should require username" do
     Factory.build(:user, :username => '').should have(1).error_on(:username)
   end
