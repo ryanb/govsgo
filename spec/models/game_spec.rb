@@ -90,6 +90,7 @@ describe Game do
     @game.chosen_color = "black"
     @game.black_player.should == user
     @game.chosen_color.should == "black"
+    @game.current_player.should == user
     @game.black_player = nil
     @game.chosen_color = "white"
     @game.white_player.should == user

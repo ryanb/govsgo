@@ -99,7 +99,7 @@ class Game < ActiveRecord::Base
   def chosen_color=(color)
     color = %w[white black].sample if color.blank?
     case color
-    when "black" then self.black_player = creator
+    when "black" then self.black_player = self.current_player = creator
     when "white" then self.white_player = creator
     end
   end
