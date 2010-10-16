@@ -3,4 +3,5 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 config/database.yml
+config/private.yml
 db/schema.rb

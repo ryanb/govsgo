@@ -13,6 +13,12 @@ describe User do
     User.new(:guest => true).should have(0).errors
   end
 
+  it "guest should require password when updating" do
+    user = User.create!(:guest => true)
+    user.guest = false
+    user.should have(1).error_on(:password)
+  end
+
   it "should require username" do
     Factory.build(:user, :username => '').should have(1).error_on(:username)
   end

@@ -9,6 +9,16 @@ class GamesController < ApplicationController
   
   def new
     @game = Game.new
+    if params[:username]
+      @game.chosen_opponent = "user"
+      @game.opponent_username = params[:username]
+    else
+      @game.chosen_opponent = "gnugo"
+      @game.chosen_color = "black"
+    end
+    @game.komi = params[:komi] || 6.5
+    @game.handicap = params[:handicap] || 0
+    @game.board_size = params[:board_size] || 19
   end
   
   def create
