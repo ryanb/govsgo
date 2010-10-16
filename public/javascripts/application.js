@@ -23,6 +23,18 @@ $(function() {
       }
       return false;
     });
+    $("#first_move").click(function() {
+      while (current_move > 0) {
+        stepMove(-1);
+      }
+      return false;
+    });
+    $("#last_move").click(function() {
+      while (current_move < moves.length) {
+        stepMove(1);
+      }
+      return false;
+    });
     resetPollTimer();
     setTimeout(pollMoves, pollTimer);
   }
