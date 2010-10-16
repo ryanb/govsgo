@@ -29,28 +29,15 @@ namespace :deploy do
   desc "Symlink extra configs and folders."
   task :symlink_extras do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-    # run "ln -nfs #{shared_path}/config/app_config.yml #{release_path}/config/app_config.yml"
-    # run "ln -nfs #{shared_path}/config/session_secret.txt #{release_path}/config/session_secret.txt"
-    # run "ln -nfs #{shared_path}/assets #{release_path}/public/assets"
   end
 
   desc "Setup shared directory."
   task :setup_shared do
-    # run "mkdir #{shared_path}/assets"
-    # run "mkdir #{shared_path}/config"
-    # run "mkdir #{shared_path}/db"
-    # run "mkdir #{shared_path}/db/sphinx"
-    # put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
-    # put File.read("config/app_config.example.yml"), "#{shared_path}/config/app_config.yml"
-    # put File.read("config/session_secret.example.txt"), "#{shared_path}/config/session_secret.txt"
-    # puts "Now edit the config files and fill assets folder in #{shared_path}."
+    run "mkdir #{shared_path}/config"
+    put File.read("config/database.example.yml"), "#{shared_path}/config/database.yml"
+    puts "Now edit the config files in #{shared_path}."
   end
-  
-  # desc "Update the crontab file"
-  # task :update_crontab, :roles => :db do
-  #   run "cd #{release_path} && whenever --update-crontab #{application}"
-  # end
-  
+
   desc "Make sure there is something to deploy"
   task :check_revision, :roles => :web do
     unless `git rev-parse HEAD` == `git rev-parse origin/master`
@@ -65,4 +52,3 @@ before "deploy", "deploy:check_revision"
 after "deploy", "deploy:cleanup" # keeps only last 5 releases
 after "deploy:setup", "deploy:setup_shared"
 after "deploy:update_code", "deploy:symlink_extras"
-# after "deploy:symlink", "deploy:update_crontab"
