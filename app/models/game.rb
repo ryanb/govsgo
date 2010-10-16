@@ -77,9 +77,12 @@ class Game < ActiveRecord::Base
       engine.replay(moves)
       self.moves           = [ moves,
                                engine.move(:black, vertex),
-                               engine.move(:white) ].reject(&:blank?).join('-')
+                               engine.move(:white) ]
+                             .reject(&:blank?).join('-')
       self.black_positions = engine.positions(:black)
       self.white_positions = engine.positions(:white)
+      self.black_score     = engine.captures(:black)
+      self.white_score     = engine.captures(:white)
     end
   end
   

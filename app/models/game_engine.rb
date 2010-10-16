@@ -32,6 +32,10 @@ class GameEngine
     @gtp.list_stones(color).map { |v| sgf_point(v) }.join
   end
   
+  def captures(color)
+    @gtp.captures(color)
+  end
+  
   private
   
   def point(vertex)
@@ -43,6 +47,7 @@ class GameEngine
   end
   
   def gnugo_point(vertex)
+    return vertex if %w[PASS RESIGN].include? vertex
     point(vertex).to_gnugo(@board_size)
   end
   
