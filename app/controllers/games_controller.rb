@@ -12,9 +12,10 @@ class GamesController < ApplicationController
   end
   
   def create
-    @game = Game.new
-    @game.creator = current_user_or_guest
+    @game            = Game.new
+    @game.creator    = current_user_or_guest
     @game.attributes = params[:game]
+    @game.prepare
     if @game.save
       flash[:notice] = "Successfully created game."
       redirect_to @game

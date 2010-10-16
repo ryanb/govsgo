@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
                          with:      /\A(?:[a-s]{2})+(?:-(?:[a-s]{2})+)*\z/,
                          allow_nil: true
   
-  attr_accessible :komi, :handicap, :board_size
+  attr_accessible :komi, :handicap, :board_size, :chosen_color
   
   ##############
   ### Scopes ###
@@ -59,16 +59,57 @@ class Game < ActiveRecord::Base
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
   
+  def prepare
+    color = chosen_color.blank? ? %w[white black].sample : chosen_color
+    case color
+    when "black"
+      self.black_player = creator
+    when "white"
+      self.white_player = creator
+    end
+    if handicap.to_i.nonzero?
+      game_engine do |engine|
+        self.moves           = engine.move(:white)
+        self.black_positions = engine.positions(:black)
+        self.white_positions = engine.positions(:white)
+      end
+      self.current_player = black_player  # FIXME
+    else
+      self.current_player = black_player
+    end
+  end
+  
   def move(vertex)
-    GameEngine.run( boardsize: board_size,
-                    handicap:  handicap,
-                    komi:      komi ) do |engine|
+    game_engine do |engine|
       engine.replay(moves)
-      self.moves           = [ moves,
-                               engine.move(:black, vertex),
-                               engine.move(:white) ].reject(&:blank?).join('-')
-      self.black_positions = engine.positions(:black)
-      self.white_positions = engine.positions(:white)
+      played              = engine.move(:black, vertex)
+      self.current_player = next_player
+      if vertex == "RESIGN"
+        finish_game(engine.final_score)
+      elsif vertex == "PASS" and moves =~ /-\z/
+        self.moves = moves.blank? ? played : [moves, ""].join("-")
+        finish_game(engine.final_score)
+      else
+        self.moves           = moves.blank? ? played : [moves, played].join("-")
+        self.black_positions = engine.positions(:black)
+        self.white_positions = engine.positions(:white)
+        p self
+        response             = engine.move(:white)
+        self.current_player  = next_player
+        if response == "RESIGN"
+          finish_game(engine.final_score)
+        elsif response == "PASS" and vertex == "PASS"
+          self.moves = [moves, ""].join("-")
+          finish_game(engine.final_score)
+        else
+          self.moves           = [moves, response].join("-")
+          self.black_positions = engine.positions(:black)
+          self.white_positions = engine.positions(:white)
+          p self
+          self.black_score     = engine.captures(:black)
+          self.white_score     = engine.captures(:white)
+        end
+      end
     end
   end
   
@@ -76,19 +117,35 @@ class Game < ActiveRecord::Base
     moves.split('-')[index..-1].join('-') unless moves.nil?
   end
   
-  def chosen_color=(color)
-    color = %w[white black].sample if color.blank?
-    case color
-    when "black" then self.black_player = self.current_player = creator
-    when "white" then self.white_player = creator
+  def next_player
+    current_player == black_player ? white_player : black_player
+  end
+  
+  def finish_game(final_score)
+    self.finished_at = Time.now
+    if final_score =~ /\A([BW])\+(\d+\.\d+)\z/
+      send("#{$1 == 'B' ? :black_score : :white_score}=", $2.to_f)
+      send("#{$1 == 'B' ? :white_score : :black_score}=", 0)
+    else
+      raise "Unrecognized score format:  #{final_score}"
     end
   end
   
-  def chosen_color
-    if creator == black_player
-      "black"
-    elsif creator == white_player
-      "white"
+  def finished?
+    not finished_at.blank?
+  end
+  
+  def resigned?
+    finished? and moves =~ /-{2}\z/
+  end
+  
+  private
+  
+  def game_engine
+    GameEngine.run( boardsize: board_size,
+                    handicap:  handicap,
+                    komi:      komi ) do |engine|
+      yield engine
     end
   end
 end
