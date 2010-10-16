@@ -33,9 +33,9 @@ class GameEngine
   private
   
   def point(vertex)
-    args = [ ]
+    args = [vertex]
     if vertex =~ /\A[A-HJ-T](?:1\d|[1-9])\z/
-      args << {board_size: board_size}
+      args << {board_size: @board_size}
     end
     Go::GTP::Point.new(*args)
   end
