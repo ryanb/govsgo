@@ -93,3 +93,8 @@ a {
 #board .b {
   background-image: url(/images/simple_black_stone.png);
 }
+
+#user_nav {
+  float: right;
+  font-size: 12px;
+}
