@@ -3,42 +3,6 @@
 <%= form_for @game do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :black_player_id %><br />
-    <%= f.text_field :black_player_id %>
-  </p>
-  <p>
-    <%= f.label :white_player_id %><br />
-    <%= f.text_field :white_player_id %>
-  </p>
-  <p>
-    <%= f.label :current_player_id %><br />
-    <%= f.text_field :current_player_id %>
-  </p>
-  <p>
-    <%= f.label :black_score %><br />
-    <%= f.text_field :black_score %>
-  </p>
-  <p>
-    <%= f.label :white_score %><br />
-    <%= f.text_field :white_score %>
-  </p>
-  <p>
-    <%= f.label :black_positions %><br />
-    <%= f.text_area :black_positions %>
-  </p>
-  <p>
-    <%= f.label :white_positions %><br />
-    <%= f.text_area :white_positions %>
-  </p>
-  <p>
-    <%= f.label :moves %><br />
-    <%= f.text_area :moves %>
-  </p>
-  <p>
-    <%= f.label :valid_positions %><br />
-    <%= f.text_area :valid_positions %>
-  </p>
-  <p>
     <%= f.label :komi %><br />
     <%= f.text_field :komi %>
   </p>
@@ -49,18 +13,6 @@
   <p>
     <%= f.label :board_size %><br />
     <%= f.text_field :board_size %>
-  </p>
-  <p>
-    <%= f.label :last_move_at %><br />
-    <%= f.datetime_select :last_move_at %>
-  </p>
-  <p>
-    <%= f.label :started_at %><br />
-    <%= f.datetime_select :started_at %>
-  </p>
-  <p>
-    <%= f.label :finished_at %><br />
-    <%= f.datetime_select :finished_at %>
   </p>
   <p><%= f.submit %></p>
 <% end %>
