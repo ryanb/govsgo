@@ -20,6 +20,13 @@ class Game < ActiveRecord::Base
   
   attr_accessible :komi, :handicap, :board_size
   
+  ##############
+  ### Scopes ###
+  ##############
+  
+  scope :finished, where("finished_at is not null")
+  scope :active, where("finished_at is null")
+  
   ########################
   ### Instance Methods ###
   ########################
