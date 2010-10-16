@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
   validates_inclusion_of :handicap,   in: (0..9).to_a,     allow_nil: true
   validates_inclusion_of :komi,       in: [0.5, 5.5, 6.5], allow_nil: true
   validates_format_of    :moves,
-                         with:      /\A(?:[a-s]{2})+(?:-(?:[a-s]{2})+)*\z/,
+                         with:      /\A(?:-|[a-s]{2})*\z/,
                          allow_nil: true
   
   attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
@@ -63,6 +63,10 @@ class Game < ActiveRecord::Base
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
   
+  def valid_positions_list
+    valid_positions.to_s.scan(/[a-s]{2}/) + %w[PASS RESIGN]
+  end
+  
   def prepare
     color = chosen_color.blank? ? %w[white black].sample : chosen_color
     case color
@@ -74,6 +78,7 @@ class Game < ActiveRecord::Base
     if handicap.to_i.nonzero?
       game_engine do |engine|
         self.moves           = engine.move(:white)
+        self.valid_positions = engine.legal_moves(:black)
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
       end
@@ -85,20 +90,22 @@ class Game < ActiveRecord::Base
   
   def move(vertex)
     game_engine do |engine|
-      engine.replay(moves)
-      played              = engine.move(:black, vertex)
-      self.current_player = next_player
+      engine.replay(moves, first_color)
+      played               = engine.move(:black, vertex)
+      self.valid_positions = engine.legal_moves(:white)
+      self.current_player  = next_player
       if vertex == "RESIGN"
         finish_game(engine.final_score)
       elsif vertex == "PASS" and moves =~ /-\z/
         self.moves = moves.blank? ? played : [moves, ""].join("-")
         finish_game(engine.final_score)
       else
+        played               = "" if vertex == "PASS"
         self.moves           = moves.blank? ? played : [moves, played].join("-")
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
-        p self
         response             = engine.move(:white)
+        self.valid_positions = engine.legal_moves(:black)
         self.current_player  = next_player
         if response == "RESIGN"
           finish_game(engine.final_score)
@@ -106,10 +113,10 @@ class Game < ActiveRecord::Base
           self.moves = [moves, ""].join("-")
           finish_game(engine.final_score)
         else
+          response             = "" if response == "PASS"
           self.moves           = [moves, response].join("-")
           self.black_positions = engine.positions(:black)
           self.white_positions = engine.positions(:white)
-          p self
           self.black_score     = engine.captures(:black)
           self.white_score     = engine.captures(:white)
         end
@@ -119,6 +126,10 @@ class Game < ActiveRecord::Base
   
   def moves_after(index)
     (moves.to_s.split('-')[index..-1] || []).join('-')
+  end
+  
+  def first_color
+    handicap.to_i.nonzero? ? "white" : "black"
   end
   
   def next_player

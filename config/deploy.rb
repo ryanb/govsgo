@@ -1,19 +1,21 @@
 require "bundler/capistrano"
 
+default_run_options[:pty] = true
+
 set :application, "govsgo.com"
 role :app, application
 role :web, application
-role :db,  application, :primary => true
+role :db,  application, primary: true
 
-set :user, "deploy"
-set :deploy_to, "/var/apps/govsgo"
-set :deploy_via, :remote_cache
-set :use_sudo, false
-set :ssh_options, { :forward_agent => true }
+set :user,        "deploy"
+set :deploy_to,   "/var/apps/govsgo"
+set :deploy_via,  :remote_cache
+set :use_sudo,    false
+set :ssh_options, forward_agent: true
 
-set :scm, "git"
+set :scm,        "git"
 set :repository, "git@github.com:railsrumble/rr10-team-236.git"
-set :branch, "master"
+set :branch,     "master"
 
 namespace :deploy do
   desc "Tell Passenger to restart."
@@ -48,9 +50,21 @@ namespace :deploy do
       exit
     end
   end
+  
+  namespace :beanstalk do
+    desc "Start the beanstalkd queue server"
+    task :start do
+      sudo "/etc/init.d/beanstalkd start"
+    end
+
+    desc "Stop the beanstalkd queue server"
+    task :stop do
+      sudo "/etc/init.d/beanstalkd stop"
+    end
+  end
 end
 
-before "deploy", "deploy:check_revision"
-after "deploy", "deploy:cleanup" # keeps only last 5 releases
-after "deploy:setup", "deploy:setup_shared"
-after "deploy:update_code", "deploy:symlink_extras"
+before "deploy",             "deploy:check_revision"
+after  "deploy",             "deploy:cleanup" # keeps only last 5 releases
+after  "deploy:setup",       "deploy:setup_shared"
+after  "deploy:update_code", "deploy:symlink_extras"

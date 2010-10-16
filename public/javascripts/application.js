@@ -11,6 +11,14 @@ $(function() {
       $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
       // Show updating graphic here
     });
+    $("#play_pass").live("click", function() {
+      $.post(window.location.pathname + '/moves', {"move": "PASS", "after": moves.length}, null, "script");
+      // Show updating graphic here
+    });
+    $("#play_resign").live("click", function() {
+      $.post(window.location.pathname + '/moves', {"move": "RESIGN", "after": moves.length}, null, "script");
+      // Show updating graphic here
+    });
     $("#previous_move").click(function() {
       if (current_move > 0) {
         stepMove(-1);
