@@ -10,12 +10,16 @@
 </div>
 
 <p>
-  <%= link_to "First", '#', :id => "first_move" %>
-  <%= link_to "Previous", '#', :id => "previous_move" %>
-  <%= link_to "Next", '#', :id => "next_move" %>
-  <%= link_to "Last", '#', :id => "last_move" %>
+  <%= link_to "Pass",   '#', :id => "play_pass" %>
+  <%= link_to "Resign", '#', :id => "play_resign" %>
 </p>
 
+<p>
+  <%= link_to "First",    '#', :id => "first_move" %>
+  <%= link_to "Previous", '#', :id => "previous_move" %>
+  <%= link_to "Next",     '#', :id => "next_move" %>
+  <%= link_to "Last",     '#', :id => "last_move" %>
+</p>
 
 <% if current_user %>
   <h2>My Games</h2>

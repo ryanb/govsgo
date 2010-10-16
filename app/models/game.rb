@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
   validates_inclusion_of :handicap,   in: (0..9).to_a,     allow_nil: true
   validates_inclusion_of :komi,       in: [0.5, 5.5, 6.5], allow_nil: true
   validates_format_of    :moves,
-                         with:      /\A(?:[a-s]{2})+(?:-(?:[a-s]{2})+)*\z/,
+                         with:      /\A(?:-|[a-s]{2})*\z/,
                          allow_nil: true
   
   attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
@@ -60,7 +60,7 @@ class Game < ActiveRecord::Base
   end
   
   def valid_positions_list
-    valid_positions.to_s.scan(/[a-s]{2}/)
+    valid_positions.to_s.scan(/[a-s]{2}/) + %w[PASS RESIGN]
   end
   
   def prepare
@@ -96,6 +96,7 @@ class Game < ActiveRecord::Base
         self.moves = moves.blank? ? played : [moves, ""].join("-")
         finish_game(engine.final_score)
       else
+        played               = "" if vertex == "PASS"
         self.moves           = moves.blank? ? played : [moves, played].join("-")
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
@@ -108,6 +109,7 @@ class Game < ActiveRecord::Base
           self.moves = [moves, ""].join("-")
           finish_game(engine.final_score)
         else
+          response             = "" if response == "PASS"
           self.moves           = [moves, response].join("-")
           self.black_positions = engine.positions(:black)
           self.white_positions = engine.positions(:white)
