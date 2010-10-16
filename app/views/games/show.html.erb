@@ -1,7 +1,7 @@
 <% title "Game" %>
 
 <div id="board">
-<% for y in ('a'..'s').to_a.reverse %>
+<% for y in 'a'..'s' %>
   <% for x in 'a'..'s' %>
     <% vertex = x + y %>
     <div class="<%= color_at vertex %>" id="<%= vertex %>"></div>
