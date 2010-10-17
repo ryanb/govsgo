@@ -1,4 +1,11 @@
-/*** Sign In ***/
+#sign_up {
+  margin-left: 100px;
+}
+
+#login_page {
+  margin-left: 100px;
+  padding-bottom: 20px;
+}
 
 #sign_in {
   padding-left: 50px;

@@ -170,9 +170,9 @@ a {
 
 form label {
   float: left;
-  width: 150px;
+  width: 142px;
   text-align: right;
-  padding-right: 5px;
+  padding-right: 8px;
 }
 
 .field {
