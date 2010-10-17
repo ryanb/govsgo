@@ -1,7 +1,7 @@
 body {
   color: #FFF;
   background-color: #18242D;
-  background-image: url(/images/layout/background2.png);
+  background-image: url(/images/game/background.png);
 }
 
 #logo {
@@ -290,7 +290,7 @@ body {
 }
 
 #board.size_19 {
-  background-image: url(/images/game/board_19.png);
+  background-image: url(/images/game/19/board.png);
   width: 620px;
   height: 620px;
 }
@@ -322,11 +322,11 @@ body {
 }
 
 #board .w {
-  background-image: url(/images/game/white.png);
+  background-image: url(/images/game/19/white_stone.png);
 }
 
 #board .b {
-  background-image: url(/images/game/black.png);
+  background-image: url(/images/game/19/black_stone.png);
 }
 
 #user_nav {
