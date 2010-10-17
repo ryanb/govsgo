@@ -70,18 +70,35 @@ function addMoves(new_moves, next_payer) {
 function stepMove(step) {
   current_move += step;
   var offset = ($("#board").attr("data-handicap") > 0 ? 1 : 0)
-  var color = (current_move + offset) % 2 ? "b" : "w";
+  var color  = (current_move + offset) % 2 ? "b" : "w";
+  var move   = moves[step > 0 ? current_move-1 : current_move]
   $("#board .last").removeClass("last");
-  $.each(moves[step > 0 ? current_move-1 : current_move].match(/../g), function(index, position) {
-    if (index == 0) {
-      $("#" + position).attr("class", (step > 0 ? color : "e"));
-      if (current_move == moves.length) {
-        $("#" + position).addClass("last");
-      }
-    } else {
-      $("#" + position).attr("class", (step > 0 ? "e" : color));
-    }
-  });
+  if (move == "") {
+	if (step > 0) {
+	  if (color == "b") {
+	    alert("Black passed.")
+	  } else {
+	    alert("White passed.")
+	  }
+	} else {
+	  if (color == "b") {
+	    alert("White passed.")
+	  } else {
+	    alert("Black passed.")
+	  }
+	}
+  } else {
+	$.each(move.match(/../g), function(index, position) {
+	  if (index == 0) {
+	    $("#" + position).attr("class", (step > 0 ? color : "e"));
+	    if (current_move == moves.length) {
+	      $("#" + position).addClass("last");
+	    }
+	  } else {
+	    $("#" + position).attr("class", (step > 0 ? "e" : color));
+	  }
+	});
+  }
 }
 
 function startPolling() {
