@@ -14,8 +14,7 @@
       <%= link_to image_tag("layout/right_triangle.png", :size => "14x23") + " Click to Play a Game", new_game_path(:handicap => 4, :board_size => 9), :id => "click_to_play" %>
       <div id="screencast">
         <p>or watch a screencast</p>
-        <div class="screencast_placeholder">
-        </div>
+        <p><a href="http://media.railscasts.com/videos/govsgo.mov"><%= image_tag "screencast.png", :size => "259x278", :alt => "Watch the Screencast" %></a></p>
       </div>
     </div>
     
