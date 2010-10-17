@@ -163,6 +163,10 @@ class Game < ActiveRecord::Base
     (moves.to_s.split('-')[index..-1] || []).join('-')
   end
   
+  def last_move
+    moves.to_s.split("-").last[/\A[a-s]{2}/]
+  end
+  
   def first_color
     handicap.to_i.nonzero? ? "white" : "black"
   end
