@@ -196,3 +196,44 @@ form label {
 #footer a {
   color: #444;
 }
+
+
+/*** Games ***/
+
+.games .game {
+  position: relative;
+  width: 300px;
+  height: 76px;
+}
+
+.games .game .details {
+  position: absolute;
+  top: 10px;
+  left: 90px;
+}
+
+.games .game .player {
+  padding-top: 8px;
+  padding-left: 22px;
+}
+
+.games .game .black {
+  background: url(/images/game/small_black_stone.png) no-repeat 9px left;
+}
+
+.games .game .white {
+  background: url(/images/game/small_white_stone.png) no-repeat 9px left;
+}
+
+.games .game .thumbnail {
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  display: block;
+}
+
+.games .game .go_button {
+  position: absolute;
+  right: 15px;
+  top: 25px;
+}

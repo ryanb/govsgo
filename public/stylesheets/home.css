@@ -33,52 +33,13 @@
 
 #watch_games .game {
   float: left;
-  position: relative;
-  width: 300px;
-  height: 76px;
   margin-top: 10px;
   margin-right: 10px;
   background-color: #D6D4DC;
 }
 
 #watch_games .game .details {
-  position: absolute;
-  top: 10px;
-  left: 90px;
   color: #696969;
-}
-
-.game .player {
-  padding-top: 8px;
-  padding-left: 22px;
-}
-
-.game .black {
-  background: url(/images/game/small_black_stone.png) no-repeat 9px left;
-}
-
-.game .white {
-  background: url(/images/game/small_white_stone.png) no-repeat 9px left;
-}
-
-.game .thumbnail {
-  position: absolute;
-  width: 76px;
-  height: 76px;
-  display: block;
-}
-
-.game .watch {
-  font-size: 14px;
-  position: absolute;
-  right: 15px;
-  top: 25px;
-  color: #FFF;
-  text-decoration: none;
-  padding: 6px 10px;
-  background-color: #7B7DC7;
-  -moz-border-radius: 14px;
-  -webkit-border-radius: 14px;
 }
 
 #play {

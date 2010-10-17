@@ -19,18 +19,9 @@
       </div>
     </div>
     
-    <div id="watch_games">
+    <div id="watch_games" class="games">
       <h2>Watch a Game</h2>
-      <% for game in @games %>
-        <div class="game">
-          <%= link_to_game_thumbnail game %>
-          <div class="details">
-            <div class="player black"><%= game.black_player_name %></div>
-            <div class="player white"><%= game.white_player_name %></div>
-          </div>
-          <%= link_to "Go", game, :class => "watch" %>
-        </div>
-      <% end %>
+      <%= render @games %>
     </div>
     <div class="clear"></div>
   </div>
