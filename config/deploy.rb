@@ -61,6 +61,16 @@ namespace :deploy do
     task :stop do
       sudo "/etc/init.d/beanstalkd stop"
     end
+    
+    desc "Start workers"
+    task :start_workers do
+      sudo "RAILS_ENV=production #{release_path}/play_computer_moves"
+    end
+    
+    desc "Stop workers"
+    task :stop_workers do
+      sudo "RAILS_ENV=production #{release_path}/play_computer_moves stop"
+    end
   end
 end
 
