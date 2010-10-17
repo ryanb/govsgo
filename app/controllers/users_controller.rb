@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
     if session[:omniauth]
-      @user.apply_omniauth(omniauth)
+      @user.apply_omniauth(session[:omniauth])
       @user.valid?
     end
   end
