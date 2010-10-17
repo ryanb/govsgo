@@ -1,3 +1,35 @@
 <% title "Update Profile" %>
 
 <%= render 'form' %>
+
+<h2>Sign In Options</h2>
+
+<% unless current_user.authentications.empty? %>
+  <p><strong>You have signed in with these services:</strong></p>
+  <div class="authentications">
+    <% for authentication in current_user.authentications %>
+      <div class="authentication">
+        <%= image_tag "auth/#{authentication.provider}_32.png", :size => "32x32" %>
+        <div class="provider"><%= authentication.provider_name %></div>
+        <div class="uid"><%= authentication.uid %></div>
+        <%= link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
+      </div>
+    <% end %>
+    <div class="clear"></div>
+  </div>
+<% end %>
+<p><strong>Add another service to sign in with:</strong></p>
+
+<a href="/auth/twitter" class="auth_provider">
+  <%= image_tag "auth/twitter_64.png", :size => "64x64", :alt => "Twitter" %>
+  Twitter
+</a>
+<a href="/auth/facebook" class="auth_provider">
+  <%= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook" %>
+  Facebook
+</a>
+<a href="/auth/open_id" class="auth_provider">
+  <%= image_tag "auth/open_id_64.png", :size => "64x64", :alt => "OpenID" %>
+  OpenID
+</a>
+<div class="clear"></div>
