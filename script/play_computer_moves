@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 NAME       = File.basename($PROGRAM_NAME)
+RAILS_ENV  = ENV.fetch("RAILS_ENV", "development")
 RAILS_ROOT = File.join(File.dirname(__FILE__), "..")
 SCRIPT_DIR = File.join(RAILS_ROOT,             "script")
 LOG_FILE   = File.join(RAILS_ROOT,             *%W[log #{NAME}.log])
@@ -22,5 +23,6 @@ else
   puts "Starting computer player (#{Process.pid})..."
   ENV["RUBYLIB"]     = File.expand_path(SCRIPT_DIR)
   ENV["WORKER_NAME"] = NAME
-  exec("stalk worker Game.move >>#{LOG_FILE} 2>&1")
+  stalk = "#{'/usr/local/ruby/bin/' if RAILS_ENV != 'development'}stalk"
+  exec("#{stalk} worker Game.move >>#{LOG_FILE} 2>&1")
 end

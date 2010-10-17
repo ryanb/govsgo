@@ -62,7 +62,7 @@ def daemonize
   exit!(0) if fork
   Process.setsid
   exit!(0) if fork
-  Dir.chroot(RAILS_ROOT)
+  Dir.chroot("/")
   File.umask(0000)
   $stdin.reopen("/dev/null")
   true
@@ -71,7 +71,7 @@ rescue Exception # if anything goes wrong
 end
 
 unless authorize { RAILS_ENV == "development" or daemonize }
-  abort "Computer player or failed to daemonize already running"
+  abort "Computer player is already running or failed to daemonize"
 end
 
 ############
