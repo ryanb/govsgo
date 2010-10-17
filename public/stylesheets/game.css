@@ -389,3 +389,7 @@ body {
 #new_game {
   padding: 30px 50px;
 }
+
+#new_game a {
+  color: #FFF;
+}
