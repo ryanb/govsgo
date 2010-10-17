@@ -1,21 +1,27 @@
-var moves = new Array();
-var current_move = 0;
-var pollTimer = null;
+var moves          = new Array();
+var current_move   = 0;
+var current_user   = null;
+var current_player = null;
+var pollTimer      = null;
 $(function() {
   if ($("#board").length > 0) {
     if ($("#board").attr("data-moves").length != "") {
       moves = $("#board").attr("data-moves").split("-");
     }
-    current_move = moves.length;
+    current_move   = moves.length;
+    current_user   = $("#board").attr("data-current-user");
+    current_player = $("#board").attr("data-current-player");
     $("#board .e").live("click", function() {
-      $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
+	  if (current_user == current_player) {
+	    $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
+      }
       // Show updating graphic here
     });
-    $("#play_pass").live("click", function() {
+    $("#play_pass").click(function() {
       $.post(window.location.pathname + '/moves', {"move": "PASS", "after": moves.length}, null, "script");
       // Show updating graphic here
     });
-    $("#play_resign").live("click", function() {
+    $("#play_resign").click(function() {
       $.post(window.location.pathname + '/moves', {"move": "RESIGN", "after": moves.length}, null, "script");
       // Show updating graphic here
     });
@@ -43,21 +49,22 @@ $(function() {
       }
       return false;
     });
-    resetPollTimer();
-    setTimeout(pollMoves, pollTimer);
+    startPolling();
   }
   $("#game_opponent_username").focus(function() {
 	$("#game_chosen_opponent_user").attr("checked", "checked");
   });
 });
 
-function addMoves(new_moves) {
+function addMoves(new_moves, next_payer) {
   $.each(new_moves.split("-"), function(index, move) {
     moves.push(move);
     if (current_move == moves.length-1) {
       stepMove(1);
     }
   });
+  current_player = next_payer;
+  startPolling();
 }
 
 function stepMove(step) {
@@ -73,13 +80,20 @@ function stepMove(step) {
   });
 }
 
+function startPolling() {
+  if (current_user != current_player) {
+    resetPollTimer();
+    setTimeout(pollMoves, pollTimer);
+  }
+}
+
 function pollMoves() {
   // Slow down polling until it's 30 seconds apart
   if (pollTimer < 30000) {
     pollTimer += 1000;
   }
   $.getScript(window.location.pathname + '/moves?after=' + moves.length);
-  setTimeout(pollMoves, pollTimer);
+  // setTimeout(pollMoves, pollTimer);
 }
 
 function resetPollTimer() {

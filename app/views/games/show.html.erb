@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div id="board" class="size_<%= @game.board_size %>" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>">
+    <div id="board" class="size_<%= @game.board_size %>" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>" data-current-player="<%= @game.current_player_id.to_i %>" data-current-user="<%= current_user && current_user.id %>">
       <div id="board_spaces">
       <% for y in ('a'..'s').first(@game.board_size) %>
         <% for x in ('a'..'s').first(@game.board_size) %>

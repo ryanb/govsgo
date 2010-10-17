@@ -1,4 +1,6 @@
-<% unless @moves.blank? %>
-addMoves("<%= @moves %>");
+<% if @moves.blank? %>
+setTimeout(pollMoves, pollTimer);
+<% else %>
+addMoves("<%= @moves %>", "<%= @game.current_player_id.to_i %>");
 resetPollTimer();
 <% end %>
