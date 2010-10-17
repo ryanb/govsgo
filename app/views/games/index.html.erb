@@ -23,7 +23,7 @@
       <h2>Watch a Game</h2>
       <% for game in @games %>
         <div class="game">
-          <div class="thumbnail"></div>
+          <%= link_to image_tag("thumbnail/19/board.png", :size => "76x76"), game, :class => "thumbnail" %>
           <div class="details">
             <div class="player">Foobar 4k</div>
             <div class="player">Testing 4k</div>
