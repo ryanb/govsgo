@@ -194,11 +194,11 @@ class Game < ActiveRecord::Base
   end
   
   def black_player_name
-    black_player ? black_player.username : "GNU Go"
+    profile_for(:black).name
   end
   
   def white_player_name
-    white_player ? white_player.username : "GNU Go"
+    profile_for(:white).name
   end
   
   def update_thumbnail
@@ -210,6 +210,22 @@ class Game < ActiveRecord::Base
                           white_positions_list
                           .map { |ln| Go::GTP::Point.new(ln).to_indices } )
     end
+  end
+  
+  def profile_for(color)
+    Profile.new(color).tap do |profile|
+      if color == :white
+        profile.handicap_or_komi = "#{komi} komi"
+      else
+        profile.handicap_or_komi = "#{handicap} handicap"
+      end
+      profile.score = send("#{color}_score")
+      profile.user = send("#{color}_player")
+    end
+  end
+  
+  def profiles
+    [profile_for(:white), profile_for(:black)]
   end
   
   private

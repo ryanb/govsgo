@@ -1,0 +1,9 @@
+<%= image_tag "game/bowl_#{profile.color}.png", :class => "bowl" %>
+<%= image_tag "game/lid_#{profile.color}.png", :class => "lid" %>
+<div class="profile">
+  <div class="details">
+    <div class="name"><%= profile.name %> as <%= profile.color.to_s.titleize %></div>
+    <div class="komi_or_handicap"><%= profile.handicap_or_komi %></div>
+    <div class="score"><%= profile.score %></div>
+  </div>
+</div>

@@ -26,18 +26,7 @@
     </div>
   </div>
   <div id="game_area">
-    <div id="top_player" class="player">
-      <%= image_tag "game/bowl_white.png", :class => "bowl" %>
-      <%= image_tag "game/lid_white.png", :class => "lid" %>
-      <div class="profile">
-        <div class="avatar"></div>
-        <div class="details">
-          <div class="name">Foo 4k</div>
-          <div class="komi">6.5 Komi</div>
-          <div class="captures">3 captured</div>
-        </div>
-      </div>
-    </div>
+    <div id="top_player" class="player"><%= render "profile", :profile => @profiles.first %></div>
     <div id="board" class="size_<%= @game.board_size %>" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>">
       <div id="board_spaces">
       <% for y in ('a'..'s').first(@game.board_size) %>
@@ -54,18 +43,7 @@
       <%= link_to ">", '#', :id => "next_move" %>
       <%= link_to ">>", '#', :id => "last_move" %>
     </div>
-    <div id="bottom_player" class="player">
-      <%= image_tag "game/bowl_black.png", :class => "bowl" %>
-      <%= image_tag "game/lid_black.png", :class => "lid" %>
-      <div class="profile">
-        <div class="avatar"></div>
-        <div class="details">
-          <div class="name">Foo 4k</div>
-          <div class="handicap">No Handicap</div>
-          <div class="captures">3 captured</div>
-        </div>
-      </div>
-    </div>
+    <div id="bottom_player" class="player"><%= render "profile", :profile => @profiles.last %></div>
     <div id="player_actions">
       <%= link_to "Pass",   '#', :id => "play_pass" %>
       <%= link_to "Resign", '#', :id => "play_resign" %>
