@@ -36,6 +36,7 @@ class Game < ActiveRecord::Base
   
   scope :finished, where("finished_at is not null")
   scope :active,   where("finished_at is null")
+  scope :recent,   order("updated_at desc")
   
   ########################
   ### Instance Methods ###
