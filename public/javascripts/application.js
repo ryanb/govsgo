@@ -56,14 +56,16 @@ $(function() {
   });
 });
 
-function addMoves(new_moves, next_payer) {
+function addMoves(new_moves, next_player) {
+  $('.profile .details .turn').hide();
+  $('.profile .details #turn_' + next_player).show();
   $.each(new_moves.split("-"), function(index, move) {
     moves.push(move);
     if (current_move == moves.length-1) {
       stepMove(1);
     }
   });
-  current_player = next_payer;
+  current_player = next_player;
   startPolling();
 }
 

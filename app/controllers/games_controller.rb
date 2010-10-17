@@ -4,7 +4,7 @@ class GamesController < ApplicationController
   end
   
   def show
-    @game = Game.find(params[:id])
+    @game     = Game.find(params[:id])
     @profiles = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
   end
