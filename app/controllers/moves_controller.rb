@@ -1,6 +1,6 @@
 class MovesController < ApplicationController
   def index
-    @game = Game.find(params[:game_id])
+    @game  = Game.find(params[:game_id])
     @moves = @game.moves_after(params[:after].to_i)
   end
   
