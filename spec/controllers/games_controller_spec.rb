@@ -26,6 +26,7 @@ describe GamesController do
   end
 
   it "create action should redirect when model is valid" do
+    Game.any_instance.expects(:queue_computer_move)
     Game.any_instance.stubs(:valid?).returns(true)
     post :create
     response.should redirect_to(game_url(assigns[:game]))

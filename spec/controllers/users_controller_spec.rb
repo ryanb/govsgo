@@ -9,6 +9,12 @@ describe UsersController do
     response.should render_template(:new)
   end
 
+  it "new action should redirect to login when email exists" do
+    user = Factory(:user)
+    get :new, :email => user.email
+    response.should redirect_to(login_url(:email => user.email))
+  end
+
   it "create action should render new template when model is invalid" do
     User.any_instance.stubs(:valid?).returns(false)
     post :create

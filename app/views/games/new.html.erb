@@ -64,26 +64,26 @@
         <strong>Play against:</strong><br />
         <%= f.radio_button :chosen_opponent, "gnugo" %> Computer (GNU Go)<br />
         <%= f.radio_button :chosen_opponent, "user" %> Username:
-        <%= f.text_field :opponent_username %><br />
+        <%= f.text_field :opponent_username %>
       </p>
       <% end %>
       <p>
-        <%= f.label :chosen_color, "Play as" %><br />
+        <%= f.label :chosen_color, "Play as" %>
         <%= f.select :chosen_color, [["Random", ""], ["Black", "black"], ["White", "white"]] %>
       </p>
       <p>
-        <%= f.label :handicap %><br />
+        <%= f.label :handicap %>
         <%= f.select :handicap, [0, 2, 3, 4, 5, 6, 7, 8, 9] %>
       </p>
       <p>
-        <%= f.label :board_size %><br />
+        <%= f.label :board_size %>
         <%= f.select :board_size, [["19 x 19", 19], ["13 x 13", 13], ["9 x 9", 9]] %>
       </p>
       <p>
-        <%= f.label :komi %><br />
+        <%= f.label :komi %>
         <%= f.select :komi, [0.5, 5.5, 6.5] %>
       </p>
-      <p><%= f.submit "Start Game" %></p>
+      <p class="field"><%= f.submit "Start Game" %></p>
     <% end %>
     </div>
     <div id="board" class="size_19" data-moves="" data-handicap="">

@@ -1,22 +1,22 @@
 <%= form_for @user do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :username %><br />
+    <%= f.label :username %>
     <%= f.text_field :username %>
   </p>
   <p>
-    <%= f.label :email, "Email Address" %><br />
+    <%= f.label :email, "Email Address" %>
     <%= f.text_field :email %>
   </p>
   <% unless session[:omniauth] %>
   <p>
-    <%= f.label :password %><br />
+    <%= f.label :password %>
     <%= f.password_field :password %>
   </p>
   <p>
-    <%= f.label :password_confirmation, "Confirm Password" %><br />
+    <%= f.label :password_confirmation, "Confirm Password" %>
     <%= f.password_field :password_confirmation %>
   </p>
   <% end %>
-  <p><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
+  <p class="field"><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
 <% end %>

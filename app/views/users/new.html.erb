@@ -1,5 +1,10 @@
 <% title "Sign up" %>
+<% stylesheet "authentication" %>
 
-<p>Already have an account? <%= link_to "Log in", login_path %>.</p>
-
-<%= render 'form' %>
+<div id="container" class="two_stones">
+  <div id="sign_up">
+    <h2 class="field">Sign Up</h2>
+    <p class="field">Already have an account? <%= link_to "Log in", login_path %>.</p>
+    <%= render 'form' %>
+  </div>
+</div>

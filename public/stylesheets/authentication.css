@@ -1,0 +1,103 @@
+#sign_up {
+  margin-left: 100px;
+}
+
+#login_page {
+  margin-left: 100px;
+  padding-bottom: 20px;
+}
+
+#sign_in {
+  padding-left: 50px;
+}
+
+#sign_in h2 {
+  width: 340px;
+  font-size: 22px;
+}
+
+#sign_in h3 {
+  font-size: 18px;
+}
+
+
+/*** Update Profile ***/
+
+#update_profile {
+  float: left;
+  margin-left: 50px;
+}
+
+#authentications {
+  margin-left: 500px;
+}
+
+#container {
+  padding: 30px 0;
+}
+
+
+
+/*** Authentications ***/
+
+.authentications {
+  margin-bottom: 30px;
+}
+
+.authentication {
+  width: 240px;
+  background-color: #A09B96;
+  padding: 7px 15px;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
+  position: relative;
+  margin-bottom: 10px;
+  color: #F7F7F7;
+}
+
+.authentication .remove {
+  text-decoration: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: #FFF;
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+.authentication .remove:hover {
+  color: #000;
+  background-color: #DFDFDF;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+}
+
+.authentication img {
+  float: left;
+}
+
+.authentication .provider, .authentication .uid {
+  margin-left: 38px;
+  margin-right: 20px;
+}
+
+.authentication .provider {
+  font-weight: bold;
+}
+
+.authentication .uid {
+  color: #DDD;
+  font-size: 11px;
+}
+
+.auth_provider img {
+  display: block;
+}
+
+.auth_provider {
+  float: left;
+  text-decoration: none;
+  margin-right: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}

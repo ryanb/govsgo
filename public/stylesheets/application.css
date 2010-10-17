@@ -5,6 +5,7 @@ body {
   background-color: #B3B3B6;
   color: #858585;
   font-size: 13px;
+  background-image: url(/images/layout/background5.png);
 }
 
 a img {
@@ -22,18 +23,17 @@ a {
 }
 
 #flash_notice, #flash_error, #flash_alert {
-  padding: 5px 8px;
-  margin: 10px 0;
+  padding: 6px 50px;
+  margin-top: 10px;
+  color: #FFF;
 }
 
 #flash_notice {
-  background-color: #CFC;
-  border: solid 1px #6C6;
+  background-color: #1D5222;
 }
 
 #flash_error, #flash_alert {
-  background-color: #FCC;
-  border: solid 1px #C66;
+  background-color: #9D1A1C;
 }
 
 .fieldWithErrors {
@@ -41,23 +41,24 @@ a {
 }
 
 .error_messages {
-  width: 400px;
-  border: 2px solid #CF0000;
+  width: 360px;
   padding: 0px;
-  padding-bottom: 12px;
+  padding: 15px 20px;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
+  background-color: #B72128;
+  -moz-border-radius: 8px;
+  -webkit-border-radius: 8px;
   font-size: 12px;
+  color: #FFF;
 }
 
-.error_messages h2 {
+#container .error_messages h2 {
   text-align: left;
   font-weight: bold;
   padding: 5px 10px;
   font-size: 12px;
   margin: 0;
-  background-color: #c00;
-  color: #fff;
+  color: #FFF;
 }
 
 .error_messages p {
@@ -153,71 +154,34 @@ a {
   background: -moz-linear-gradient(center bottom, #AB684F 0%, #0F0806 100%);
 }
 
-
-
-/*** Authentications ***/
-
-.authentications {
-  margin-bottom: 30px;
+#container {
+  background-color: #F5F1F9;
 }
 
-.authentication {
+#container.two_stones {
+  background: #F5F1F9 url(/images/home/two_stones.png) top right no-repeat;
+}
+
+#container h2, #container h3 {
+  color: #979797;
+}
+
+
+/*** Forms ***/
+
+form label {
   float: left;
-  background-color: #EEE;
-  border: solid 1px #999;
-  padding: 5px 10px;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  position: relative;
-  margin-right: 10px;
+  width: 142px;
+  text-align: right;
+  padding-right: 8px;
 }
 
-.authentication .remove {
-  text-decoration: none;
-  position: absolute;
-  top: 3px;
-  right: 3px;
-  color: #333;
-  padding: 2px 4px;
-  font-size: 10px;
+.field {
+  margin-left: 150px;
 }
 
-.authentication .remove:hover {
-  color: #FFF;
-  background-color: #777;
-  -moz-border-radius: 7px;
-  -webkit-border-radius: 7px;
-}
 
-.authentication img {
-  float: left;
-}
-
-.authentication .provider, .authentication .uid {
-  margin-left: 38px;
-  margin-right: 20px;
-}
-
-.authentication .provider {
-  font-weight: bold;
-}
-
-.authentication .uid {
-  color: #666;
-  font-size: 11px;
-}
-
-.auth_provider img {
-  display: block;
-}
-
-.auth_provider {
-  float: left;
-  text-decoration: none;
-  margin-right: 20px;
-  text-align: center;
-  margin-bottom: 10px;
-}
+/*** Footer ***/
 
 #footer {
   clear: both;

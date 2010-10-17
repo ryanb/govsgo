@@ -1,5 +1,4 @@
 #container {
-  background: #F5F1F9 url(/images/home/two_stones.png) top right no-repeat;
   position: relative;
 }
 
@@ -12,7 +11,6 @@
 }
 
 #welcome h2 {
-  color: #979797;
   font-size: 25px;
 }
 
@@ -61,15 +59,16 @@
 }
 
 .game .watch {
+  font-size: 14px;
   position: absolute;
   right: 15px;
-  top: 20px;
+  top: 18px;
   color: #FFF;
   text-decoration: none;
   padding: 6px 10px;
   background-color: #7B7DC7;
-  -moz-border-radius: 12px;
-  -webkit-border-radius: 12px;
+  -moz-border-radius: 14px;
+  -webkit-border-radius: 14px;
 }
 
 #play {

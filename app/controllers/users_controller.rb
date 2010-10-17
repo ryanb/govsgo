@@ -2,6 +2,9 @@ class UsersController < ApplicationController
   before_filter :login_required, :except => [:new, :create]
 
   def new
+    if params[:email] && User.find_by_email(params[:email])
+      redirect_to login_url(:email => params[:email])
+    end
     @user = User.new
   end
 
@@ -19,7 +22,7 @@ class UsersController < ApplicationController
   def edit
     @user = current_user
     if session[:omniauth]
-      @user.apply_omniauth(omniauth)
+      @user.apply_omniauth(session[:omniauth])
       @user.valid?
     end
   end
