@@ -12,7 +12,13 @@ describe UsersController do
   it "new action should redirect to login when email exists" do
     user = Factory(:user)
     get :new, :email => user.email
-    response.should redirect_to(login_url(:email => user.email))
+    response.should redirect_to(login_url(:login => user.email))
+  end
+
+  it "new action should redirect to edit account page with email address when already logged in" do
+    @controller.stubs(:current_user).returns(Factory(:user))
+    get :new, :email => "foo"
+    response.should redirect_to(edit_current_user_url(:email => "foo"))
   end
 
   it "create action should render new template when model is invalid" do

@@ -2,10 +2,15 @@ class UsersController < ApplicationController
   before_filter :login_required, :except => [:new, :create]
 
   def new
-    if params[:email] && User.find_by_email(params[:email])
-      redirect_to login_url(:email => params[:email])
+    if params[:email]
+      if logged_in?
+        redirect_to edit_current_user_url(:email => params[:email])
+      elsif User.find_by_email(params[:email])
+        flash[:notice] = "It appears you already have an account, please login below."
+        redirect_to login_url(:login => params[:email])
+      end
     end
-    @user = User.new
+    @user = User.new(:email => params[:email])
   end
 
   def create
@@ -21,6 +26,9 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    if params[:email]
+      @user.email = params[:email]
+    end
     if session[:omniauth]
       @user.apply_omniauth(session[:omniauth])
       @user.valid?
