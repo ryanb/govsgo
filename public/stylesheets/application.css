@@ -5,7 +5,7 @@ body {
   background-color: #B3B3B6;
   color: #858585;
   font-size: 13px;
-  background-image: url(/images/layout/background5.png);
+  background-image: url(/images/layout/background.png);
 }
 
 a img {
@@ -147,7 +147,7 @@ a {
 }
 
 #container.two_stones {
-  background: #F5F1F9 url(/images/home/two_stones.png) top right no-repeat;
+  background: #F5F1F9 url(/images/layout/two_stones.png) top right no-repeat;
 }
 
 #container h2, #container h3 {
