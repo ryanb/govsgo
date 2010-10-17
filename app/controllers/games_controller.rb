@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
   before_filter :login_required, :only => :my
-  before_filter :fetch_games, :only => [:index, :show, :other, :my]
+  before_filter :fetch_games, :only => [:index, :show, :other, :my, :new]
   
   def index
     @other_games_limit = @my_games.blank? ? 8 : 4
@@ -28,6 +28,8 @@ class GamesController < ApplicationController
     @game.komi       = params[:komi]       || 6.5
     @game.handicap   = params[:handicap]   || 0
     @game.board_size = params[:board_size] || 19
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
   end
   
   def create
@@ -40,6 +42,9 @@ class GamesController < ApplicationController
       flash[:notice] = "Successfully created game."
       redirect_to @game
     else
+      fetch_games
+      @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+      @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
       render :action => 'new'
     end
   end
