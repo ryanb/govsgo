@@ -8,9 +8,9 @@
     <%= yield(:head) %>
   </head>
   <body>
-    <a href="/" id="logo"><img src="/images/layout/logo.png" width="282" height="112" alt="Go vs Go" /></a>
+    <a href="/" id="logo"><img src="/images/layout/logo2.png" width="241" height="96" alt="Go vs Go" /></a>
     <ul id="nav">
-      <li class="banner blue"><%= link_to "Start a Game" %></li>
+      <li class="banner blue"><%= link_to "Play a Game" %></li>
       <li class="gap"></li>
       <li class="banner purple"><%= link_to "What is Go?" %></li>
       <li class="gap"></li>
@@ -20,27 +20,12 @@
       <div class="clear">
     </ul>
     <div class="clear"></div>
-    <!-- <div id="container">
-      <div id="user_nav">
-        <% if logged_in? %>
-          <% if current_user.guest? %>
-            Currently logged in as a guest.
-            Please <%= link_to "setup your account", edit_current_user_path %> to save your games.
-          <% else %>
-            Welcome <%= current_user.username %>.
-            <%= link_to "Edit profile", edit_current_user_path %> or
-            <%= link_to "Log out", logout_path %>
-          <% end %>
-        <% else %>
-          <%= link_to "Sign up", signup_path %> or
-          <%= link_to "Log in", login_path %>.
-        <% end %>
-      </div> -->
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
-      <% end %>
-      <%= content_tag :h1, yield(:title) if show_title? %>
-      <%= yield %>
-    <!-- </div> -->
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
+    <%= yield %>
+    <div id="footer">
+      <p>This site was created by <%= link_to "Ryan Bates", "http://railscasts.com" %>, <%= link_to "Phil Bates", "http://www.prbates.com" %> and <%= link_to "James Edward Gray II", "http://blog.grayproductions.net/" %> for <%= link_to "Rails Rumble 2010", "http://r20.railsrumble.com/" %></p>
+    </div>
   </body>
 </html>

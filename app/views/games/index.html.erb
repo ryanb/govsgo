@@ -1,7 +1,37 @@
 <% title "Games" %>
+<% stylesheet "home" %>
 
-<% for game in @games %>
-  <h2><%= link_to "Game ##{game.id}", game %></h2>
-<% end %>
-
-<p><%= link_to "New Game", new_game_path %></p>
+<div id="container">
+  
+  <div id="welcome">
+    <h2>Welcome</h2>
+    <p>Go is a board game invented in China more than 4,000 years ago. It is more popular in the far East than Chess in the West. The rules are simple but mastering the game can take a lifetime.</p>
+    <p>We invite you to try a game against the computer or online with a real person!</p>
+  </div>
+  
+  <div id="games">
+    <div id="play">
+      <%= link_to image_tag("home/right_triangle.png", :size => "14x23") + " Click to Play a Game", new_game_path, :id => "click_to_play" %>
+      <div id="screencast">
+        <p>or watch a screencast</p>
+        <div class="screencast_placeholder">
+        </div>
+      </div>
+    </div>
+    
+    <div id="watch_games">
+      <h2>Watch a Game</h2>
+      <% for game in @games %>
+        <div class="game">
+          <div class="thumbnail"></div>
+          <div class="details">
+            <div class="player">Foobar 4k</div>
+            <div class="player">Testing 4k</div>
+          </div>
+          <%= link_to "Watch", game, :class => "watch" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>

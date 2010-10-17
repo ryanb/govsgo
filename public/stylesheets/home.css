@@ -1,0 +1,108 @@
+#container {
+  background: #F5F1F9 url(/images/home/two_stones.png) top right no-repeat;
+  position: relative;
+}
+
+#welcome {
+  line-height: 24px;
+  position: absolute;
+  top: 50px;
+  left: 55px;
+  width: 390px;
+}
+
+#welcome h2 {
+  color: #979797;
+  font-size: 25px;
+}
+
+#games {
+  padding-top: 350px;
+  padding-bottom: 30px;
+}
+
+#watch_games {
+  margin-left: 375px;
+}
+
+#watch_games h2 {
+  font-size: 22px;
+  background-color: #A3A4A5;
+  color: #FFF;
+  padding: 8px 10px;
+  margin: 0;
+}
+
+#watch_games .game {
+  float: left;
+  position: relative;
+  width: 270px;
+  height: 64px;
+  margin-top: 10px;
+  margin-right: 10px;
+  background-color: #D6D4DC;
+}
+
+#watch_games .game .details {
+  position: absolute;
+  top: 4px;
+  left: 80px;
+}
+
+.game .player {
+  padding-top: 8px;
+}
+
+.game .thumbnail {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  background-color: #CBA162;
+}
+
+.game .watch {
+  position: absolute;
+  right: 15px;
+  top: 20px;
+  color: #FFF;
+  text-decoration: none;
+  padding: 6px 10px;
+  background-color: #7B7DC7;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+}
+
+#play {
+  float: left;
+  width: 350px;
+}
+
+#click_to_play {
+  background-color: #7B7DC7;
+  font-size: 22px;
+  color: #FFF;
+  padding: 8px 15px;
+  text-decoration: none;
+  display: block;
+  font-weight: bold;
+  text-align: right;
+}
+
+#click_to_play img {
+  vertical-align: top;
+  padding-top: 1px;
+  padding-right: 3px;
+}
+
+#screencast {
+  text-align: center;
+  padding-top: 15px;
+}
+
+.screencast_placeholder {
+  background-color: #CCC;
+  border: solid 1px #999;
+  width: 280px;
+  height: 220px;
+  margin: 0 auto;
+}
