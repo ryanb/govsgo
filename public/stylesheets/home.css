@@ -45,15 +45,43 @@
   margin-right: 20px;
 }
 
-#other_games.full {
+.full #other_games {
   float: none;
   margin-right: 0;
 }
 
-#other_games.full .game {
+.full #other_games .game {
   float: left;
   margin-right: 10px;
 }
+
+.full .pagination {
+  clear: both;
+}
+
+.games .pagination {
+  margin: 10px 0;
+  text-align: center;
+  color: #777;
+}
+
+.games .pagination a {
+  color: #777;
+  text-decoration: none;
+  background-color: #D5D5D5;
+  padding: 4px 8px;
+  margin: 0 8px;
+  font-size: 14px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+.games .pagination a:hover {
+  color: #FFF;
+  background-color: #444;
+}
+
+
 
 #play {
   float: left;

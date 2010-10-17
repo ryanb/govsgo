@@ -1,10 +1,17 @@
 class GamesController < ApplicationController
-  before_filter :fetch_games, :only => [:index, :show]
+  before_filter :login_required, :only => :my
+  before_filter :fetch_games, :only => [:index, :show, :other, :my]
+  
   def index
+    @other_games_limit = @my_games.blank? ? 8 : 4
+    @other_games = @other_games.paginate(:page => 1, :per_page => @other_games_limit)
+    @my_games = @my_games.paginate(:page => 1, :per_page => 4) if @my_games
   end
   
   def show
     @game = Game.find(params[:id])
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
     @profiles = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
   end
@@ -35,6 +42,14 @@ class GamesController < ApplicationController
     else
       render :action => 'new'
     end
+  end
+  
+  def other
+    @other_games = @other_games.paginate(:page => params[:page], :per_page => params[:per_page])
+  end
+  
+  def my
+    @my_games = @my_games.paginate(:page => params[:page], :per_page => params[:per_page])
   end
   
   private

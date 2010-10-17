@@ -4,6 +4,11 @@ var current_user   = null;
 var current_player = null;
 var pollTimer      = null;
 $(function() {
+  $(".pagination a").live("click", function() {
+    $.getScript(this.href);
+    return false;
+  });
+  
   if ($("#board").length > 0) {
     if ($("#board").attr("data-moves").length != "") {
       moves = $("#board").attr("data-moves").split("-");
