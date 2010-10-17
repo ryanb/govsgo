@@ -3,9 +3,9 @@ class UsersController < ApplicationController
 
   def new
     if params[:email] && User.find_by_email(params[:email])
-      redirect_to login_url(:email => params[:email])
+      redirect_to login_url(email: params[:email])
     end
-    @user = User.new
+    @user = User.new(email: params[:email])
   end
 
   def create
