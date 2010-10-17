@@ -291,6 +291,30 @@ body {
   background-image: url(/images/game/9/black_stone.png);
 }
 
+#board.size_19 .w.last {
+  background-image: url(/images/game/19/last_white_stone.png);
+}
+
+#board.size_19 .b.last {
+  background-image: url(/images/game/19/last_black_stone.png);
+}
+
+#board.size_13 .w.last {
+  background-image: url(/images/game/13/last_white_stone.png);
+}
+
+#board.size_13 .b.last {
+  background-image: url(/images/game/13/last_black_stone.png);
+}
+
+#board.size_9 .w.last {
+  background-image: url(/images/game/9/last_white_stone.png);
+}
+
+#board.size_9 .b.last {
+  background-image: url(/images/game/9/last_black_stone.png);
+}
+
 #user_nav {
   float: right;
   font-size: 12px;
