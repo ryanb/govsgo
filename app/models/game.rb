@@ -1,4 +1,10 @@
 class Game < ActiveRecord::Base
+  #################
+  ### Callbacks ###
+  #################
+  
+  after_save :update_thumbnail
+  
   ####################
   ### Associations ###
   ####################
@@ -43,6 +49,11 @@ class Game < ActiveRecord::Base
   ########################
 
   attr_accessor :chosen_color, :creator, :chosen_opponent, :opponent_username
+  attr_writer   :position_changed
+  
+  def position_changed?
+    @position_changed
+  end
   
   def black_player_is_human?
     not black_player_id.blank?
@@ -105,6 +116,7 @@ class Game < ActiveRecord::Base
         self.current_player = black_player
       end
     end
+    self.position_changed = true
   end
   
   def move(vertex)
@@ -119,12 +131,14 @@ class Game < ActiveRecord::Base
         self.moves = moves.blank? ? played : [moves, ""].join("-")
         finish_game(engine.final_score)
       else
-        played               = "" if vertex == "PASS"
-        self.moves           = moves.blank? ? played : [moves, played].join("-")
-        self.black_positions = engine.positions(:black)
-        self.white_positions = engine.positions(:white)
-        self.black_score     = engine.captures(:black)
-        self.white_score     = engine.captures(:white)
+        played                = "" if vertex == "PASS"
+        self.moves            = moves.blank? ? played :
+                                               [moves, played].join("-")
+        self.black_positions  = engine.positions(:black)
+        self.white_positions  = engine.positions(:white)
+        self.black_score      = engine.captures(:black)
+        self.white_score      = engine.captures(:white)
+        self.position_changed = true
       end
     end
   end
@@ -185,6 +199,17 @@ class Game < ActiveRecord::Base
   
   def white_player_name
     white_player ? white_player.username : "GNU Go"
+  end
+  
+  def update_thumbnail
+    if Rails.env != "test" and position_changed?
+      GameThumb.generate( id,
+                          board_size,
+                          black_positions_list
+                          .map { |ln| Go::GTP::Point.new(ln).to_indices },
+                          white_positions_list
+                          .map { |ln| Go::GTP::Point.new(ln).to_indices } )
+    end
   end
   
   private

@@ -32,6 +32,7 @@ namespace :deploy do
   task :symlink_extras do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/private.yml #{release_path}/config/private.yml"
+    run "ln -nfs #{shared_path}/assets #{release_path}/assets"
   end
 
   desc "Setup shared directory."
