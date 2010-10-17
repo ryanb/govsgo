@@ -164,7 +164,7 @@ class Game < ActiveRecord::Base
   end
   
   def last_move
-    moves.to_s.split("-").last[/\A[a-s]{2}/]
+    (moves.to_s.split("-").last || "")[/\A[a-s]{2}/]
   end
   
   def first_color
