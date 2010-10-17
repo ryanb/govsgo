@@ -1,25 +1,31 @@
 <% title "Sign In" %>
+<% stylesheet "authentication" %>
 
-<p><strong>Sign in through one of these services:</strong></p>
+<div id="container" class="two_stones">
+  <div id="sign_in">
+    <h2>Sign in through one of the following services</h2>
 
-<a href="/auth/twitter" class="auth_provider">
-  <%= image_tag "auth/twitter_128.png", :size => "128x128", :alt => "Twitter" %>
-  Twitter
-</a>
-<a href="/auth/facebook" class="auth_provider">
-  <%= image_tag "auth/facebook_128.png", :size => "128x128", :alt => "Facebook" %>
-  Facebook
-</a>
-<a href="/auth/open_id" class="auth_provider">
-  <%= image_tag "auth/open_id_128.png", :size => "128x128", :alt => "OpenID" %>
-  OpenID
-</a>
-<div class="clear"></div>
+    <a href="/auth/twitter" class="auth_provider">
+      <%= image_tag "auth/twitter_64.png", :size => "64x64", :alt => "Twitter" %>
+      Twitter
+    </a>
+    <a href="/auth/facebook" class="auth_provider">
+      <%= image_tag "auth/facebook_64.png", :size => "64x64", :alt => "Facebook" %>
+      Facebook
+    </a>
+    <a href="/auth/open_id" class="auth_provider">
+      <%= image_tag "auth/open_id_64.png", :size => "64x64", :alt => "OpenID" %>
+      OpenID
+    </a>
+    <div class="clear"></div>
 
-<% unless logged_in? %>
-  <p>
-    <strong>Don't use these services?</strong>
-    <%= link_to "Sign up", signup_path %> or
-    <%= link_to "sign in", login_path %> with a password.
-  </p>
-<% end %>
+    <h3>Don't use these services?<br /> Just enter your email address:</h3>
+    <%= form_tag new_user_path, :method => :get do %>
+      <p>
+        <%= label_tag :email, "Email Address" %>
+        <%= text_field_tag :email, params[:email] %>
+        <%= submit_tag "Continue", :name => nil %>
+      </p>
+    <% end %>
+  </div>
+</div>

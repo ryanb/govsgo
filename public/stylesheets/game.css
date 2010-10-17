@@ -344,6 +344,7 @@ body {
   top: 320px;
   width: 430px;
   z-index: 40;
+  border: solid 8px #513F2C;
 }
 
 #new_game {

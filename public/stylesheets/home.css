@@ -1,5 +1,4 @@
 #container {
-  background: #F5F1F9 url(/images/home/two_stones.png) top right no-repeat;
   position: relative;
 }
 
@@ -12,7 +11,6 @@
 }
 
 #welcome h2 {
-  color: #979797;
   font-size: 25px;
 }
 
