@@ -8,6 +8,10 @@ body {
   margin-bottom: 0;
 }
 
+#flash_notice, #flash_error, #flash_alert {
+  margin-bottom: 20px;
+}
+
 
 /*** Navigation ***/
 

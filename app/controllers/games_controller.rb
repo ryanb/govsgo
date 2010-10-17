@@ -39,7 +39,7 @@ class GamesController < ApplicationController
     @game.prepare
     if @game.save
       @game.queue_computer_move
-      flash[:notice] = "Successfully created game."
+      flash[:notice] = "Game started. Click on a point below to place your stone."
       redirect_to @game
     else
       fetch_games
