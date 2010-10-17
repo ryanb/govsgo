@@ -101,4 +101,13 @@ describe User do
     user.games_my_turn.should == [black_game]
     user.games_their_turn.should == [white_game]
   end
+  
+  it "should filter other games" do
+    Game.delete_all
+    user = Factory(:user)
+    black_game = Factory(:game, :black_player => user)
+    white_game = Factory(:game, :white_player => user)
+    other_game = Factory(:game)
+    user.other_games.should == [other_game]
+  end
 end

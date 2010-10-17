@@ -5,6 +5,12 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.find(params[:id])
+    if logged_in?
+      @my_games = current_user.games.recent
+      @other_games = current_user.other_games.recent
+    else
+      @other_games = Game.recent
+    end
   end
   
   def new
