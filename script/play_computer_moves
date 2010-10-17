@@ -23,6 +23,7 @@ else
   puts "Starting computer player (#{Process.pid})..."
   ENV["RUBYLIB"]     = File.expand_path(SCRIPT_DIR)
   ENV["WORKER_NAME"] = NAME
-  stalk = "#{'/usr/local/ruby/bin/' if RAILS_ENV != 'development'}stalk"
-  exec("#{stalk} worker Game.move >>#{LOG_FILE} 2>&1")
+  production         = RAILS_ENV == "production"
+  stalk = "#{'/usr/local/ruby/bin/' if production}stalk"
+  exec("#{stalk} worker Game.move#{" >>#{LOG_FILE} 2>&1" if production}")
 end
