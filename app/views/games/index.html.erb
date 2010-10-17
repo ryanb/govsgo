@@ -25,8 +25,8 @@
         <div class="game">
           <%= link_to image_tag("thumbnail/19/board.png", :size => "76x76"), game, :class => "thumbnail" %>
           <div class="details">
-            <div class="player">Foobar 4k</div>
-            <div class="player">Testing 4k</div>
+            <div class="player black"><%= game.black_player_name %></div>
+            <div class="player white"><%= game.white_player_name %></div>
           </div>
           <%= link_to "Go", game, :class => "watch" %>
         </div>

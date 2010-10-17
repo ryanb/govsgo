@@ -82,4 +82,11 @@ describe Game do
     @game.white_player = user
     @game.should be_player(user)
   end
+  
+  it "should report white and black player usernames and GNU Go when nil" do
+    user = Factory(:user)
+    Factory.build(:game, :black_player => user).black_player_name.should == user.username
+    Factory.build(:game, :white_player => user).white_player_name.should == user.username
+    Game.new.white_player_name.should == "GNU Go"
+  end
 end
