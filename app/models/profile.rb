@@ -6,7 +6,7 @@ class Profile
   end
   
   def name
-    if user?
+    if user
       user.guest? ? "Guest" : user.username
     else
       "GNU Go"
