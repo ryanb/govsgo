@@ -64,12 +64,18 @@ namespace :deploy do
     
     desc "Start workers"
     task :start_workers do
-      sudo "RAILS_ENV=production #{release_path}/play_computer_moves"
+      sudo "RAILS_ENV=production #{current_path}/script/play_computer_moves"
     end
     
     desc "Stop workers"
     task :stop_workers do
-      sudo "RAILS_ENV=production #{release_path}/play_computer_moves stop"
+      sudo "RAILS_ENV=production #{current_path}/script/play_computer_moves stop"
+    end
+    
+    desc "Restart workers"
+    task :restart_workers do
+      sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves stop"
+      sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves"
     end
   end
 end
@@ -78,3 +84,4 @@ before "deploy",             "deploy:check_revision"
 after  "deploy",             "deploy:cleanup" # keeps only last 5 releases
 after  "deploy:setup",       "deploy:setup_shared"
 after  "deploy:update_code", "deploy:symlink_extras"
+after  "deploy:restart",     "deploy:beanstalkd:restart_workers"
