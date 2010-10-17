@@ -101,7 +101,6 @@ def finish_game(final_score)
   end
 end
 
-RAILS_ENV   = ENV.fetch("RAILS_ENV", "development")
 CONFIG_PATH = File.join(File.dirname(__FILE__), *%w[.. config database.yml])
 
 config      = open(CONFIG_PATH) { |file|
