@@ -128,7 +128,9 @@ job "Game.move" do |args|
     gtp.fixed_handicap args["handicap"]  if args["handicap"].to_i.nonzero?
     gtp.komi           args["komi"]      if args["komi"]
     gtp.replay(args["moves_for_gnugo"], args["first_color"])
+    other_stones   = gtp.list_stones(next_color)
     computers_move = gtp.genmove(color)
+    captured       = other_stones - gtp.list_stones(next_color)
 
     sql_update = { valid_positions:   gnugo_to_sgf( gtp.all_legal(next_color),
                                                     boardsize ),
@@ -145,7 +147,8 @@ job "Game.move" do |args|
     else
       computers_move           = computers_move.to_s.upcase == "PASS" ?
                                  ""                                   :
-                                 gnugo_to_sgf(computers_move, boardsize)
+                                 gnugo_to_sgf( [computers_move] + captured,
+                                               boardsize )
       sql_update[:moves]       = [moves, computers_move].compact.join("-")
       sql_update[:black_score] = gtp.captures(:black)
       sql_update[:white_score] = gtp.captures(:white)

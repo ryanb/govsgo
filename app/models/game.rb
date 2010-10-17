@@ -122,8 +122,8 @@ class Game < ActiveRecord::Base
   def move(vertex)
     game_engine do |engine|
       engine.replay(moves, first_color)
-      played               = engine.move(:black, vertex)
-      self.valid_positions = engine.legal_moves(:white)
+      played               = engine.move(current_color, vertex)
+      self.valid_positions = engine.legal_moves(next_color)
       self.current_player  = next_player
       if vertex == "RESIGN"
         finish_game(engine.final_score)
@@ -169,6 +169,10 @@ class Game < ActiveRecord::Base
   
   def current_color
     current_player == black_player ? "black" : "white"
+  end
+  
+  def next_color
+    current_player == black_player ? "white" : "black"
   end
   
   def next_player
