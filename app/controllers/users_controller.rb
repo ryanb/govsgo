@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def new
     if params[:email]
       if logged_in?
+        flash[:notice] = "Please update your profile below."
         redirect_to edit_current_user_url(:email => params[:email])
       elsif User.find_by_email(params[:email])
         flash[:notice] = "It appears you already have an account, please login below."
