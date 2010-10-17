@@ -1,6 +1,7 @@
 <% if @moves.blank? %>
 setTimeout(pollMoves, pollTimer);
+<% elsif @game.resigned? %>
+alert("<%= @game.black_score.zero? ? "Black" : "White" %> resigned.");
 <% else %>
 addMoves("<%= @moves %>", "<%= @game.current_player_id.to_i %>");
-resetPollTimer();
 <% end %>
