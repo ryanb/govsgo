@@ -1,115 +1,90 @@
-<% title "Game" %>
+<% title "Game", false %>
 
-<div id="board" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>">
-  <div id="board_spaces" class="boardsize<%= @game.board_size %>">
-  <% for y in ('a'..'s').first(@game.board_size) %>
-    <% for x in ('a'..'s').first(@game.board_size) %>
-      <% vertex = x + y %>
-      <div class="<%= color_at vertex %>" id="<%= vertex %>"></div>
+<div id="game">
+  <div class="games_column">
+    <% if @game.player? current_user %>
+      <h2>My Games</h2>
+
+      <h3>My Turn</h3>
+      <% for game in current_user.games_my_turn %>
+        <h4><%= link_to "Game ##{game.id}", game %></h4>
+      <% end %>
+  
+      <h3>Their Turn</h3>
+      <% for game in current_user.games_their_turn %>
+        <h4><%= link_to "Game ##{game.id}", game %></h4>
+      <% end %>
+  
+      <h3>Finished Games</h3>
+      <% for game in current_user.games.finished %>
+        <h4><%= link_to "Game ##{game.id}", game %></h4>
+      <% end %>
+    <% else %>
+      <h2>Watch a Game</h2>
+      <div class="inner">
+      <% for game in Game.first(8) %>
+        <div class="game">
+          <div class="thumbnail"></div>
+          <div class="details">
+            <div class="player_name">Foobar 4k</div>
+            <div class="vs">vs</div>
+            <div class="player_name">Testing 4k</div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      <% end %>
+      </div>
     <% end %>
-  <% end %>
+    <div class="pagination">
+      <%= link_to "<", '#', :id => "previous_move" %>
+      Page 1
+      <%= link_to ">", '#', :id => "next_move" %>
+    </div>
+  </div>
+  <div id="game_area">
+    <div id="top_player" class="player">
+      <%= image_tag "game/bowl_white.png", :class => "bowl" %>
+      <%= image_tag "game/lid_white.png", :class => "lid" %>
+      <div class="profile">
+        <div class="avatar"></div>
+        <div class="details">
+          <div class="name">Foo 4k</div>
+          <div class="komi">6.5 Komi</div>
+          <div class="captures">3 captured</div>
+        </div>
+      </div>
+    </div>
+    <div id="board" class="size_<%= @game.board_size %>" data-moves="<%= @game.moves %>" data-handicap="<%= @game.handicap.to_i %>">
+      <div id="board_spaces">
+      <% for y in ('a'..'s').first(@game.board_size) %>
+        <% for x in ('a'..'s').first(@game.board_size) %>
+          <% vertex = x + y %>
+          <div class="<%= color_at vertex %>" id="<%= vertex %>"></div>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+    <div id="move_nav">
+      <%= link_to "<<", '#', :id => "first_move" %>
+      <%= link_to "<", '#', :id => "previous_move" %>
+      <%= link_to ">", '#', :id => "next_move" %>
+      <%= link_to ">>", '#', :id => "last_move" %>
+    </div>
+    <div id="bottom_player" class="player">
+      <%= image_tag "game/bowl_black.png", :class => "bowl" %>
+      <%= image_tag "game/lid_black.png", :class => "lid" %>
+      <div class="profile">
+        <div class="avatar"></div>
+        <div class="details">
+          <div class="name">Foo 4k</div>
+          <div class="handicap">No Handicap</div>
+          <div class="captures">3 captured</div>
+        </div>
+      </div>
+    </div>
+    <div id="player_actions">
+      <%= link_to "Pass",   '#', :id => "play_pass" %>
+      <%= link_to "Resign", '#', :id => "play_resign" %>
+    </div>
   </div>
 </div>
-
-<p>
-  <%= link_to "Pass",   '#', :id => "play_pass" %>
-  <%= link_to "Resign", '#', :id => "play_resign" %>
-</p>
-
-<p>
-  <%= link_to "First",    '#', :id => "first_move" %>
-  <%= link_to "Previous", '#', :id => "previous_move" %>
-  <%= link_to "Next",     '#', :id => "next_move" %>
-  <%= link_to "Last",     '#', :id => "last_move" %>
-</p>
-
-<% if @game.player? current_user %>
-  <h2>My Games</h2>
-
-  <h3>My Turn</h3>
-  <% for game in current_user.games_my_turn %>
-    <h4><%= link_to "Game ##{game.id}", game %></h4>
-  <% end %>
-  
-  <h3>Their Turn</h3>
-  <% for game in current_user.games_their_turn %>
-    <h4><%= link_to "Game ##{game.id}", game %></h4>
-  <% end %>
-  
-  <h3>Finished Games</h3>
-  <% for game in current_user.games.finished %>
-    <h4><%= link_to "Game ##{game.id}", game %></h4>
-  <% end %>
-<% else %>
-  <h2>Watch a Game</h2>
-  <% for game in Game.all %>
-    <h4><%= link_to "Game ##{game.id}", game %></h4>
-  <% end %>
-<% end %>
-
-<h2>Debug Details</h2>
-
-<p>
-  <strong>Black Player:</strong>
-  <%= @game.black_player_id %>
-</p>
-<p>
-  <strong>White Player:</strong>
-  <%= @game.white_player_id %>
-</p>
-<p>
-  <strong>Current Player:</strong>
-  <%= @game.current_player_id %>
-</p>
-<p>
-  <strong>Black Score:</strong>
-  <%= @game.black_score %>
-</p>
-<p>
-  <strong>White Score:</strong>
-  <%= @game.white_score %>
-</p>
-<p>
-  <strong>Black Positions:</strong>
-  <%= @game.black_positions %>
-</p>
-<p>
-  <strong>White Positions:</strong>
-  <%= @game.white_positions %>
-</p>
-<p>
-  <strong>Moves:</strong>
-  <%= @game.moves %>
-</p>
-<p>
-  <strong>Valid Positions:</strong>
-  <%= @game.valid_positions %>
-</p>
-<p>
-  <strong>Komi:</strong>
-  <%= @game.komi %>
-</p>
-<p>
-  <strong>Handicap:</strong>
-  <%= @game.handicap %>
-</p>
-<p>
-  <strong>Board Size:</strong>
-  <%= @game.board_size %>
-</p>
-<p>
-  <strong>Last Move At:</strong>
-  <%= @game.last_move_at %>
-</p>
-<p>
-  <strong>Started At:</strong>
-  <%= @game.started_at %>
-</p>
-<p>
-  <strong>Finished At:</strong>
-  <%= @game.finished_at %>
-</p>
-
-<p>
-  <%= link_to "View All", games_path %>
-</p>

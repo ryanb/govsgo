@@ -20,7 +20,7 @@
       <div class="clear">
     </ul>
     <div class="clear"></div>
-    <div id="container">
+    <!-- <div id="container">
       <div id="user_nav">
         <% if logged_in? %>
           <% if current_user.guest? %>
@@ -35,12 +35,12 @@
           <%= link_to "Sign up", signup_path %> or
           <%= link_to "Log in", login_path %>.
         <% end %>
-      </div>
+      </div> -->
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>
       <%= content_tag :h1, yield(:title) if show_title? %>
       <%= yield %>
-    </div>
+    <!-- </div> -->
   </body>
 </html>
