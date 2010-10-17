@@ -287,46 +287,85 @@ body {
   -webkit-box-shadow: 10px 10px 30px #000;
   -moz-box-shadow: 10px 10px 30px #000;
   filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000, offX=10, offY=10, positive=true);
-}
-
-#board.size_19 {
-  background-image: url(/images/game/19/board.png);
   width: 620px;
   height: 620px;
 }
 
+#board.size_19 {
+  background-image: url(/images/game/19/board.png);
+}
+
 #board.size_13 {
-  background-image: url(/images/simple_board_13.png);
-  width: 395px;
-  height: 395px;
+  background-image: url(/images/game/13/board.png);
 }
 
 #board.size_9 {
-  background-image: url(/images/simple_board_9.png);
-  width: 275px;
-  height: 275px;
+  background-image: url(/images/game/9/board.png);
 }
 
 .size_19 #board_spaces {
   position: absolute;
   top: 25px;
   left: 25px;
-  width: 575;
+  width: 575px;
+}
+
+.size_13 #board_spaces {
+  position: absolute;
+  top: 38px;
+  left: 38px;
+  width: 550px;
+}
+
+.size_9 #board_spaces {
+  position: absolute;
+  top: 35px;
+  left: 35px;
+  width: 535px;
 }
 
 #board_spaces div {
   float: left;
-  width: 30px;
-  height: 30px;
   background-repeat: no-repeat;
 }
 
-#board .w {
+.size_19 #board_spaces div {
+  width: 30px;
+  height: 30px;
+}
+
+.size_13 #board_spaces div {
+  width: 42px;
+  height: 42px;
+}
+
+.size_9 #board_spaces div {
+  width: 59px;
+  height: 59px;
+}
+
+#board.size_19 .w {
   background-image: url(/images/game/19/white_stone.png);
 }
 
-#board .b {
+#board.size_19 .b {
   background-image: url(/images/game/19/black_stone.png);
+}
+
+#board.size_13 .w {
+  background-image: url(/images/game/13/white_stone.png);
+}
+
+#board.size_13 .b {
+  background-image: url(/images/game/13/black_stone.png);
+}
+
+#board.size_9 .w {
+  background-image: url(/images/game/9/white_stone.png);
+}
+
+#board.size_9 .b {
+  background-image: url(/images/game/9/black_stone.png);
 }
 
 #user_nav {
