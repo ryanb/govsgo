@@ -5,6 +5,7 @@ Govsgo::Application.routes.draw do
   match 'signup' => 'users#new', :as => :signup
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'login' => 'sessions#new', :as => :login
+  match 'go_resources' => 'games#resources', :as => :go_resources
   resources :authentications
   resources :sessions
   resources :users

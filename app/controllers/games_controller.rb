@@ -57,6 +57,10 @@ class GamesController < ApplicationController
     @my_games = @my_games.paginate(:page => params[:page], :per_page => params[:per_page])
   end
   
+  def resources
+    
+  end
+  
   private
   
   def fetch_games

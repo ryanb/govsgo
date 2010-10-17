@@ -163,8 +163,29 @@ a {
   background: #F5F1F9 url(/images/layout/two_stones.png) top right no-repeat;
 }
 
+#container.three_stones {
+  background: #F5F1F9 url(/images/layout/three_stones.png) top right no-repeat;
+}
+
 #container h2, #container h3 {
   color: #979797;
+}
+
+#go_resources {
+  padding: 50px 80px;
+  font-size: 14px;
+  text-align: left;
+  width: 350px;
+  line-height: 25px;
+}
+
+#go_resources h2 {
+  font-size: 22px;
+}
+
+#go_resources ul {
+  margin-left: 18px;
+  padding-left: 0;
 }
 
 

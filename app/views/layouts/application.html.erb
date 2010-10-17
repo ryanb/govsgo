@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %> - Go vs Go</title>
+    <title><%= content_for?(:title) ? yield(:title) : "" %> - Go vs Go</title>
     <%= stylesheet_link_tag "application" %>
     <%= javascript_include_tag :defaults %>
     <%= csrf_meta_tag %>
@@ -14,7 +14,7 @@
       <li class="gap"></li>
       <li class="banner purple"><%= link_to "Play a Game", new_game_path %></li>
       <li class="gap"></li>
-      <li class="banner red"><%= link_to "What is Go?", new_game_path %></li>
+      <li class="banner red"><%= link_to "Go Resources", go_resources_path %></li>
       <li class="gap"></li>
       <% if guest? %>
         <li class="banner brown"><%= link_to "Sign In", signin_path %></li>
