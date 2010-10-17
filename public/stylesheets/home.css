@@ -59,15 +59,16 @@
 }
 
 .game .watch {
+  font-size: 14px;
   position: absolute;
   right: 15px;
-  top: 20px;
+  top: 18px;
   color: #FFF;
   text-decoration: none;
   padding: 6px 10px;
   background-color: #7B7DC7;
-  -moz-border-radius: 12px;
-  -webkit-border-radius: 12px;
+  -moz-border-radius: 14px;
+  -webkit-border-radius: 14px;
 }
 
 #play {
