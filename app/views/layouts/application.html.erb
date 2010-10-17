@@ -10,18 +10,16 @@
   <body>
     <a href="/" id="logo"><img src="/images/layout/logo2.png" width="241" height="96" alt="Go vs Go" /></a>
     <ul id="nav">
-      <li class="banner blue"><%= link_to "Play a Game", new_game_path %></li>
+      <li class="banner blue"><%= link_to "Home", root_url %></li>
       <li class="gap"></li>
-      <li class="banner purple"><%= link_to "What is Go?" %></li>
+      <li class="banner purple"><%= link_to "Play a Game", new_game_path %></li>
+      <li class="gap"></li>
+      <li class="banner red"><%= link_to "What is Go?", new_game_path %></li>
       <li class="gap"></li>
       <% if guest? %>
-        <li class="banner red"><%= link_to "Sign In", signin_path %></li>
-        <li class="gap"></li>
-        <li class="banner brown"><%= link_to "..." %></li>
+        <li class="banner brown"><%= link_to "Sign In", signin_path %></li>
       <% else %>
-        <li class="banner red"><%= link_to "My Profile", edit_current_user_path %></li>
-        <li class="gap"></li>
-        <li class="banner brown"><%= link_to "Log Out", logout_path %></li>
+        <li class="banner brown"><%= link_to "My Profile", edit_current_user_path %></li>
       <% end %>
       <div class="clear">
     </ul>
