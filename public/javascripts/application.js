@@ -46,6 +46,9 @@ $(function() {
     resetPollTimer();
     setTimeout(pollMoves, pollTimer);
   }
+  $("#game_opponent_username").focus(function() {
+	$("#game_chosen_opponent_user").attr("checked", "checked");
+  });
 });
 
 function addMoves(new_moves) {

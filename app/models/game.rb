@@ -17,6 +17,15 @@ class Game < ActiveRecord::Base
   validates_format_of    :moves,
                          with:      /\A(?:-|[a-s]{2})*\z/,
                          allow_nil: true
+  validate               :opponent_found
+  
+  def opponent_found
+    if chosen_opponent == "user" and ( black_player.blank? or
+                                       white_player.blank? )
+      errors.add(:opponent_username, "not found")
+    end
+  end
+  private :opponent_found
   
   attr_accessible :komi, :handicap, :board_size,
                   :chosen_color, :chosen_opponent, :opponent_username
@@ -73,22 +82,27 @@ class Game < ActiveRecord::Base
   end
   
   def prepare
+    opponent = nil
+    if chosen_opponent == "user"
+      opponent = User.find_by_username(opponent_username)
+    end
     color = chosen_color.blank? ? %w[white black].sample : chosen_color
     case color
     when "black"
       self.black_player = creator
+      self.white_player = opponent
     when "white"
+      self.black_player = opponent
       self.white_player = creator
     end
-    if handicap.to_i.nonzero?
-      game_engine do |engine|
-        self.valid_positions = engine.legal_moves(:black)
+    game_engine do |engine|
+      self.valid_positions = engine.legal_moves(:black)
+      if handicap.to_i.nonzero?
         self.black_positions = engine.positions(:black)
-        self.white_positions = engine.positions(:white)
+        self.current_player  = white_player
+      else
+        self.current_player = black_player
       end
-      self.current_player = white_player
-    else
-      self.current_player = black_player
     end
   end
   
