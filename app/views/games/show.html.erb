@@ -3,48 +3,27 @@
 <% @hide_footer = true %>
 
 <div id="game">
-  <div class="games_column games">
-    <h2>Watch a Game</h2>
-    <% Game.recent.limit(8).each_with_index do |game, index| %>
-      <% unless index.zero? %>
-        <div class="game_divider"></div>
-      <% end %>
-      <%= render game %>
-      <!-- <div class="game">
-        <div class="thumbnail"></div>
-        <div class="details">
-          <div class="player_name">Foobar 4k</div>
-          <div class="vs">vs</div>
-          <div class="player_name">Testing 4k</div>
-        </div>
-        <div class="clear"></div>
-      </div> -->
-    <% end %>
-    
-    <!-- <% if @game.player? current_user %>
+  <div id="side">
+    <% if logged_in? && current_user.games.present? %>
+    <div class="games">
       <h2>My Games</h2>
-
-      <h3>My Turn</h3>
-      <% for game in current_user.games_my_turn %>
-        <h4><%= link_to "Game ##{game.id}", game %></h4>
+      <% current_user.games.limit(5).each_with_index do |game, index| %>
+        <% unless index.zero? %>
+          <div class="game_divider"></div>
+        <% end %>
+        <%= render game %>
       <% end %>
-  
-      <h3>Their Turn</h3>
-      <% for game in current_user.games_their_turn %>
-        <h4><%= link_to "Game ##{game.id}", game %></h4>
-      <% end %>
-  
-      <h3>Finished Games</h3>
-      <% for game in current_user.games.finished %>
-        <h4><%= link_to "Game ##{game.id}", game %></h4>
-      <% end %>
-    <% else %>
+    </div>
     <% end %>
-    <div class="pagination">
-      <%= link_to "<", '#', :id => "previous_move" %>
-      Page 1
-      <%= link_to ">", '#', :id => "next_move" %>
-    </div> -->
+    <div class="games">
+      <h2>Watch a Game</h2>
+      <% Game.recent.limit(5).each_with_index do |game, index| %>
+        <% unless index.zero? %>
+          <div class="game_divider"></div>
+        <% end %>
+        <%= render game %>
+      <% end %>
+    </div>
   </div>
   <div id="game_area">
     <div id="top_player" class="player">
