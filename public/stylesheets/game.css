@@ -1,9 +1,6 @@
 body {
+  color: #FFF;
   background-color: #18242D;
-  font-family: Verdana, Helvetica, Arial;
-  font-size: 14px;
-  margin: 0;
-  padding: 0;
   background-image: url(/images/layout/background2.png);
 }
 
@@ -346,4 +343,20 @@ body {
 #user_nav {
   float: right;
   font-size: 12px;
+}
+
+
+/*** New Game Form ***/
+
+#new_game_overlay {
+  background: url(/images/game/black_overlay.png);
+  position: absolute;
+  left: 95px;
+  top: 320px;
+  width: 430px;
+  z-index: 40;
+}
+
+#new_game {
+  padding: 30px 50px;
 }

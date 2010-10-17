@@ -10,7 +10,7 @@
   <body>
     <a href="/" id="logo"><img src="/images/layout/logo2.png" width="241" height="96" alt="Go vs Go" /></a>
     <ul id="nav">
-      <li class="banner blue"><%= link_to "Play a Game" %></li>
+      <li class="banner blue"><%= link_to "Play a Game", new_game_path %></li>
       <li class="gap"></li>
       <li class="banner purple"><%= link_to "What is Go?" %></li>
       <li class="gap"></li>
@@ -24,8 +24,10 @@
       <%= content_tag :div, msg, :id => "flash_#{name}" %>
     <% end %>
     <%= yield %>
+    <% unless @hide_footer %>
     <div id="footer">
-      <p>This site was created by <%= link_to "Ryan Bates", "http://railscasts.com" %>, <%= link_to "Phil Bates", "http://www.prbates.com" %> and <%= link_to "James Edward Gray II", "http://blog.grayproductions.net/" %> for <%= link_to "Rails Rumble 2010", "http://r20.railsrumble.com/" %></p>
+      <p>This site was created by <%= link_to "Ryan Bates", "http://railscasts.com" %>, <%= link_to "Phil Bates", "http://www.prbates.com" %> and <%= link_to "James Edward Gray II", "http://blog.grayproductions.net/" %> for <%= link_to "Rails Rumble 2010", "http://r10.railsrumble.com/" %></p>
     </div>
+    <% end %>
   </body>
 </html>
