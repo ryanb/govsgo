@@ -77,6 +77,11 @@ namespace :deploy do
       sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves stop"
       sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves"
     end
+    
+    desc "Requeue all games waiting on a computer move"
+    task :queue_all_for_computer do
+      run "cd #{current_path} && RAILS_ENV=production rake data:game:queue_all_for_computer"
+    end
   end
 end
 
