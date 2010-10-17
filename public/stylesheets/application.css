@@ -98,19 +98,14 @@ a {
 
 #nav li.gap {
   width: 8px;
-  height: 70px;
-  background-color: #2E2F2F;
-  box-shadow: 2px 7px 20px #111;
-  -webkit-box-shadow: 2px 7px 20px #111;
-  -moz-box-shadow: 2px 7px 20px #111;
-  filter: progid:DXImageTransform.Microsoft.dropShadow(color=#111, offX=7, offY=7, positive=true);
+  height: 1px;
 }
 
 #nav li.banner {
-  box-shadow: 7px 7px 40px #111;
-  -webkit-box-shadow: 7px 7px 40px #111;
-  -moz-box-shadow: 7px 7px 40px #111;
-  filter: progid:DXImageTransform.Microsoft.dropShadow(color=#111, offX=7, offY=7, positive=true);
+  box-shadow: 7px 7px 40px #202020;
+  -webkit-box-shadow: 7px 7px 40px #202020;
+  -moz-box-shadow: 7px 7px 40px #202020;
+  filter: progid:DXImageTransform.Microsoft.dropShadow(color=#202020, offX=7, offY=7, positive=true);
 }
 
 #nav li a {
@@ -121,13 +116,6 @@ a {
   text-align: center;
   color: #FFF;
   text-decoration: none;
-  -webkit-transition: margin 0.1s linear;
-  -moz-transition: margin 0.1s linear;
-  -o-transition: margin 0.1s linear;
-}
-
-#nav li a:hover {
-  margin-top: 0;
 }
 
 #nav li.blue {
