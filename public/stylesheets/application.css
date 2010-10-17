@@ -70,6 +70,19 @@ a {
 }
 
 
+#error_message {
+  padding: 80px 50px;
+  font-size: 14px;
+  text-align: left;
+  width: 350px;
+  line-height: 25px;
+}
+
+#error_message h2 {
+  font-size: 22px;
+}
+
+
 /*** Logo ***/
 
 #logo {
