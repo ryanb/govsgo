@@ -78,8 +78,14 @@ end
 ### Jobs ###
 ############
 
+CONFIG_PATH = File.join(RAILS_ROOT, *%w[config database.yml])
+THUMB_LIB   = File.join(RAILS_ROOT, *%w[lib game_thumb])
+
 require "mysql2"
 require "go/gtp"
+require "oily_png"
+
+require THUMB_LIB
 
 def gnugo_to_sgf(vertices, boardsize)
   if vertices.is_a? Array
@@ -87,6 +93,10 @@ def gnugo_to_sgf(vertices, boardsize)
   else
     Go::GTP::Point.new(vertices, board_size: boardsize).to_sgf
   end
+end
+
+def sgf_to_indices(sgf)
+  sgf.to_s.scan(/[a-s]{2}/).map { |ln| Go::GTP::Point.new(ln).to_indices }
 end
 
 def finish_game(final_score)
@@ -101,15 +111,14 @@ def finish_game(final_score)
   end
 end
 
-CONFIG_PATH = File.join(File.dirname(__FILE__), *%w[.. config database.yml])
-
-config      = open(CONFIG_PATH) { |file|
+config = open(CONFIG_PATH) { |file|
   Hash[YAML.load(file)[RAILS_ENV].map { |k, v| [k.to_sym, v] }]
 }
-mysql       = Mysql2::Client.new(config)
+mysql  = Mysql2::Client.new(config)
 
 job "Game.move" do |args|
   Go::GTP.run_gnugo do |gtp|
+    id         = args["id"]
     boardsize  = args["boardsize"].to_i
     color      = args["current_color"]
     next_color = color == "black" ? "white" : "black"
@@ -144,8 +153,12 @@ job "Game.move" do |args|
     mysql.query(
       "UPDATE games SET "                                             +
       sql_update.map { |col, val| "%s = %p" % [col, val] }.join(", ") +
-      " WHERE id = #{args['id']} AND current_player_id IS NULL AND "  +
+      " WHERE id = #{id} AND current_player_id IS NULL AND "          +
       "finished_at IS NULL"
     )
+    GameThumb.generate( id,
+                        boardsize,
+                        sgf_to_indices(sql_update[:black_positions]),
+                        sgf_to_indices(sql_update[:white_positions]) )
   end
 end

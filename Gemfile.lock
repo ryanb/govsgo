@@ -44,6 +44,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
+    chunky_png (0.10.3)
     daemons (1.1.0)
     diff-lcs (1.1.2)
     erubis (2.6.6)
@@ -107,6 +108,8 @@ GEM
     oauth2 (0.0.13)
       faraday (~> 0.4.1)
       multi_json (>= 0.0.4)
+    oily_png (0.1.0)
+      chunky_png (~> 0.10.2)
     omniauth (0.1.4)
       oa-basic (= 0.1.4)
       oa-core (= 0.1.4)
@@ -180,6 +183,7 @@ DEPENDENCIES
   mocha
   mysql2
   nifty-generators
+  oily_png (= 0.1.0)
   omniauth
   rails (= 3.0.0)
   rspec-rails (>= 2.0.1)
