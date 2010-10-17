@@ -28,6 +28,10 @@ class User < ActiveRecord::Base
     Game.where("black_player_id = ? or white_player_id = ?", id, id)
   end
   
+  def other_games
+    Game.where("(black_player_id != ? or black_player_id is null) and (white_player_id != ? or white_player_id is null)", id, id)
+  end
+  
   def games_my_turn
     games.active.where("current_player_id = ?", id)
   end

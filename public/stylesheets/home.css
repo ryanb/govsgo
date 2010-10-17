@@ -14,16 +14,16 @@
   font-size: 25px;
 }
 
-#games {
+#game_actions {
   padding-top: 350px;
   padding-bottom: 30px;
 }
 
-#watch_games {
-  margin-left: 375px;
+#games {
+  margin-left: 385px;
 }
 
-#watch_games h2 {
+#container .games h2 {
   font-size: 22px;
   background-color: #A3A4A5;
   color: #FFF;
@@ -31,15 +31,28 @@
   margin: 0;
 }
 
-#watch_games .game {
-  float: left;
-  margin-top: 10px;
-  margin-right: 10px;
+.games .game {
   background-color: #D6D4DC;
+  margin-top: 10px;
 }
 
-#watch_games .game .details {
+.game .details {
   color: #696969;
+}
+
+.games {
+  float: right;
+  margin-right: 20px;
+}
+
+#other_games.full {
+  float: none;
+  margin-right: 0;
+}
+
+#other_games.full .game {
+  float: left;
+  margin-right: 10px;
 }
 
 #play {
