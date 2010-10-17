@@ -12,7 +12,7 @@ $(function() {
     current_user   = $("#board").attr("data-current-user");
     current_player = $("#board").attr("data-current-player");
     $("#board .e").live("click", function() {
-	  if (current_user == current_player) {
+	  if (current_move == moves.length && current_user == current_player) {
 	    $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
       }
       // Show updating graphic here
