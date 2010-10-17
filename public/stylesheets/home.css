@@ -21,6 +21,7 @@
 
 #games {
   margin-left: 385px;
+  min-width: 660px;
 }
 
 #container .games h2 {

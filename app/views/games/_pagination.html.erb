@@ -1,4 +1,5 @@
 <% unless games.previous_page.nil? && games.next_page.nil? %>
+<div class="clear"></div>
 <div class="pagination">
   <% if games.previous_page %>
     <%= link_to "<", send("#{game_type}_games_path", :page => games.previous_page, :per_page => games.per_page, :format => "js") %>
