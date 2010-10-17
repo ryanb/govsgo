@@ -101,16 +101,3 @@
   text-align: center;
   margin-bottom: 10px;
 }
-
-#footer {
-  clear: both;
-  font-size: 12px;
-  margin-top: 25px;
-  margin-bottom: 10px;
-  text-align: center;
-  color: #555;
-}
-
-#footer a {
-  color: #444;
-}
