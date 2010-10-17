@@ -280,10 +280,7 @@ body {
   margin-left: 80px;
 }
 
-#board.size_19 {
-  background-image: url(/images/game/board_19.png);
-  width: 620px;
-  height: 620px;
+#board {
   position: absolute;
   top: 200px;
   box-shadow: 10px 10px 30px #000;
@@ -292,37 +289,29 @@ body {
   filter: progid:DXImageTransform.Microsoft.dropShadow(color=#000, offX=10, offY=10, positive=true);
 }
 
-#board_spaces {
+#board.size_19 {
+  background-image: url(/images/game/board_19.png);
+  width: 620px;
+  height: 620px;
+}
+
+#board.size_13 {
+  background-image: url(/images/simple_board_13.png);
+  width: 395px;
+  height: 395px;
+}
+
+#board.size_9 {
+  background-image: url(/images/simple_board_9.png);
+  width: 275px;
+  height: 275px;
+}
+
+.size_19 #board_spaces {
   position: absolute;
   top: 25px;
   left: 25px;
   width: 575;
-}
-
-
-.boardsize19 {
-  background-image: url(/images/game/board_19.png);
-  width: 575px; /* add 5 for quick float hack */
-  height: 575px;
-}
-
-.boardsize13 {
-  background-image: url(/images/simple_board_13.png);
-  width: 395px; /* add 5 for quick float hack */
-  height: 395px;
-}
-
-.boardsize9 {
-  background-image: url(/images/simple_board_9.png);
-  width: 275px; /* add 5 for quick float hack */
-  height: 275px;
-}
-
-#board_spaces.boardsize19 {
-  padding-left: 24px;
-  padding-top: 24px;
-  padding-bottom: 21px;
-  padding-right: 21px;
 }
 
 #board_spaces div {
