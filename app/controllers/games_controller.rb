@@ -9,10 +9,10 @@ class GamesController < ApplicationController
   end
   
   def show
-    @game = Game.find(params[:id])
+    @game        = Game.find(params[:id])
     @other_games = @other_games.paginate(:page => 1, :per_page => 5)
-    @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
-    @profiles = @game.profiles
+    @my_games    = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
+    @profiles    = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
   end
   
