@@ -1,16 +1,10 @@
 class GamesController < ApplicationController
+  before_filter :fetch_games, :only => [:index, :show]
   def index
-    @games = Game.recent.limit(8)
   end
   
   def show
     @game = Game.find(params[:id])
-    if logged_in?
-      @my_games = current_user.games.recent
-      @other_games = current_user.other_games.recent
-    else
-      @other_games = Game.recent
-    end
   end
   
   def new
@@ -38,6 +32,17 @@ class GamesController < ApplicationController
       redirect_to @game
     else
       render :action => 'new'
+    end
+  end
+  
+  private
+  
+  def fetch_games
+    if logged_in?
+      @my_games = current_user.games.recent
+      @other_games = current_user.other_games.recent
+    else
+      @other_games = Game.recent
     end
   end
 end

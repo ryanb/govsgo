@@ -9,7 +9,7 @@
     <p>We invite you to try a game against the computer or online with a real person!</p>
   </div>
   
-  <div id="games">
+  <div id="game_actions">
     <div id="play">
       <%= link_to image_tag("layout/right_triangle.png", :size => "14x23") + " Click to Play a Game", new_game_path(:handicap => 4, :board_size => 9), :id => "click_to_play" %>
       <div id="screencast">
@@ -19,10 +19,18 @@
       </div>
     </div>
     
-    <div id="watch_games" class="games">
-      <h2>Watch a Game</h2>
-      <%= render @games %>
+    <div id="games">
+      <div id="other_games" class="games <%= "full" if @my_games.blank? %>">
+        <h2>Watch a Game</h2>
+        <%= render @other_games.limit(@my_games.blank? ? 8 : 4) %>
+      </div>
+      <% unless @my_games.blank? %>
+      <div id="my_games" class="games">
+        <h2>My Games</h2>
+        <%= render @my_games.limit(4) %>
+      </div>
+      <% end %>
+      <div class="clear"></div>
     </div>
-    <div class="clear"></div>
   </div>
 </div>
