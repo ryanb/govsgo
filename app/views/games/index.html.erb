@@ -19,15 +19,13 @@
       </div>
     </div>
     
-    <div id="games">
-      <div id="other_games" class="games <%= "full" if @my_games.blank? %>">
-        <h2>Watch a Game</h2>
-        <%= render @other_games.limit(@my_games.blank? ? 8 : 4) %>
+    <div id="games"<%= " class='full'" if @other_games_limit == 8 %>>
+      <div id="other_games" class="games">
+        <%= render "other_games" %>
       </div>
       <% unless @my_games.blank? %>
       <div id="my_games" class="games">
-        <h2>My Games</h2>
-        <%= render @my_games.limit(4) %>
+        <%= render "my_games" %>
       </div>
       <% end %>
       <div class="clear"></div>

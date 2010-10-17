@@ -10,6 +10,10 @@ Govsgo::Application.routes.draw do
   resources :users
   resources :games do
     resources :moves
+    collection do
+      get :my
+      get :other
+    end
   end
   root :to => 'games#index'
 end

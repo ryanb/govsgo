@@ -5,45 +5,14 @@
 <!-- TODO refactor with show action -->
 
 <div id="game">
-  <div class="games_column">
-    <% if logged_in? %>
-      <h2>My Games</h2>
-      <div class="inner">
-      <h3>My Turn</h3>
-      <% for game in current_user.games_my_turn %>
-        <h4><%= link_to "Game ##{game.id}", game %></h4>
-      <% end %>
-  
-      <h3>Their Turn</h3>
-      <% for game in current_user.games_their_turn %>
-        <h4><%= link_to "Game ##{game.id}", game %></h4>
-      <% end %>
-  
-      <h3>Finished Games</h3>
-      <% for game in current_user.games.finished %>
-        <h4><%= link_to "Game ##{game.id}", game %></h4>
-      <% end %>
-      </div>
-    <% else %>
-      <h2>Watch a Game</h2>
-      <div class="inner">
-      <% for game in Game.first(8) %>
-        <div class="game">
-          <div class="thumbnail"></div>
-          <div class="details">
-            <div class="player_name">Foobar 4k</div>
-            <div class="vs">vs</div>
-            <div class="player_name">Testing 4k</div>
-          </div>
-          <div class="clear"></div>
-        </div>
-      <% end %>
-      </div>
+  <div id="side">
+    <% unless @my_games.blank? %>
+    <div id="my_games" class="games">
+      <%= render "my_games" %>
+    </div>
     <% end %>
-    <div class="pagination">
-      <%= link_to "<", '#', :id => "previous_move" %>
-      Page 1
-      <%= link_to ">", '#', :id => "next_move" %>
+    <div id="other_games" class="games">
+      <%= render "other_games" %>
     </div>
   </div>
   <div id="game_area">
@@ -86,20 +55,10 @@
       <p class="field"><%= f.submit "Start Game" %></p>
     <% end %>
     </div>
-    <div id="board" class="size_19" data-moves="" data-handicap="">
-      <div id="board_spaces">
-      <% for y in ('a'..'s') %>
-        <% for x in ('a'..'s') %>
-          <% vertex = x + y %>
-          <div class="e" id="<%= vertex %>"></div>
-        <% end %>
-      <% end %>
-      </div>
-    </div>
+    <div id="board" class="size_19" data-moves="" data-handicap=""></div>
     <div id="bottom_player" class="player">
       <%= image_tag "game/bowl_black.png", :class => "bowl" %>
       <%= image_tag "game/lid_black.png", :class => "lid" %>
     </div>
   </div>
 </div>
-
