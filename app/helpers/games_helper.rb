@@ -18,4 +18,12 @@ module GamesHelper
   def link_to_game_thumbnail(game)
     link_to thumbnail(game), game, :class => "thumbnail"
   end
+  
+  def game_score(score, finished)
+    if finished and score.nonzero?
+      "won by #{score}"
+    else
+      pluralize(score.to_i, "captured stone")
+    end
+  end
 end

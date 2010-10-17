@@ -5,6 +5,6 @@
     <div class="name"><%= profile.name %> as <%= profile.color.to_s.titleize %></div>
     <div id="turn_<%= id = profile.user ? profile.user.id : 0 %>" class="turn"<%= raw ' style="display: none;"' unless @game.current_player_id.to_i == id %>>current player</div>
     <div class="komi_or_handicap"><%= profile.handicap_or_komi %></div>
-    <div class="score"><%= profile.score %></div>
+    <div id="score_<%= id %>" class="score"><%= game_score profile.score, @game.finished? %></div>
   </div>
 </div>
