@@ -45,10 +45,20 @@
   position: absolute;
   top: 10px;
   left: 90px;
+  color: #696969;
 }
 
 .game .player {
   padding-top: 8px;
+  padding-left: 22px;
+}
+
+.game .black {
+  background: url(/images/game/small_black_stone.png) no-repeat 9px left;
+}
+
+.game .white {
+  background: url(/images/game/small_white_stone.png) no-repeat 9px left;
 }
 
 .game .thumbnail {

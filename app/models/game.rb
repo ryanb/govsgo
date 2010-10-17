@@ -178,6 +178,14 @@ class Game < ActiveRecord::Base
     finished? and moves =~ /-{2}\z/
   end
   
+  def black_player_name
+    black_player ? black_player.username : "GNU Go"
+  end
+  
+  def white_player_name
+    white_player ? white_player.username : "GNU Go"
+  end
+  
   private
   
   def game_engine
