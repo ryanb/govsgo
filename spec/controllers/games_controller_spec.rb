@@ -8,17 +8,17 @@ describe GamesController do
     get :index
     response.should render_template(:index)
   end
-  
+
   it "show action should render show template" do
     get :show, :id => Game.first
     response.should render_template(:show)
   end
-  
+
   it "new action should render new template" do
     get :new
     response.should render_template(:new)
   end
-  
+
   it "create action should render new template when model is invalid" do
     Game.any_instance.stubs(:valid?).returns(false)
     post :create

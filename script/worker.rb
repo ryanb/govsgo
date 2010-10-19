@@ -20,7 +20,7 @@ def authorize(&block)
     end
     pid.flock(File::LOCK_UN)
   end
-  
+
   at_exit do
     revoke
   end
@@ -123,7 +123,7 @@ job "Game.move" do |args|
     color      = args["current_color"]
     next_color = color == "black" ? "white" : "black"
     moves      = args["moves_for_db"]
-    
+
     gtp.boardsize      boardsize         if boardsize
     gtp.fixed_handicap args["handicap"]  if args["handicap"].to_i.nonzero?
     gtp.komi           args["komi"]      if args["komi"]

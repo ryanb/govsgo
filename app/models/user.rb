@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation, :guest
-  
+
   has_many :authentications
 
   attr_accessor :password
@@ -23,23 +23,23 @@ class User < ActiveRecord::Base
   def matching_password?(pass)
     self.password_hash == encrypt_password(pass)
   end
-  
+
   def games
     Game.where("black_player_id = ? or white_player_id = ?", id, id)
   end
-  
+
   def other_games
     Game.where("(black_player_id != ? or black_player_id is null) and (white_player_id != ? or white_player_id is null)", id, id)
   end
-  
+
   def games_my_turn
     games.active.where("current_player_id = ?", id)
   end
-  
+
   def games_their_turn
     games.active.where("current_player_id != ? or current_player_id is null", id)
   end
-  
+
   def password_required?
     !guest? && (new_record? || password_hash.blank?) && authentications.empty?
   end

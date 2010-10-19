@@ -2,13 +2,13 @@
 <% stylesheet "home" %>
 
 <div id="container" class="two_stones">
-  
+
   <div id="welcome">
     <h2>Welcome</h2>
     <p>Go is a board game invented in China more than 4,000 years ago. It is more popular in the far East than Chess in the West. The rules are simple but mastering the game can take a lifetime.</p>
     <p>We invite you to try a game against the computer or online with a real person!</p>
   </div>
-  
+
   <div id="game_actions">
     <div id="play">
       <%= link_to image_tag("layout/right_triangle.png", :size => "14x23") + " Click to Play a Game", new_game_path(:handicap => 4, :board_size => 9), :id => "click_to_play" %>
@@ -17,7 +17,7 @@
         <p><a href="http://media.railscasts.com/videos/govsgo.mov"><%= image_tag "screencast.png", :size => "259x278", :alt => "Watch the Screencast" %></a></p>
       </div>
     </div>
-    
+
     <div id="games"<%= " class='full'" if @other_games_limit == 8 %>>
       <div id="other_games" class="games">
         <%= render "other_games" %>

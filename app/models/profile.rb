@@ -4,7 +4,7 @@ class Profile
   def initialize(color)
     @color = color
   end
-  
+
   def name
     if user
       user.guest? ? "Guest" : user.username

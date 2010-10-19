@@ -3,7 +3,7 @@ class MovesController < ApplicationController
     @game  = Game.find(params[:game_id])
     @moves = @game.moves_after(params[:after].to_i)
   end
-  
+
   def create
     @game = Game.find(params[:game_id])
     if current_user == @game.current_player and

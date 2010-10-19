@@ -3,7 +3,7 @@ require 'spec_helper'
 describe MovesController do
   fixtures :all
   render_views
-  
+
   it "should show moves in game" do
     game = Factory(:game, moves: "aa-bb-cc")
     get "index", :game_id => game.id, :format => "js", :after => 1

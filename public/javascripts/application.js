@@ -8,7 +8,7 @@ $(function() {
     $.getScript(this.href);
     return false;
   });
-  
+
   if ($("#board").length > 0) {
     if ($("#board").attr("data-moves").length != "") {
       moves = $("#board").attr("data-moves").split("-");

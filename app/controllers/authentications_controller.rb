@@ -1,7 +1,7 @@
 class AuthenticationsController < ApplicationController
   def index
   end
-  
+
   def create
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
@@ -30,7 +30,7 @@ class AuthenticationsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy

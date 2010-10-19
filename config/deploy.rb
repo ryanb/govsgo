@@ -20,9 +20,9 @@ set :branch,     "master"
 namespace :deploy do
   desc "Tell Passenger to restart."
   task :restart, :roles => :web do
-    run "touch #{deploy_to}/current/tmp/restart.txt" 
+    run "touch #{deploy_to}/current/tmp/restart.txt"
   end
-  
+
   desc "Do nothing on startup so we don't get a script/spin error."
   task :start do
     puts "You may need to restart Apache."
@@ -51,7 +51,7 @@ namespace :deploy do
       exit
     end
   end
-  
+
   namespace :beanstalk do
     desc "Start the beanstalkd queue server"
     task :start do
@@ -62,23 +62,23 @@ namespace :deploy do
     task :stop do
       sudo "/etc/init.d/beanstalkd stop"
     end
-    
+
     desc "Start workers"
     task :start_workers do
       sudo "RAILS_ENV=production #{current_path}/script/play_computer_moves"
     end
-    
+
     desc "Stop workers"
     task :stop_workers do
       sudo "RAILS_ENV=production #{current_path}/script/play_computer_moves stop"
     end
-    
+
     desc "Restart workers"
     task :restart_workers do
       sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves stop"
       sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves"
     end
-    
+
     desc "Requeue all games waiting on a computer move"
     task :queue_all_for_computer do
       run "cd #{current_path} && RAILS_ENV=production rake data:game:queue_all_for_computer"

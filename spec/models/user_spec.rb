@@ -84,14 +84,14 @@ describe User do
     Factory(:user, :username => 'foobar', :password => 'secret').save!
     User.authenticate('foobar', 'badpassword').should be_nil
   end
-  
+
   it "should have games based on white or black" do
     user = Factory(:user)
     black_game = Factory(:game, :black_player => user)
     white_game = Factory(:game, :white_player => user)
     user.games.should == [black_game, white_game]
   end
-  
+
   it "should separate games for my turn vs their turn" do
     user = Factory(:user)
     black_game = Factory(:game, :black_player => user, :current_player => user)
@@ -101,7 +101,7 @@ describe User do
     user.games_my_turn.should == [black_game]
     user.games_their_turn.should == [white_game]
   end
-  
+
   it "should filter other games" do
     Game.delete_all
     user = Factory(:user)
