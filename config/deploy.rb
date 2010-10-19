@@ -14,8 +14,8 @@ set :use_sudo,    false
 set :ssh_options, forward_agent: true
 
 set :scm,        "git"
-set :repository, "git@github.com:railsrumble/rr10-team-236.git"
-set :branch,     "master"
+set :repository, "git://github.com/ryanb/govsgo.git"
+set :branch,     "rumble10"
 
 namespace :deploy do
   desc "Tell Passenger to restart."
