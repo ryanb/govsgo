@@ -16,9 +16,9 @@ $(function() {
     current_move   = moves.length;
     current_user   = $("#board").attr("data-current-user");
     current_player = $("#board").attr("data-current-player");
-    $("#board .e").live("click", function() {
-	  if (current_move == moves.length && current_user == current_player) {
-	    $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
+    $("#board_spaces div").click(function() {
+      if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player) {
+        $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
       }
       // Show updating graphic here
     });
