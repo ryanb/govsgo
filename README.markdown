@@ -1,6 +1,6 @@
 # Go vs Go
 
-This is the source code for http://govsgo.com.
+This is the source code for [govsgo.com](http://govsgo.com).
 
 If you find a bug in the site or have a suggestion please post it on the [Issue Tracker](http://github.com/ryanb/govsgo/issues) or fork the project and submit a pull request.
 
