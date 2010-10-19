@@ -1,3 +1,0 @@
-= Go vs Go
-
-We are rumbling!
