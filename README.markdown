@@ -22,3 +22,8 @@ brew install beanstalk
 After that you should be able to start it up with `rails s` and run the specs with `rake`.
 
 To get the AI working you'll need to run `beanstalkd` and `script/play_computer_moves`.
+
+
+## Credits
+
+This site was originally created for Rails Rumble 2010 by Phil Bates, James Edward Gray II and Ryan Bates.
