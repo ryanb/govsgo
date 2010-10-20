@@ -8,7 +8,7 @@ If you find a bug in the site or have a suggestion please post it on the [Issue 
 
 Ruby 1.9.2 is required. If you're using RVM it should automatically switch to 1.9.2 when entering the directory.
 
-Run the following commands to set it up. Note the brew commands to install GNU Go and Beanstalk. You may want to use a different packaging system or install it from the source.
+Run the following commands to set it up. Note the [Homebrew](http://github.com/mxcl/homebrew) commands to install [GNU Go](http://www.gnu.org/software/gnugo/) and [Beanstalk](http://kr.github.com/beanstalkd/). You may want to use a different packaging system or install it from the source.
 
 <pre>
 bundle
