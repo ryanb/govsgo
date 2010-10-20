@@ -14,16 +14,16 @@ if ARGV.shift.to_s.downcase == "stop"
       Process.kill("INT", pid)
       puts "Stopped."
     rescue Exception => error
-      puts "Could not stop:  #{error.message}"
+      puts "Could not stop: #{error.message}"
     end
   else
     puts "Computer player is not running."
   end
 else
   puts "Starting computer player (#{Process.pid})..."
-  ENV["RUBYLIB"]     = File.expand_path(SCRIPT_DIR)
+  ENV["RUBYLIB"] = File.expand_path(SCRIPT_DIR)
   ENV["WORKER_NAME"] = NAME
-  production         = RAILS_ENV == "production"
+  production = RAILS_ENV == "production"
   stalk = "#{'/usr/local/ruby/bin/' if production}stalk"
   exec("#{stalk} worker Game.move#{" >>#{LOG_FILE} 2>&1" if production}")
 end

@@ -10,9 +10,9 @@ module GameThumb
 
   def generate(id, size, black_positions, white_positions)
     images = File.join(IMAGE_DIR, size.to_s)
-    board  = ChunkyPNG::Image.from_file(File.join(images, "board.png"))
-    black  = ChunkyPNG::Image.from_file(File.join(images, "black_stone.png"))
-    white  = ChunkyPNG::Image.from_file(File.join(images, "white_stone.png"))
+    board = ChunkyPNG::Image.from_file(File.join(images, "board.png"))
+    black = ChunkyPNG::Image.from_file(File.join(images, "black_stone.png"))
+    white = ChunkyPNG::Image.from_file(File.join(images, "white_stone.png"))
     offset = 76 / size.to_f
 
     black_positions.each do |x, y|

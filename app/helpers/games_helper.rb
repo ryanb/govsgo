@@ -20,7 +20,7 @@ module GamesHelper
   end
 
   def game_score(score, finished)
-    if finished and score.nonzero?
+    if finished && score.nonzero?
       "won by #{score}"
     else
       pluralize(score.to_i, "captured stone")

@@ -17,17 +17,14 @@ class Game < ActiveRecord::Base
   ### Validations ###
   ###################
 
-  validates_inclusion_of :board_size, in: [9, 13, 19],     allow_nil: true
-  validates_inclusion_of :handicap,   in: (0..9).to_a,     allow_nil: true
-  validates_inclusion_of :komi,       in: [0.5, 5.5, 6.5], allow_nil: true
-  validates_format_of    :moves,
-                         with:      /\A(?:-|[a-s]{2})*\z/,
-                         allow_nil: true
+  validates_inclusion_of :board_size, :in => [9, 13, 19],     :allow_nil => true
+  validates_inclusion_of :handicap,   :in => (0..9).to_a,     :allow_nil => true
+  validates_inclusion_of :komi,       :in => [0.5, 5.5, 6.5], :allow_nil => true
+  validates_format_of    :moves, :with => /\A(?:-|[a-s]{2})*\z/, :allow_nil => true
   validate               :opponent_found
 
   def opponent_found
-    if chosen_opponent == "user" and ( black_player.blank? or
-                                       white_player.blank? )
+    if chosen_opponent == "user" && (black_player.blank? || white_player.blank?)
       errors.add(:opponent_username, "not found")
     end
   end
@@ -72,19 +69,15 @@ class Game < ActiveRecord::Base
   end
 
   def black_positions_list
-    if black_positions       and
-       @black_positions_list and
-       @black_positions_list.size != black_positions.size / 2
-       @black_positions_list = nil
+    if black_positions && @black_positions_list && @black_positions_list.size != black_positions.size / 2
+      @black_positions_list = nil
     end
     @black_positions_list ||= black_positions.to_s.scan(/[a-s]{2}/)
   end
 
   def white_positions_list
-    if white_positions       and
-       @white_positions_list and
-       @white_positions_list.size != white_positions.size / 2
-       @white_positions_list = nil
+    if white_positions && @white_positions_list && @white_positions_list.size != white_positions.size / 2
+      @white_positions_list = nil
     end
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
@@ -111,7 +104,7 @@ class Game < ActiveRecord::Base
       self.valid_positions = engine.legal_moves(:black)
       if handicap.to_i.nonzero?
         self.black_positions = engine.positions(:black)
-        self.current_player  = white_player
+        self.current_player = white_player
       else
         self.current_player = black_player
       end
@@ -122,22 +115,22 @@ class Game < ActiveRecord::Base
   def move(vertex)
     game_engine do |engine|
       engine.replay(moves, first_color)
-      played               = engine.move(current_color, vertex)
+      played = engine.move(current_color, vertex)
       self.valid_positions = engine.legal_moves(next_color)
-      self.current_player  = next_player
+      self.current_player = next_player
       if vertex == "RESIGN"
         finish_game(engine.final_score)
-      elsif vertex == "PASS" and moves =~ /-\z/
+      elsif vertex == "PASS" && moves =~ /-\z/
         self.moves = moves.blank? ? played : [moves, ""].join("-")
         finish_game(engine.final_score)
       else
-        played                = "" if vertex == "PASS"
-        self.moves            = moves.blank? ? played :
+        played = "" if vertex == "PASS"
+        self.moves = moves.blank? ? played :
                                                [moves, played].join("-")
-        self.black_positions  = engine.positions(:black)
-        self.white_positions  = engine.positions(:white)
-        self.black_score      = engine.captures(:black)
-        self.white_score      = engine.captures(:white)
+        self.black_positions = engine.positions(:black)
+        self.white_positions = engine.positions(:white)
+        self.black_score = engine.captures(:black)
+        self.white_score = engine.captures(:white)
         self.position_changed = true
       end
     end
@@ -146,16 +139,15 @@ class Game < ActiveRecord::Base
   def queue_computer_move
     unless current_player_is_human?
       Stalker.enqueue( "Game.move",
-                       id:                id,
-                       next_player_id:    next_player.id,
-                       boardsize:         board_size,
-                       handicap:          handicap,
-                       komi:              komi,
-                       moves_for_gnugo:   GameEngine.sgf_to_gnugo( moves,
-                                                                   board_size ),
-                       moves_for_db:      moves,
-                       first_color:       first_color,
-                       current_color:     current_color )
+                       :id =>                id,
+                       :next_player_id =>    next_player.id,
+                       :boardsize =>         board_size,
+                       :handicap =>          handicap,
+                       :komi =>              komi,
+                       :moves_for_gnugo =>   GameEngine.sgf_to_gnugo(moves, board_size),
+                       :moves_for_db =>      moves,
+                       :first_color =>       first_color,
+                       :current_color =>     current_color )
     end
   end
 
@@ -198,7 +190,7 @@ class Game < ActiveRecord::Base
   end
 
   def resigned?
-    finished? and moves =~ /-{2}\z/
+    finished? && moves =~ /-{2}\z/
   end
 
   def black_player_name
@@ -210,7 +202,7 @@ class Game < ActiveRecord::Base
   end
 
   def update_thumbnail
-    if Rails.env != "test" and position_changed?
+    if Rails.env != "test" && position_changed?
       GameThumb.generate( id,
                           board_size,
                           black_positions_list
@@ -239,9 +231,7 @@ class Game < ActiveRecord::Base
   private
 
   def game_engine
-    GameEngine.run( boardsize: board_size,
-                    handicap:  handicap,
-                    komi:      komi ) do |engine|
+    GameEngine.run(:boardsize => board_size, :handicap => handicap, :komi => komi) do |engine|
       yield engine
     end
   end

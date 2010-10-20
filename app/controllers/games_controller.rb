@@ -9,32 +9,32 @@ class GamesController < ApplicationController
   end
 
   def show
-    @game        = Game.find(params[:id])
+    @game = Game.find(params[:id])
     @other_games = @other_games.paginate(:page => 1, :per_page => 5)
-    @my_games    = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
-    @profiles    = @game.profiles
+    @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
+    @profiles = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
   end
 
   def new
     @game = Game.new
     if params[:username]
-      @game.chosen_opponent   = "user"
+      @game.chosen_opponent = "user"
       @game.opponent_username = params[:username]
     else
       @game.chosen_opponent = "gnugo"
-      @game.chosen_color    = "black"
+      @game.chosen_color = "black"
     end
-    @game.komi       = params[:komi]       || 6.5
-    @game.handicap   = params[:handicap]   || 0
+    @game.komi = params[:komi] || 6.5
+    @game.handicap = params[:handicap] || 0
     @game.board_size = params[:board_size] || 19
     @other_games = @other_games.paginate(:page => 1, :per_page => 5)
     @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
   end
 
   def create
-    @game            = Game.new
-    @game.creator    = current_user_or_guest
+    @game = Game.new
+    @game.creator = current_user_or_guest
     @game.attributes = params[:game]
     @game.prepare
     if @game.save

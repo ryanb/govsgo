@@ -13,8 +13,8 @@ $(function() {
     if ($("#board").attr("data-moves").length != "") {
       moves = $("#board").attr("data-moves").split("-");
     }
-    current_move   = moves.length;
-    current_user   = $("#board").attr("data-current-user");
+    current_move = moves.length;
+    current_user = $("#board").attr("data-current-user");
     current_player = $("#board").attr("data-current-player");
     $("#board_spaces div").click(function() {
       if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player) {
@@ -77,8 +77,8 @@ function addMoves(new_moves, next_player) {
 function stepMove(step) {
   current_move += step;
   var offset = ($("#board").attr("data-handicap") > 0 ? 1 : 0)
-  var color  = (current_move + offset) % 2 ? "b" : "w";
-  var move   = moves[step > 0 ? current_move-1 : current_move]
+  var color = (current_move + offset) % 2 ? "b" : "w";
+  var move = moves[step > 0 ? current_move-1 : current_move]
   $("#board .last").removeClass("last");
   if (move == "") {
 	if (step > 0) {

@@ -2,26 +2,26 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe GameEngine do
   before(:each) do
-    @gtp    = mock
+    @gtp = mock
     @engine = GameEngine.new(@gtp)
   end
 
   it "run should invoke GNU Go with the proper boardsize" do
     Go::GTP.expects(:run_gnugo).yields(@gtp)
     @gtp.expects(:boardsize).with(13)
-    GameEngine.run(boardsize: 13) { }
+    GameEngine.run(:boardsize => 13) { }
   end
 
   it "run should invoke GNU Go with non-zero handicaps" do
     Go::GTP.expects(:run_gnugo).yields(@gtp)
     @gtp.expects(:fixed_handicap).with(2)
-    GameEngine.run(handicap: 2) { }
+    GameEngine.run(:handicap => 2) { }
   end
 
   it "run should invoke GNU Go with the proper komi" do
     Go::GTP.expects(:run_gnugo).yields(@gtp)
     @gtp.expects(:komi).with(5.5)
-    GameEngine.run(komi: 5.5) { }
+    GameEngine.run(:komi => 5.5) { }
   end
 
   it "pass replay to gtp splitting moves into points" do

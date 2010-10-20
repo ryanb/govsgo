@@ -4,9 +4,8 @@
 
 RAILS_ENV  = ENV.fetch("RAILS_ENV", "development")
 RAILS_ROOT = File.join(File.dirname(__FILE__), "..")
-SCRIPT_DIR = File.join(RAILS_ROOT,             "script")
-PID_FILE   = File.join( RAILS_ROOT,
-                        *%W[tmp pids #{ENV['WORKER_NAME']}.pid] )
+SCRIPT_DIR = File.join(RAILS_ROOT, "script")
+PID_FILE   = File.join(RAILS_ROOT, *%W[tmp pids #{ENV['WORKER_NAME']}.pid])
 
 def authorize(&block)
   open(PID_FILE, File::CREAT | File::EXCL | File::WRONLY) do |pid|
@@ -91,7 +90,7 @@ def gnugo_to_sgf(vertices, boardsize)
   if vertices.is_a? Array
     vertices.map { |v| gnugo_to_sgf(v, boardsize) }.join
   else
-    Go::GTP::Point.new(vertices, board_size: boardsize).to_sgf
+    Go::GTP::Point.new(vertices, :board_size => boardsize).to_sgf
   end
 end
 
@@ -102,7 +101,7 @@ end
 def finish_game(final_score)
   if final_score =~ /\A([BW])\+(\d+\.\d+)\z/
     results                                          =
-      {finished_at: Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")}
+      {:finished_at => Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")}
     results[$1 == 'B' ? :black_score : :white_score] = $2.to_f
     results[$1 == 'B' ? :white_score : :black_score] = 0
     results
@@ -132,13 +131,13 @@ job "Game.move" do |args|
     computers_move = gtp.genmove(color)
     captured       = other_stones - gtp.list_stones(next_color)
 
-    sql_update = { valid_positions:   gnugo_to_sgf( gtp.all_legal(next_color),
+    sql_update = { :valid_positions =>   gnugo_to_sgf( gtp.all_legal(next_color),
                                                     boardsize ),
-                   black_positions:   gnugo_to_sgf( gtp.list_stones(:black),
+                   :black_positions =>   gnugo_to_sgf( gtp.list_stones(:black),
                                                     boardsize ),
-                   white_positions:   gnugo_to_sgf( gtp.list_stones(:white),
+                   :white_positions =>   gnugo_to_sgf( gtp.list_stones(:white),
                                                     boardsize ),
-                   current_player_id: args["next_player_id"] }
+                   :current_player_id => args["next_player_id"] }
     if computers_move.to_s.upcase == "RESIGN"
       sql_update.merge!(finish_game(gtp.final_score))
     elsif computers_move.to_s.upcase == "PASS" and moves =~ /-\z/

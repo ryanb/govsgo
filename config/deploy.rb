@@ -5,13 +5,13 @@ default_run_options[:pty] = true
 set  :application, "govsgo.com"
 role :app,         application
 role :web,         application
-role :db,          application, primary: true
+role :db,          application, :primary => true
 
 set :user,        "deploy"
 set :deploy_to,   "/var/apps/govsgo"
 set :deploy_via,  :remote_cache
 set :use_sudo,    false
-set :ssh_options, forward_agent: true
+set :ssh_options, :forward_agent => true
 
 set :scm,        "git"
 set :repository, "git://github.com/ryanb/govsgo.git"
