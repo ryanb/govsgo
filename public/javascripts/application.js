@@ -57,7 +57,7 @@ $(function() {
     startPolling();
   }
   $("#game_opponent_username").focus(function() {
-	$("#game_chosen_opponent_user").attr("checked", "checked");
+    $("#game_chosen_opponent_user").attr("checked", "checked");
   });
 });
 
@@ -76,35 +76,35 @@ function addMoves(new_moves, next_player) {
 
 function stepMove(step) {
   current_move += step;
-  var offset = ($("#board").attr("data-handicap") > 0 ? 1 : 0)
+  var offset = $("#board").attr("data-handicap") > 0 ? 1 : 0;
   var color = (current_move + offset) % 2 ? "b" : "w";
-  var move = moves[step > 0 ? current_move-1 : current_move]
-  $("#board .last").removeClass("last");
-  if (move == "") {
-	if (step > 0) {
-	  if (color == "b") {
-	    alert("Black passed.")
-	  } else {
-	    alert("White passed.")
-	  }
-	} else {
-	  if (color == "b") {
-	    alert("White passed.")
-	  } else {
-	    alert("Black passed.")
-	  }
-	}
+
+  // Update move by adding or removing stones based on what is matched
+  if (step > 0) {
+    updateStones(color, moves[current_move-1], false);
   } else {
-	$.each(move.match(/../g), function(index, position) {
-	  if (index == 0) {
-	    $("#" + position).attr("class", (step > 0 ? color : "e"));
-	    if (current_move == moves.length) {
-	      $("#" + position).addClass("last");
-	    }
-	  } else {
-	    $("#" + position).attr("class", (step > 0 ? "e" : color));
-	  }
-	});
+    updateStones(color, moves[current_move], true);
+  }
+
+  // Update status for passed/resigned
+  $("#board .last").removeClass("last");
+  $(".profile .status").text("");
+  if (moves[current_move-1] == "") {
+    $("#" + color + "_status").text("passed");
+  } else if (current_move > 0) {
+    $("#" + moves[current_move-1].substr(0, 2)).addClass("last");
+  }
+}
+
+function updateStones(color, move, backwards) {
+  if (move != "") {
+    $.each(move.match(/../g), function(index, position) {
+      if (index == 0) {
+        $("#" + position).attr("class", (backwards ? "e" : color));
+      } else {
+        $("#" + position).attr("class", (backwards ? color : "e"));
+      }
+    });
   }
 }
 
