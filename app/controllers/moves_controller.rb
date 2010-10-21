@@ -6,14 +6,11 @@ class MovesController < ApplicationController
 
   def create
     @game = Game.find(params[:game_id])
-    if current_user == @game.current_player && @game.valid_positions_list.include?(params[:move])
-      @game.move(params[:move])
-      @game.save!
-      @game.queue_computer_move
-    else
-      head 409
-    end
+    @game.move(params[:move], current_user)
+    @game.queue_computer_move
   rescue GameEngine::IllegalMove
-    flash[:alert] = "That is an illegal move, try moving somewhere else."
+    flash[:alert] = "That is an illegal move."
+  rescue GameEngine::OutOfTurn
+    flash[:alert] = "It is not your turn to move."
   end
 end

@@ -12,9 +12,9 @@ describe GameEngine do
     end
     
     it "should raise illegal suicide move when placing a stone in surrounding stones" do
-      @engine.replay("ab-cc-ba", :black)
+      @engine.replay("ab-cc-ba", "black")
       lambda {
-        @engine.move(:black, "aa")
+        @engine.move(:white, "aa")
       }.should raise_error(GameEngine::IllegalMove)
     end
   end

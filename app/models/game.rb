@@ -112,7 +112,8 @@ class Game < ActiveRecord::Base
     self.position_changed = true
   end
 
-  def move(vertex)
+  def move(vertex, user)
+    raise GameEngine::OutOfTurn if user.id != current_player_id
     game_engine do |engine|
       engine.replay(moves, first_color)
       played = engine.move(current_color, vertex)
@@ -125,8 +126,7 @@ class Game < ActiveRecord::Base
         finish_game(engine.final_score)
       else
         played = "" if vertex == "PASS"
-        self.moves = moves.blank? ? played :
-                                               [moves, played].join("-")
+        self.moves = moves.blank? ? played : [moves, played].join("-")
         self.black_positions = engine.positions(:black)
         self.white_positions = engine.positions(:white)
         self.black_score = engine.captures(:black)
@@ -134,6 +134,9 @@ class Game < ActiveRecord::Base
         self.position_changed = true
       end
     end
+    # Check current_player again, fetching from database to avoid double moves
+    raise GameEngine::OutOfTurn if user.id != Game.find(id, :select => "current_player_id").current_player_id
+    save!
   end
 
   def queue_computer_move

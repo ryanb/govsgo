@@ -1,6 +1,7 @@
 class GameEngine
   class Error < StandardError; end
   class IllegalMove < Error; end
+  class OutOfTurn < Error; end
   
   def self.sgf_to_gnugo(sgf_moves, board_size)
     sgf_moves.to_s.split("-").map { |move| gnugo_point(move[0..1], board_size) }
