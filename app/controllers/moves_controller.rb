@@ -13,5 +13,7 @@ class MovesController < ApplicationController
     else
       head 409
     end
+  rescue GameEngine::IllegalMove
+    flash[:alert] = "That is an illegal move, try moving somewhere else."
   end
 end

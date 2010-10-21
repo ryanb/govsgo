@@ -1,4 +1,7 @@
 class GameEngine
+  class Error < StandardError; end
+  class IllegalMove < Error; end
+  
   def self.sgf_to_gnugo(sgf_moves, board_size)
     sgf_moves.to_s.split("-").map { |move| gnugo_point(move[0..1], board_size) }
   end
@@ -44,6 +47,7 @@ class GameEngine
     other_stones = @gtp.list_stones(opposite(color))
     if vertex
       @gtp.play(color, gnugo_point(vertex))
+      raise IllegalMove unless @gtp.success?
     else
       vertex = sgf_point(@gtp.genmove(color))
     end

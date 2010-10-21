@@ -1,3 +1,7 @@
-addMoves("<%= @game.moves_after(params[:after].to_i) %>", "<%= @game.current_player_id.to_i %>");
-$('.profile .details #score_<%= @game.black_player_id.to_i %>').html(<%= raw game_score(@game.black_score, @game.finished?).to_s.inspect %>);
-$('.profile .details #score_<%= @game.white_player_id.to_i %>').html(<%= raw game_score(@game.white_score, @game.finished?).to_s.inspect %>);
+<% if flash[:alert] %>
+  alert("<%= escape_javascript(flash.delete(:alert)) %>");
+<% else %>
+  addMoves("<%= @game.moves_after(params[:after].to_i) %>", "<%= @game.current_player_id.to_i %>");
+  $('.profile .details #score_<%= @game.black_player_id.to_i %>').html(<%= raw game_score(@game.black_score, @game.finished?).to_s.inspect %>);
+  $('.profile .details #score_<%= @game.white_player_id.to_i %>').html(<%= raw game_score(@game.white_score, @game.finished?).to_s.inspect %>);
+<% end %>
