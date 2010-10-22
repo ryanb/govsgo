@@ -13,6 +13,7 @@ class GameEngine
   end
 
   def initialize(gtp, options = {})
+    @resigned = false
     @gtp = gtp
     @board_size = options[:board_size] || 19
     @handicap = options[:handicap] || 0
@@ -32,7 +33,10 @@ class GameEngine
   end
 
   def move(color, vertex = nil)
-    if %w[PASS RESIGN].include? vertex
+    if vertex == "RESIGN"
+      @resigned = true
+      vertex
+    elsif vertex == "PASS"
       play(color, vertex)
       vertex
     else
@@ -64,7 +68,7 @@ class GameEngine
   end
 
   def game_finished?
-    @gtp.over?
+    @resigned || @gtp.over?
   end
 
   def first_color
@@ -98,8 +102,8 @@ class GameEngine
   end
 
   def sgf_point(vertex)
-    if %w[PASS RESIGN].include? vertex
-      vertex
+    if %w[PASS RESIGN].include? vertex.to_s.upcase
+      vertex.to_s.upcase
     else
       point(vertex).to_sgf
     end

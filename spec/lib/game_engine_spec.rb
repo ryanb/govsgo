@@ -32,6 +32,12 @@ describe GameEngine do
       @engine.replay("ab-cc-ba-dd")
       @engine.move("black", "aa").should == "aa"
     end
+
+    it "should end game when resigning" do
+      @engine.replay("ab-cc-ba-dd")
+      @engine.move("black", "RESIGN").should == "RESIGN"
+      @engine.should be_game_finished
+    end
   end
 
   describe "with gtp stub" do
@@ -114,11 +120,6 @@ describe GameEngine do
     it "should return PASS as move when passing" do
       @gtp.expects(:play).with(:black, "PASS")
       @engine.move(:black, "PASS").should == "PASS"
-    end
-
-    it "should return RESIGN when resigning" do
-      @gtp.expects(:play).with(:white, "RESIGN")
-      @engine.move(:white, "RESIGN").should == "RESIGN"
     end
 
     it "should be finished when gtp says game is over" do
