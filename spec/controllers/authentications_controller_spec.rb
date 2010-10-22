@@ -53,4 +53,17 @@ describe AuthenticationsController do
     response.should redirect_to(edit_current_user_path)
     Authentication.exists?(authentication.id).should be_false
   end
+
+  it "create action should log in user and merge guest games into user" do
+    guest = User.create!(:guest => true)
+    @controller.stubs(:current_user).returns(guest)
+    game = Factory(:game, :black_player => guest)
+    user = Factory(:user)
+    user.authentications.create!(:provider => "foo", :uid => "123")
+    request.env["omniauth.auth"] = {"provider" => "foo", "uid" => "123"}
+    post :create
+    response.should redirect_to(root_url)
+    session[:user_id].should == user.id
+    game.reload.black_player.should == user
+  end
 end

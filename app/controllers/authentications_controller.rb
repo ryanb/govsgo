@@ -6,6 +6,7 @@ class AuthenticationsController < ApplicationController
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
+      current_user.move_games_to(authentication.user) if current_user && current_user.guest?
       flash[:notice] = "Signed in successfully."
       remember_user(authentication.user)
       redirect_to root_url

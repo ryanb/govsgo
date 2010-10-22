@@ -57,6 +57,13 @@ class User < ActiveRecord::Base
     [username, rank].reject(&:blank?).join(" ")
   end
 
+  def move_games_to(user)
+    games.each do |game|
+      game.update_attribute(:black_player_id, user.id) if game.black_player_id == id
+      game.update_attribute(:white_player_id, user.id) if game.white_player_id == id
+    end
+  end
+
   private
 
   def prepare_password

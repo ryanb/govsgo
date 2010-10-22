@@ -10,8 +10,9 @@
   </p>
   <p>
     <%= f.label :rank %>
-    <%= f.text_field :rank %><br>
-    <span class="hint">such as "4k" leave blank if unknown</span>
+    <%= f.text_field :rank, :size => 10 %>
+    <span class="hint">such as "4k"</span><br>
+    <span class="field hint">leave blank if unknown</span>
   </p>
   <% unless session[:omniauth] %>
   <p>
