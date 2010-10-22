@@ -1,10 +1,8 @@
 require "fileutils"
 
 module GameThumb
-  IMAGE_DIR = File.join( File.dirname(__FILE__),
-                         *%w[.. public images thumbnail] )
-  THUMB_DIR = File.join( File.dirname(__FILE__),
-                         *%w[.. public assets games thumbs] )
+  IMAGE_DIR = File.join(File.dirname(__FILE__), *%w[.. public images thumbnail])
+  THUMB_DIR = File.join(File.dirname(__FILE__), *%w[.. public assets games thumbs])
 
   module_function
 
@@ -15,16 +13,19 @@ module GameThumb
     white = ChunkyPNG::Image.from_file(File.join(images, "white_stone.png"))
     offset = 76 / size.to_f
 
-    black_positions.each do |x, y|
-      board.compose(black, (x * offset).round, (y * offset).round)
-    end
-    white_positions.each do |x, y|
-      board.compose(white, (x * offset).round, (y * offset).round)
-    end
+    add_stones(board, black, black_positions, offset)
+    add_stones(board, white, white_positions, offset)
 
     FileUtils.mkdir_p(THUMB_DIR)
     thumb = File.join(THUMB_DIR, "#{id}.png")
     board.save("#{thumb}~", :fast_rgba)
     FileUtils.mv("#{thumb}~", thumb)
+  end
+
+  def add_stones(board, stone, positions, offset)
+    positions.to_s.scan(/[a-s]{2}/).each do |position|
+      x, y = Go::GTP::Point.new(position).to_indices
+      # board.compose(stone, (x * offset).round, (y * offset).round)
+    end
   end
 end

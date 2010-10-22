@@ -7,7 +7,6 @@ one:
   black_positions: MyText
   white_positions: MyText
   moves: MyText
-  valid_positions: MyText
   komi: 1.5
   handicap: 1
   board_size: 1
@@ -24,7 +23,6 @@ two:
   black_positions: MyText
   white_positions: MyText
   moves: MyText
-  valid_positions: MyText
   komi: 1.5
   handicap: 1
   board_size: 1

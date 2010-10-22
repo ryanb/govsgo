@@ -89,8 +89,10 @@ function stepMove(step) {
   // Update status for passed/resigned
   $("#board .last").removeClass("last");
   $(".profile .status").text("");
-  if (moves[current_move-1] == "") {
+  if (moves[current_move-1] == "PASS") {
     $("#" + color + "_status").text("passed");
+  } else if (moves[current_move-1] == "RESIGN") {
+    $("#" + color + "_status").text("resigned");
   } else if (current_move > 0) {
     $("#" + moves[current_move-1].substr(0, 2)).addClass("last");
   }

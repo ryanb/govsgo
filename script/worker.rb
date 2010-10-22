@@ -78,37 +78,13 @@ end
 ############
 
 CONFIG_PATH = File.join(RAILS_ROOT, *%w[config database.yml])
-THUMB_LIB   = File.join(RAILS_ROOT, *%w[lib game_thumb])
 
 require "mysql2"
 require "go/gtp"
 require "oily_png"
 
-require THUMB_LIB
-
-def gnugo_to_sgf(vertices, boardsize)
-  if vertices.is_a? Array
-    vertices.map { |v| gnugo_to_sgf(v, boardsize) }.join
-  else
-    Go::GTP::Point.new(vertices, :board_size => boardsize).to_sgf
-  end
-end
-
-def sgf_to_indices(sgf)
-  sgf.to_s.scan(/[a-s]{2}/).map { |ln| Go::GTP::Point.new(ln).to_indices }
-end
-
-def finish_game(final_score)
-  if final_score =~ /\A([BW])\+(\d+\.\d+)\z/
-    results                                          =
-      {:finished_at => Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")}
-    results[$1 == 'B' ? :black_score : :white_score] = $2.to_f
-    results[$1 == 'B' ? :white_score : :black_score] = 0
-    results
-  else
-    raise "Unrecognized score format:  #{final_score}"
-  end
-end
+require File.join(RAILS_ROOT, *%w[lib game_thumb])
+require File.join(RAILS_ROOT, *%w[lib game_engine])
 
 config = open(CONFIG_PATH) { |file|
   Hash[YAML.load(file)[RAILS_ENV].map { |k, v| [k.to_sym, v] }]
@@ -116,51 +92,25 @@ config = open(CONFIG_PATH) { |file|
 mysql  = Mysql2::Client.new(config)
 
 job "Game.move" do |args|
-  Go::GTP.run_gnugo do |gtp|
-    id         = args["id"]
-    boardsize  = args["boardsize"].to_i
-    color      = args["current_color"]
-    next_color = color == "black" ? "white" : "black"
-    moves      = args["moves_for_db"]
-
-    gtp.boardsize      boardsize         if boardsize
-    gtp.fixed_handicap args["handicap"]  if args["handicap"].to_i.nonzero?
-    gtp.komi           args["komi"]      if args["komi"]
-    gtp.replay(args["moves_for_gnugo"], args["first_color"])
-    other_stones   = gtp.list_stones(next_color)
-    computers_move = gtp.genmove(color)
-    captured       = other_stones - gtp.list_stones(next_color)
-
-    sql_update = { :valid_positions =>   gnugo_to_sgf( gtp.all_legal(next_color),
-                                                    boardsize ),
-                   :black_positions =>   gnugo_to_sgf( gtp.list_stones(:black),
-                                                    boardsize ),
-                   :white_positions =>   gnugo_to_sgf( gtp.list_stones(:white),
-                                                    boardsize ),
-                   :current_player_id => args["next_player_id"] }
-    if computers_move.to_s.upcase == "RESIGN"
-      sql_update.merge!(finish_game(gtp.final_score))
-    elsif computers_move.to_s.upcase == "PASS" and moves =~ /-\z/
-      sql_update[:moves] = "#{moves}-"
-      sql_update.merge!(finish_game(gtp.final_score))
+  id = args["id"]
+  game = mysql.query("select * from games where id='#{id}' limit 1", :symbolize_keys => true).first
+  update = {}
+  GameEngine.run(:board_size => game[:board_size].to_i, :handicap => game[:handicap].to_i, :komi => game[:komi].to_f) do |engine|
+    engine.replay(game[:moves])
+    update[:current_player_id] = args["next_player_id"]
+    update[:moves] = [game[:moves].to_s, engine.move(args["current_color"])].reject(&:empty?).join("-")
+    update[:black_positions] = engine.positions(:black)
+    update[:white_positions] = engine.positions(:white)
+    if engine.game_finished?
+      update[:finished_at] = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
+      update[:black_score] = engine.black_score
+      update[:white_score] = engine.white_score
     else
-      computers_move           = computers_move.to_s.upcase == "PASS" ?
-                                 ""                                   :
-                                 gnugo_to_sgf( [computers_move] + captured,
-                                               boardsize )
-      sql_update[:moves]       = [moves, computers_move].compact.join("-")
-      sql_update[:black_score] = gtp.captures(:black)
-      sql_update[:white_score] = gtp.captures(:white)
+      update[:black_score] = engine.captures(:black)
+      update[:white_score] = engine.captures(:white)
     end
-    mysql.query(
-      "UPDATE games SET "                                             +
-      sql_update.map { |col, val| "%s = %p" % [col, val] }.join(", ") +
-      " WHERE id = #{id} AND current_player_id IS NULL AND "          +
-      "finished_at IS NULL"
-    )
-    GameThumb.generate( id,
-                        boardsize,
-                        sgf_to_indices(sql_update[:black_positions]),
-                        sgf_to_indices(sql_update[:white_positions]) )
   end
+  values = update.map { |col, val| "#{col}='#{mysql.escape(val.to_s)}'" }.join(", ")
+  mysql.query("UPDATE games SET #{values} WHERE id=#{id} AND current_player_id IS NULL AND finished_at IS NULL")
+  GameThumb.generate(id, game[:board_size], update[:black_positions], update[:white_positions])
 end

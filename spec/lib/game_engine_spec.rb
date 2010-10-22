@@ -6,19 +6,19 @@ describe GameEngine do
       @gtp = Go::GTP.run_gnugo
       @engine = GameEngine.new(@gtp)
     end
-    
+
     after(:each) do
       @gtp.quit
     end
-    
+
     it "should raise illegal suicide move when placing a stone in surrounding stones" do
-      @engine.replay("ab-cc-ba", "black")
+      @engine.replay("ab-cc-ba")
       lambda {
         @engine.move(:white, "aa")
       }.should raise_error(GameEngine::IllegalMove)
     end
   end
-  
+
   describe "with gtp stub" do
     before(:each) do
       @gtp = mock
@@ -29,7 +29,7 @@ describe GameEngine do
     it "run should invoke GNU Go with the proper boardsize" do
       Go::GTP.expects(:run_gnugo).yields(@gtp)
       @gtp.expects(:boardsize).with(13)
-      GameEngine.run(:boardsize => 13) { }
+      GameEngine.run(:board_size => 13) { }
     end
 
     it "run should invoke GNU Go with non-zero handicaps" do
@@ -44,14 +44,20 @@ describe GameEngine do
       GameEngine.run(:komi => 5.5) { }
     end
 
-    it "pass replay to gtp splitting moves into points" do
-      @gtp.expects(:replay).with(%w[A17 A16], "black")
-      @engine.replay("acff-ad", "black")
+    it "should call play for each move on replay passing in GNU Go position" do
+      @gtp.expects(:play).with(:white, "A16")
+      @gtp.expects(:play).with(:black, "A17")
+      @engine.replay("acff-ad")
     end
 
-    it "pass empty array of replay points when nil" do
-      @gtp.expects(:replay).with([], "black")
-      @engine.replay(nil, "black")
+    it "should do nothing for replay when passing an nil for moves" do
+      @engine.replay(nil)
+    end
+
+    it "should replay pass and resign correctly" do
+      @gtp.expects(:play).with(:white, "RESIGN")
+      @gtp.expects(:play).with(:black, "PASS")
+      @engine.replay("PASS-RESIGN")
     end
 
     it "should move stone and return point back" do
@@ -76,6 +82,41 @@ describe GameEngine do
     it "should convert black positions to points" do
       @gtp.stubs(:list_stones).with(:black).returns(%w[A17 A16])
       @engine.positions(:black).should == "acad"
+    end
+
+    it "should determine scores when black wins" do
+      @gtp.stubs(:final_score).returns("B+70.5")
+      @engine.black_score.should == 70.5
+      @engine.white_score.should == 0
+    end
+
+    it "should determine scores when white wins" do
+      @gtp.stubs(:final_score).returns("W+35.5")
+      @engine.black_score.should == 0
+      @engine.white_score.should == 35.5
+    end
+
+    it "should return PASS as move when passing" do
+      @gtp.expects(:play).with(:black, "PASS")
+      @engine.move(:black, "PASS").should == "PASS"
+    end
+
+    it "should return RESIGN when resigning" do
+      @gtp.expects(:play).with(:white, "RESIGN")
+      @engine.move(:white, "RESIGN").should == "RESIGN"
+    end
+
+    it "should be finished when gtp says game is over" do
+      @gtp.stubs(:over?).returns(true)
+      @engine.should be_game_finished
+    end
+
+    it "should have black be first color by default" do
+      @engine.first_color.should == :black
+    end
+
+    it "should have white be first color when handicap is used" do
+      GameEngine.new(nil, :handicap => 2).first_color.should == :white
     end
   end
 end

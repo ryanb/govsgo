@@ -82,10 +82,6 @@ class Game < ActiveRecord::Base
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
 
-  def valid_positions_list
-    valid_positions.to_s.scan(/[a-s]{2}/) + %w[PASS RESIGN]
-  end
-
   def prepare
     opponent = nil
     if chosen_opponent == "user"
@@ -101,7 +97,6 @@ class Game < ActiveRecord::Base
       self.white_player = creator
     end
     game_engine do |engine|
-      self.valid_positions = engine.legal_moves(:black)
       if handicap.to_i.nonzero?
         self.black_positions = engine.positions(:black)
         self.current_player = white_player
@@ -115,42 +110,30 @@ class Game < ActiveRecord::Base
   def move(vertex, user)
     raise GameEngine::OutOfTurn if user.id != current_player_id
     game_engine do |engine|
-      engine.replay(moves, first_color)
-      played = engine.move(current_color, vertex)
-      self.valid_positions = engine.legal_moves(next_color)
+      engine.replay(moves)
       self.current_player = next_player
-      if vertex == "RESIGN"
-        finish_game(engine.final_score)
-      elsif vertex == "PASS" && moves =~ /-\z/
-        self.moves = moves.blank? ? played : [moves, ""].join("-")
-        finish_game(engine.final_score)
+      self.moves = [moves, engine.move(current_color, vertex)].reject(&:blank?).join("-")
+      self.black_positions = engine.positions(:black)
+      self.white_positions = engine.positions(:white)
+      if engine.game_finished?
+        self.finished_at = Time.now
+        self.black_score = engine.black_score
+        self.white_score = engine.white_score
       else
-        played = "" if vertex == "PASS"
-        self.moves = moves.blank? ? played : [moves, played].join("-")
-        self.black_positions = engine.positions(:black)
-        self.white_positions = engine.positions(:white)
         self.black_score = engine.captures(:black)
         self.white_score = engine.captures(:white)
         self.position_changed = true
       end
     end
-    # Check current_player again, fetching from database to avoid double moves
+    # Check current_player again, fetching from database to async double move problem
+    # This should probably be moved into a database lock so no updates happen between here and the save
     raise GameEngine::OutOfTurn if user.id != Game.find(id, :select => "current_player_id").current_player_id
     save!
   end
 
   def queue_computer_move
     unless current_player_is_human?
-      Stalker.enqueue( "Game.move",
-                       :id =>                id,
-                       :next_player_id =>    next_player.id,
-                       :boardsize =>         board_size,
-                       :handicap =>          handicap,
-                       :komi =>              komi,
-                       :moves_for_gnugo =>   GameEngine.sgf_to_gnugo(moves, board_size),
-                       :moves_for_db =>      moves,
-                       :first_color =>       first_color,
-                       :current_color =>     current_color )
+      Stalker.enqueue("Game.move", :id => id, :next_player_id => next_player.id, :current_color => current_color)
     end
   end
 
@@ -160,10 +143,6 @@ class Game < ActiveRecord::Base
 
   def last_move
     (moves.to_s.split("-").last || "")[/\A[a-s]{2}/]
-  end
-
-  def first_color
-    handicap.to_i.nonzero? ? "white" : "black"
   end
 
   def current_color
@@ -178,22 +157,8 @@ class Game < ActiveRecord::Base
     current_player == black_player ? white_player : black_player
   end
 
-  def finish_game(final_score)
-    self.finished_at = Time.now
-    if final_score =~ /\A([BW])\+(\d+\.\d+)\z/
-      send("#{$1 == 'B' ? :black_score : :white_score}=", $2.to_f)
-      send("#{$1 == 'B' ? :white_score : :black_score}=", 0)
-    else
-      raise "Unrecognized score format:  #{final_score}"
-    end
-  end
-
   def finished?
     not finished_at.blank?
-  end
-
-  def resigned?
-    finished? && moves =~ /-{2}\z/
   end
 
   def black_player_name
@@ -206,12 +171,7 @@ class Game < ActiveRecord::Base
 
   def update_thumbnail
     if Rails.env != "test" && position_changed?
-      GameThumb.generate( id,
-                          board_size,
-                          black_positions_list
-                          .map { |ln| Go::GTP::Point.new(ln).to_indices },
-                          white_positions_list
-                          .map { |ln| Go::GTP::Point.new(ln).to_indices } )
+      GameThumb.generate(id, board_size, black_positions, white_positions)
     end
   end
 
@@ -234,7 +194,7 @@ class Game < ActiveRecord::Base
   private
 
   def game_engine
-    GameEngine.run(:boardsize => board_size, :handicap => handicap, :komi => komi) do |engine|
+    GameEngine.run(:board_size => board_size, :handicap => handicap, :komi => komi) do |engine|
       yield engine
     end
   end

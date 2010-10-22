@@ -89,7 +89,7 @@ describe Game do
     Factory.build(:game, :white_player => user).white_player_name.should == user.username
     Game.new.white_player_name.should == "GNU Go"
   end
-  
+
   it "should raise an OutOfTurn exception when attempting to play when it's not your turn" do
     user = Factory(:user)
     @game.save!
