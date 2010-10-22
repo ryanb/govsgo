@@ -26,13 +26,6 @@ describe Game do
     @game.should have(:no).errors_on(:komi)
   end
 
-  it "should require that moves be a valid list of moves and captures" do
-    @game.moves = "wrong"
-    @game.should have(1).error_on(:moves)
-    @game.moves = "acbbccdd-ad"
-    @game.should have(:no).errors_on(:moves)
-  end
-
   it "should indicate a human player when black_player_id is set" do
     @game.should_not be_black_player_is_human
     @game.black_player_id = 1
