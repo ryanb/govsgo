@@ -1,6 +1,6 @@
 # Go vs Go
 
-This is the source code for [govsgo.com](http://govsgo.com).
+This is the source code for [govsgo.com](http://govsgo.com), a site for playing [Go](http://en.wikipedia.org/wiki/Go_(game)) online with other players or against the computer.
 
 If you find a bug in the site or have a suggestion please post it on the [Issue Tracker](http://github.com/ryanb/govsgo/issues) or fork the project and submit a pull request.
 
@@ -8,7 +8,7 @@ If you find a bug in the site or have a suggestion please post it on the [Issue 
 
 Ruby 1.9.2 is required. If you're using RVM it should automatically switch to 1.9.2 when entering the directory.
 
-Run the following commands to set it up. Note the [Homebrew](http://github.com/mxcl/homebrew) commands to install [GNU Go](http://www.gnu.org/software/gnugo/) and [Beanstalk](http://kr.github.com/beanstalkd/). You may want to use a different packaging system or install them from the source.
+Run the following commands to set it up. Note the [Homebrew](http://github.com/mxcl/homebrew) command to install [GNU Go](http://www.gnu.org/software/gnugo/) and [Beanstalk](http://kr.github.com/beanstalkd/). You may want to use a different packaging system or install them from the source.
 
 <pre>
 bundle
