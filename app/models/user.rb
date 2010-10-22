@@ -59,8 +59,9 @@ class User < ActiveRecord::Base
 
   def move_games_to(user)
     games.each do |game|
-      game.update_attribute(:black_player_id, user.id) if game.black_player_id == id
-      game.update_attribute(:white_player_id, user.id) if game.white_player_id == id
+      %w[black white current].each do |type|
+        game.update_attribute("#{type}_player_id", user.id) if game.send("#{type}_player_id") == id
+      end
     end
   end
 

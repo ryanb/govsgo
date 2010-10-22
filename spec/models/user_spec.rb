@@ -116,4 +116,14 @@ describe User do
     Factory.build(:user, :last_request_at => 6.minutes.ago).should_not be_online
     Factory.build(:user).should_not be_online
   end
+
+  it "should update black, white, and current player id when moving games" do
+    user = Factory(:user)
+    game = Factory(:game, :black_player => user, :white_player => user, :white_player => user)
+    other_user = Factory(:user)
+    user.move_games_to(other_user)
+    game.reload.black_player.should == other_user
+    game.black_player.should == other_user
+    game.current_player.should == other_user
+  end
 end
