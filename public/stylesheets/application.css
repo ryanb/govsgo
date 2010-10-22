@@ -196,10 +196,17 @@ form label {
   width: 142px;
   text-align: right;
   padding-right: 8px;
+  padding-top: 2px;
 }
 
 .field {
   margin-left: 150px;
+}
+
+.hint {
+  font-size: 11px;
+  font-style: italic;
+  padding-left: 155px;
 }
 
 

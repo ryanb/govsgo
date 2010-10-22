@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :email, :password, :password_confirmation, :guest
+  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank
 
   has_many :authentications
 
@@ -51,6 +51,10 @@ class User < ActiveRecord::Base
 
   def online?
     last_request_at && last_request_at > 5.minutes.ago
+  end
+
+  def name_with_rank
+    [username, rank].reject(&:blank?).join(" ")
   end
 
   private
