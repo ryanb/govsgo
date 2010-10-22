@@ -97,8 +97,8 @@ job "Game.move" do |args|
   update = {}
   GameEngine.run(:board_size => game[:board_size].to_i, :handicap => game[:handicap].to_i, :komi => game[:komi].to_f) do |engine|
     engine.replay(game[:moves])
-    update[:current_player_id] = args["next_player_id"]
     update[:moves] = [game[:moves].to_s, engine.move(args["current_color"])].reject(&:empty?).join("-")
+    update[:current_player_id] = args["next_player_id"]
     update[:black_positions] = engine.positions(:black)
     update[:white_positions] = engine.positions(:white)
     if engine.game_finished?

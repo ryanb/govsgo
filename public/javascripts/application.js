@@ -54,7 +54,9 @@ $(function() {
       }
       return false;
     });
-    startPolling();
+    if ($("#board").attr("data-finished") != "true") {
+      startPolling();
+    }
   }
   $("#game_opponent_username").focus(function() {
     $("#game_chosen_opponent_user").attr("checked", "checked");
@@ -71,7 +73,6 @@ function addMoves(new_moves, next_player) {
     }
   });
   current_player = next_player;
-  startPolling();
 }
 
 function stepMove(step) {
@@ -123,7 +124,6 @@ function pollMoves() {
     pollTimer += 1000;
   }
   $.getScript(window.location.pathname + '/moves?after=' + moves.length);
-  // setTimeout(pollMoves, pollTimer);
 }
 
 function resetPollTimer() {

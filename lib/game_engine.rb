@@ -90,8 +90,8 @@ class GameEngine
   end
 
   def gnugo_point(vertex)
-    if %w[PASS RESIGN].include? vertex
-      vertex
+    if %w[PASS RESIGN].include? vertex.to_s.upcase
+      vertex.to_s.upcase
     else
       point(vertex).to_gnugo(@board_size)
     end

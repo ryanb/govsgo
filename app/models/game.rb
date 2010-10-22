@@ -20,7 +20,6 @@ class Game < ActiveRecord::Base
   validates_inclusion_of :board_size, :in => [9, 13, 19],     :allow_nil => true
   validates_inclusion_of :handicap,   :in => (0..9).to_a,     :allow_nil => true
   validates_inclusion_of :komi,       :in => [0.5, 5.5, 6.5], :allow_nil => true
-  validates_format_of    :moves, :with => /\A(?:-|[a-s]{2})*\z/, :allow_nil => true
   validate               :opponent_found
 
   def opponent_found
@@ -181,8 +180,19 @@ class Game < ActiveRecord::Base
       else
         profile.handicap_or_komi = "#{handicap} handicap"
       end
+      if color.to_sym == :white
+        profile.handicap_or_komi = "#{komi} komi"
+      else
+        profile.handicap_or_komi = "#{handicap} handicap"
+      end
       profile.score = send("#{color}_score")
       profile.user = send("#{color}_player")
+      if profile.user != current_player
+        case moves.to_s.split("-").last
+        when "PASS" then profile.last_status = "passed"
+        when "RESIGN" then profile.last_status = "resigned"
+        end
+      end
     end
   end
 
