@@ -23,5 +23,5 @@ end
 
 group :development do
   gem 'capistrano'
-  gem 'thin'
+  gem 'mongrel', '1.2.0.pre2'
 end

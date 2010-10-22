@@ -45,11 +45,10 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
     chunky_png (0.10.3)
-    daemons (1.1.0)
+    daemons (1.0.10)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
-    eventmachine (0.12.10)
     factory_girl (1.3.2)
     factory_girl_rails (1.0)
       factory_girl (~> 1.3)
@@ -57,6 +56,7 @@ GEM
     faraday (0.4.6)
       addressable (>= 2.1.1)
       rack (>= 1.0.1)
+    gem_plugin (0.2.3)
     go_gtp (0.0.4)
     highline (1.6.1)
     i18n (0.4.1)
@@ -70,6 +70,9 @@ GEM
     mime-types (1.16)
     mocha (0.9.8)
       rake
+    mongrel (1.2.0.pre2)
+      daemons (~> 1.0.10)
+      gem_plugin (~> 0.2.3)
     multi_json (0.0.4)
     mysql2 (0.2.4)
     net-ldap (0.1.1)
@@ -160,10 +163,6 @@ GEM
     stalker (0.5.0)
       beanstalk-client
       json_pure
-    thin (1.2.7)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.14.3)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
@@ -182,6 +181,7 @@ DEPENDENCIES
   go_gtp (= 0.0.4)
   jquery-rails
   mocha
+  mongrel (= 1.2.0.pre2)
   mysql2
   nifty-generators
   oily_png (= 0.1.0)
@@ -189,5 +189,4 @@ DEPENDENCIES
   rails (= 3.0.0)
   rspec-rails (>= 2.0.1)
   stalker (= 0.5.0)
-  thin
   will_paginate (= 3.0.pre2)
