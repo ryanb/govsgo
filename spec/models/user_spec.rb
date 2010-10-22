@@ -110,4 +110,10 @@ describe User do
     other_game = Factory(:game)
     user.other_games.should == [other_game]
   end
+
+  it "should report user online when last request time within 5 minutes" do
+    Factory.build(:user, :last_request_at => 4.minutes.ago).should be_online
+    Factory.build(:user, :last_request_at => 6.minutes.ago).should_not be_online
+    Factory.build(:user).should_not be_online
+  end
 end

@@ -49,6 +49,10 @@ class User < ActiveRecord::Base
     self.username = omniauth['user_info']['nickname'] if username.blank?
   end
 
+  def online?
+    last_request_at && last_request_at > 5.minutes.ago
+  end
+
   private
 
   def prepare_password

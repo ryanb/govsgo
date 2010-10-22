@@ -258,3 +258,15 @@ form label {
   right: 15px;
   top: 25px;
 }
+
+.user_offline, .user_online {
+  padding-left: 3px;
+}
+
+.user_offline {
+  color: #C61B19;
+}
+
+.user_online {
+  color: #00A200;
+}

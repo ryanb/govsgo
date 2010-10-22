@@ -1,8 +1,8 @@
 <div class="game">
   <%= link_to_game_thumbnail game %>
   <div class="details">
-    <div class="player black"><%= game.black_player_name %></div>
-    <div class="player white"><%= game.white_player_name %></div>
+    <div class="player black"><%= game.black_player_name %> <%= online_status(game.black_player) %></div>
+    <div class="player white"><%= game.white_player_name %> <%= online_status(game.white_player) %></div>
   </div>
   <%= link_to image_tag("game/go_button.png"), game, :size => "46x31", :class => "go_button" %>
 </div>
