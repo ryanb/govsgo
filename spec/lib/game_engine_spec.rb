@@ -17,6 +17,16 @@ describe GameEngine do
         @engine.move(:white, "aa")
       }.should raise_error(GameEngine::IllegalMove)
     end
+
+    it "should report back captured stones for black" do
+      @engine.replay("dd-aa-ab-cc")
+      @engine.move("black", "ba").should == "baaa"
+    end
+
+    it "should report back captured stones for white" do
+      @engine.replay("aa-ab-cc")
+      @engine.move("white", "ba").should == "baaa"
+    end
   end
 
   describe "with gtp stub" do

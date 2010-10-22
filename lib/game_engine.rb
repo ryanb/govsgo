@@ -20,7 +20,7 @@ class GameEngine
 
   def replay(moves)
     colors = [:black, :white].cycle
-    colors.next if first_color == :white
+    colors.next if first_color.to_sym == :white
     moves.to_s.split("-").each do |move|
       play(colors.next, (move =~ /[A-Z]/ ? move : move[0..1]))
     end
@@ -78,7 +78,7 @@ class GameEngine
   end
 
   def opposite(color)
-    color == :black ? :white : :black
+    color.to_sym == :black ? :white : :black
   end
 
   def point(vertex)

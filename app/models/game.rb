@@ -30,8 +30,7 @@ class Game < ActiveRecord::Base
   end
   private :opponent_found
 
-  attr_accessible :komi, :handicap, :board_size,
-                  :chosen_color, :chosen_opponent, :opponent_username
+  attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
 
   ##############
   ### Scopes ###
@@ -87,7 +86,7 @@ class Game < ActiveRecord::Base
     if chosen_opponent == "user"
       opponent = User.find_by_username(opponent_username)
     end
-    color = chosen_color.blank? ? %w[white black].sample : chosen_color
+    color = chosen_color.blank? ? %w[black white].sample : chosen_color
     case color
     when "black"
       self.black_player = creator
@@ -146,11 +145,11 @@ class Game < ActiveRecord::Base
   end
 
   def current_color
-    current_player == black_player ? "black" : "white"
+    current_player == black_player ? :black : :white
   end
 
   def next_color
-    current_player == black_player ? "white" : "black"
+    current_player == black_player ? :white : :black
   end
 
   def next_player
@@ -177,7 +176,7 @@ class Game < ActiveRecord::Base
 
   def profile_for(color)
     Profile.new(color).tap do |profile|
-      if color == :white
+      if color.to_sym == :white
         profile.handicap_or_komi = "#{komi} komi"
       else
         profile.handicap_or_komi = "#{handicap} handicap"
