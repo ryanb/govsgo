@@ -113,7 +113,7 @@ class Game < ActiveRecord::Base
       self.black_positions = engine.positions(:black)
       self.white_positions = engine.positions(:white)
       self.current_player = next_player
-      if engine.game_finished?
+      if engine.over?
         self.finished_at = Time.now
         self.black_score = engine.black_score
         self.white_score = engine.white_score

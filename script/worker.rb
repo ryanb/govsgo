@@ -101,7 +101,7 @@ job "Game.move" do |args|
     update[:current_player_id] = args["next_player_id"]
     update[:black_positions] = engine.positions(:black)
     update[:white_positions] = engine.positions(:white)
-    if engine.game_finished?
+    if engine.over?
       update[:finished_at] = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
       update[:black_score] = engine.black_score
       update[:white_score] = engine.white_score

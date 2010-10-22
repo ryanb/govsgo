@@ -36,7 +36,14 @@ describe GameEngine do
     it "should end game when resigning" do
       @engine.replay("ab-cc-ba-dd")
       @engine.move("black", "RESIGN").should == "RESIGN"
-      @engine.should be_game_finished
+      @engine.should be_over
+    end
+
+    it "should report illegal move when playing after resigning" do
+      @engine.replay("aa-RESIGN")
+      lambda {
+        @engine.move("black", "bb")
+      }.should raise_error(GameEngine::IllegalMove)
     end
   end
 
@@ -76,18 +83,19 @@ describe GameEngine do
     end
 
     it "should replay pass and resign correctly" do
-      @gtp.expects(:play).with(:white, "RESIGN")
       @gtp.expects(:play).with(:black, "PASS")
       @engine.replay("PASS-RESIGN")
     end
 
     it "should move stone and return point back" do
+      @gtp.stubs(:over?).returns(false)
       @gtp.stubs(:list_stones).with(:white).returns(%w[A17 A16])
       @gtp.expects(:play).with(:black, "A18")
       @engine.move(:black, "ab").should == "ab"
     end
 
     it "should move stone and return point back with captures" do
+      @gtp.stubs(:over?).returns(false)
       @gtp.expects(:play).with(:black, "A18")
       @gtp.expects(:list_stones).with(:white).returns(%w[A16]) # it mocks them in reverse order
       @gtp.expects(:list_stones).with(:white).returns(%w[A17 A16])
@@ -95,6 +103,7 @@ describe GameEngine do
     end
 
     it "should call genmove when move position isn't given" do
+      @gtp.stubs(:over?).returns(false)
       @gtp.stubs(:list_stones).with(:white).returns(%w[A17 A16])
       @gtp.expects(:genmove).with(:black).returns("A18")
       @engine.move(:black).should == "ab"
@@ -118,13 +127,22 @@ describe GameEngine do
     end
 
     it "should return PASS as move when passing" do
+      @gtp.stubs(:over?).returns(false)
       @gtp.expects(:play).with(:black, "PASS")
       @engine.move(:black, "PASS").should == "PASS"
     end
 
+    it "should be over when genmove returns resign" do
+      @gtp.stubs(:over?).returns(false)
+      @gtp.stubs(:list_stones).with(:white).returns(%w[A17 A16])
+      @gtp.expects(:genmove).with(:black).returns("resign")
+      @engine.move(:black).should == "RESIGN"
+      @engine.should be_over
+    end
+
     it "should be finished when gtp says game is over" do
       @gtp.stubs(:over?).returns(true)
-      @engine.should be_game_finished
+      @engine.should be_over
     end
 
     it "should have black be first color by default" do

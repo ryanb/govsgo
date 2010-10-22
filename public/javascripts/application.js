@@ -17,18 +17,17 @@ $(function() {
     current_user = $("#board").attr("data-current-user");
     current_player = $("#board").attr("data-current-player");
     $("#board_spaces div").click(function() {
-      if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player) {
-        $.post(window.location.pathname + '/moves', {"move": $(this).attr("id"), "after": moves.length}, null, "script");
+      if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player && $("#board").attr("data-finished") != "true") {
+        playMove($(this).attr("id"));
       }
-      // Show updating graphic here
     });
     $("#play_pass").click(function() {
-      $.post(window.location.pathname + '/moves', {"move": "PASS", "after": moves.length}, null, "script");
-      // Show updating graphic here
+      playMove("PASS");
+      return false;
     });
     $("#play_resign").click(function() {
-      $.post(window.location.pathname + '/moves', {"move": "RESIGN", "after": moves.length}, null, "script");
-      // Show updating graphic here
+      playMove("RESIGN");
+      return false;
     });
     $("#previous_move").click(function() {
       if (current_move > 0) {
@@ -62,6 +61,10 @@ $(function() {
     $("#game_chosen_opponent_user").attr("checked", "checked");
   });
 });
+
+function playMove(move) {
+  $.post(window.location.pathname + '/moves', {"move": move, "after": moves.length}, null, "script");
+}
 
 function addMoves(new_moves, next_player) {
   $('.profile .details .turn').hide();

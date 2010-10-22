@@ -28,15 +28,17 @@ class GameEngine
   end
 
   def play(color, vertex)
-    @gtp.play(color, gnugo_point(vertex))
+    if vertex == "RESIGN"
+      @resigned = true
+    else
+      @gtp.play(color, gnugo_point(vertex))
+    end
     raise IllegalMove unless @gtp.success?
   end
 
   def move(color, vertex = nil)
-    if vertex == "RESIGN"
-      @resigned = true
-      vertex
-    elsif vertex == "PASS"
+    raise IllegalMove if over?
+    if %w[PASS RESIGN].include? vertex
       play(color, vertex)
       vertex
     else
@@ -45,6 +47,7 @@ class GameEngine
         play(color, vertex)
       else
         vertex = sgf_point(@gtp.genmove(color))
+        @resigned = true if vertex == "RESIGN"
       end
       captured = other_stones - @gtp.list_stones(opposite(color))
       sgf_point(vertex) + captured.map { |v| sgf_point(v) }.join
@@ -67,7 +70,7 @@ class GameEngine
     score_for("W")
   end
 
-  def game_finished?
+  def over?
     @resigned || @gtp.over?
   end
 
