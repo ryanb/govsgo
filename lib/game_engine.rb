@@ -13,7 +13,7 @@ class GameEngine
   end
 
   def initialize(gtp, options = {})
-    @resigned = false
+    @resigned = nil
     @gtp = gtp
     @board_size = options[:board_size] || 19
     @handicap = options[:handicap] || 0
@@ -29,7 +29,7 @@ class GameEngine
 
   def play(color, vertex)
     if vertex == "RESIGN"
-      @resigned = true
+      @resigned = color
     else
       @gtp.play(color, gnugo_point(vertex))
     end
@@ -47,7 +47,7 @@ class GameEngine
         play(color, vertex)
       else
         vertex = sgf_point(@gtp.genmove(color))
-        @resigned = true if vertex == "RESIGN"
+        @resigned = color if vertex == "RESIGN"
       end
       captured = other_stones - @gtp.list_stones(opposite(color))
       sgf_point(vertex) + captured.map { |v| sgf_point(v) }.join
@@ -63,11 +63,11 @@ class GameEngine
   end
 
   def black_score
-    score_for("B")
+    score_for(:black)
   end
 
   def white_score
-    score_for("W")
+    score_for(:white)
   end
 
   def over?
@@ -81,7 +81,11 @@ class GameEngine
   private
 
   def score_for(color)
-    @gtp.final_score[/^#{color}\+([\d\.]+)$/, 1].to_f
+    if @resigned
+      @resigned.to_sym == color.to_sym ? 0 : 1
+    else
+      @gtp.final_score[/^#{color.to_s[0].upcase}\+([\d\.]+)$/, 1].to_f
+    end
   end
 
   def opposite(color)

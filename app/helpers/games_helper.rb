@@ -20,8 +20,12 @@ module GamesHelper
   end
 
   def game_score(score, finished)
-    if finished && score.nonzero?
-      "won by #{score}"
+    if finished
+      if score.to_f == 1.0
+        "won"
+      elsif score.to_f > 0
+        "won by #{score}"
+      end
     else
       pluralize(score.to_i, "captured stone")
     end

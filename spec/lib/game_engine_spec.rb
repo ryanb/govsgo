@@ -37,6 +37,8 @@ describe GameEngine do
       @engine.replay("ab-cc-ba-dd")
       @engine.move("black", "RESIGN").should == "RESIGN"
       @engine.should be_over
+      @engine.black_score.should == 0
+      @engine.white_score.should == 1
     end
 
     it "should report illegal move when playing after resigning" do
