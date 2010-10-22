@@ -68,7 +68,9 @@ function playMove(move) {
 
 function addMoves(new_moves, next_player) {
   $('.profile .details .turn').hide();
-  $('.profile .details #turn_' + next_player).show();
+  if ($("#board").attr("data-finished") != "true") {
+    $('.profile .details #turn_' + next_player).show();
+  }
   $.each(new_moves.split("-"), function(index, move) {
     moves.push(move);
     if (current_move == moves.length-1) {

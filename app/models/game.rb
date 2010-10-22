@@ -130,7 +130,7 @@ class Game < ActiveRecord::Base
   end
 
   def queue_computer_move
-    unless current_player_is_human?
+    if !finished? && !current_player_is_human?
       Stalker.enqueue("Game.move", :id => id, :next_player_id => next_player.id, :current_color => current_color)
     end
   end
