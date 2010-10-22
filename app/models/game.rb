@@ -110,10 +110,10 @@ class Game < ActiveRecord::Base
     raise GameEngine::OutOfTurn if user.id != current_player_id
     game_engine do |engine|
       engine.replay(moves)
-      self.current_player = next_player
       self.moves = [moves, engine.move(current_color, vertex)].reject(&:blank?).join("-")
       self.black_positions = engine.positions(:black)
       self.white_positions = engine.positions(:white)
+      self.current_player = next_player
       if engine.game_finished?
         self.finished_at = Time.now
         self.black_score = engine.black_score

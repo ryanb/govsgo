@@ -27,6 +27,11 @@ describe GameEngine do
       @engine.replay("aa-ab-cc")
       @engine.move("white", "ba").should == "baaa"
     end
+
+    it "should allow black to place stone with surrounding black stones" do
+      @engine.replay("ab-cc-ba-dd")
+      @engine.move("black", "aa").should == "aa"
+    end
   end
 
   describe "with gtp stub" do
