@@ -1,7 +1,7 @@
 <div class="game">
   <%= link_to_game_thumbnail game %>
   <div class="details">
-    <% game.profiles.sort_by { |p| p.current ? 0 : 1 }.each do |profile| %>
+    <% game.profiles_with_current_first.each do |profile| %>
       <div class="player <%= profile.color %>"><%= profile.name %> <%= online_status(profile.user) %></div>
     <% end %>
     <% if game.last_move_at %>

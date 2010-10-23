@@ -20,7 +20,7 @@
       <% for y in ('a'..'s').first(@game.board_size) %>
         <% for x in ('a'..'s').first(@game.board_size) %>
           <% position = x + y %>
-          <div class="<%= color_at position %><%= ' last' if @game.last_move == position %>" id="<%= position %>"></div>
+          <div class="<%= color_at position %><%= ' last' if @game.last_position == position %>" id="<%= position %>"></div>
         <% end %>
       <% end %>
       </div>

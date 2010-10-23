@@ -22,7 +22,7 @@ brew install gnu-go beanstalk
 You can start up the server with `rails s` and run the specs with `rake`.
 
 
-## Background Process
+### Background Process
 
 In production, the computer moves are handled in a background process because GNU Go can take a while and we don't want to tie up the Rails process during this time.
 

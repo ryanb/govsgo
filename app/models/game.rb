@@ -3,7 +3,11 @@ class Game < ActiveRecord::Base
   ### Callbacks ###
   #################
 
-  after_save :update_thumbnail, :if => :position_changed?
+  after_save :generate_thumbnail, :if => :update_thumbnail
+
+  def generate_thumbnail
+    GameThumb.generate(id, board_size, black_positions, white_positions) unless Rails.env.test?
+  end
 
   ####################
   ### Associations ###
@@ -17,6 +21,8 @@ class Game < ActiveRecord::Base
   ### Validations ###
   ###################
 
+  attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
+
   validates_inclusion_of :board_size, :in => [9, 13, 19],     :allow_nil => true
   validates_inclusion_of :handicap,   :in => (0..9).to_a,     :allow_nil => true
   validates_inclusion_of :komi,       :in => [0.5, 5.5, 6.5], :allow_nil => true
@@ -27,44 +33,20 @@ class Game < ActiveRecord::Base
       errors.add(:opponent_username, "not found")
     end
   end
-  private :opponent_found
-
-  attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
 
   ##############
   ### Scopes ###
   ##############
 
-  scope :finished, where("finished_at is not null")
-  scope :active,   where("finished_at is null")
-  scope :recent,   order("updated_at desc")
+  scope :finished,   where("finished_at is not null")
+  scope :unfinished, where("finished_at is null")
+  scope :recent,     order("updated_at desc")
 
   ########################
   ### Instance Methods ###
   ########################
 
-  attr_accessor :chosen_color, :creator, :chosen_opponent, :opponent_username
-  attr_writer   :position_changed
-
-  def position_changed?
-    @position_changed
-  end
-
-  def black_player_is_human?
-    not black_player_id.blank?
-  end
-
-  def white_player_is_human?
-    not white_player_id.blank?
-  end
-
-  def current_player_is_human?
-    not current_player_id.blank?
-  end
-
-  def player?(user)
-    user && (white_player == user || black_player == user)
-  end
+  attr_accessor :chosen_color, :creator, :chosen_opponent, :opponent_username, :update_thumbnail
 
   def black_positions_list
     if black_positions && @black_positions_list && @black_positions_list.size != black_positions.size / 2
@@ -80,6 +62,7 @@ class Game < ActiveRecord::Base
     @white_positions_list ||= white_positions.to_s.scan(/[a-s]{2}/)
   end
 
+  # todo: This method needs to be tested better
   def prepare
     opponent = nil
     if chosen_opponent == "user"
@@ -102,7 +85,7 @@ class Game < ActiveRecord::Base
         self.current_player = black_player
       end
     end
-    self.position_changed = true
+    self.update_thumbnail = true
   end
 
   # todo: This method needs to be tested better
@@ -111,15 +94,15 @@ class Game < ActiveRecord::Base
     GameEngine.update_game_attributes_with_move(attributes.symbolize_keys, position).each do |name, value|
       self.send("#{name}=", value)
     end
-    self.position_changed = true # todo: this could be made smarter
-    # Check current_player again, fetching from database to async double move problem
+    self.update_thumbnail = true # todo: this could be made smarter
+    # Check current_player again, fetching from database to prevent async double move problem
     # This should probably be moved into a database lock so no updates happen between here and the save
     raise GameEngine::OutOfTurn if user.try(:id) != Game.find(id, :select => "current_player_id").current_player_id
     save!
   end
 
   def queue_computer_move
-    if !finished? && !current_player_is_human?
+    if !finished? && !current_player
       if PRIVATE_CONFIG["background_process"] && !Rails.env.test?
         Stalker.enqueue("Game.move", :id => id)
       else
@@ -133,39 +116,15 @@ class Game < ActiveRecord::Base
   end
 
   def last_move
-    (moves.to_s.split("-").last || "")[/\A[a-s]{2}/]
+    moves.to_s.split("-").last.to_s
   end
 
-  def current_color
-    current_player == black_player ? :black : :white
-  end
-
-  def next_color
-    current_player == black_player ? :white : :black
-  end
-
-  def next_player
-    current_player == black_player ? white_player : black_player
-  end
-
-  def next_player_id
-    next_player.id if next_player
+  def last_position
+    last_move[/^[a-s]{2}/]
   end
 
   def finished?
-    not finished_at.blank?
-  end
-
-  def black_player_name
-    profile_for(:black).name
-  end
-
-  def white_player_name
-    profile_for(:white).name
-  end
-
-  def update_thumbnail
-    GameThumb.generate(id, board_size, black_positions, white_positions) unless Rails.env.test?
+    finished_at
   end
 
   def profile_for(color)
@@ -180,7 +139,7 @@ class Game < ActiveRecord::Base
       if profile.user == current_player
         profile.current = true
       else
-        case moves.to_s.split("-").last
+        case last_move
         when "PASS" then profile.last_status = "passed"
         when "RESIGN" then profile.last_status = "resigned"
         end
@@ -190,5 +149,9 @@ class Game < ActiveRecord::Base
 
   def profiles
     [profile_for(:white), profile_for(:black)]
+  end
+
+  def profiles_with_current_first
+    profiles.sort_by { |p| p.current ? 0 : 1 }
   end
 end

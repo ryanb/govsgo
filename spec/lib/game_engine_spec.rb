@@ -178,7 +178,7 @@ describe GameEngine do
       @engine.stubs(:over?).returns(true)
       @engine.stubs(:score).with(:black).returns(1)
       @engine.stubs(:score).with(:white).returns(2)
-      result = @engine.update_game_attributes_with_move(:current_color => :white, :moves => "aa")
+      result = @engine.update_game_attributes_with_move(:moves => "aa")
       result[:moves].should == "aa-cc"
       result[:finished_at].should > 1.minute.ago
       result[:black_score].should == 1

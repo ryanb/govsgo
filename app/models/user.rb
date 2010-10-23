@@ -33,11 +33,11 @@ class User < ActiveRecord::Base
   end
 
   def games_my_turn
-    games.active.where("current_player_id = ?", id)
+    games.unfinished.where("current_player_id = ?", id)
   end
 
   def games_their_turn
-    games.active.where("current_player_id != ? or current_player_id is null", id)
+    games.unfinished.where("current_player_id != ? or current_player_id is null", id)
   end
 
   def password_required?
