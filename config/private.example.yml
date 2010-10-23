@@ -3,3 +3,4 @@ twitter_key: "CONSUMER_KEY"
 twitter_secret: "CONSUMER_SECRET"
 facebook_id: "APP_ID"
 facebook_secret: "APP_SECRET"
+background_process: false

@@ -107,20 +107,24 @@ class Game < ActiveRecord::Base
 
   # todo: This method needs to be tested better
   def move(position, user)
-    raise GameEngine::OutOfTurn if user.id != current_player_id
+    raise GameEngine::OutOfTurn if user.try(:id) != current_player_id
     GameEngine.update_game_attributes_with_move(attributes.symbolize_keys, position).each do |name, value|
       self.send("#{name}=", value)
     end
     self.position_changed = true # todo: this could be made smarter
     # Check current_player again, fetching from database to async double move problem
     # This should probably be moved into a database lock so no updates happen between here and the save
-    raise GameEngine::OutOfTurn if user.id != Game.find(id, :select => "current_player_id").current_player_id
+    raise GameEngine::OutOfTurn if user.try(:id) != Game.find(id, :select => "current_player_id").current_player_id
     save!
   end
 
   def queue_computer_move
     if !finished? && !current_player_is_human?
-      Stalker.enqueue("Game.move", :id => id, :next_player_id => next_player.id, :current_color => current_color)
+      if PRIVATE_CONFIG["background_process"] && !Rails.env.test?
+        Stalker.enqueue("Game.move", :id => id)
+      else
+        move(nil, nil)
+      end
     end
   end
 
