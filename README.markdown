@@ -4,6 +4,7 @@ This is the source code for [govsgo.com](http://govsgo.com), a site for playing 
 
 If you find a bug in the site or have a suggestion please post it on the [Issue Tracker](http://github.com/ryanb/govsgo/issues) or fork the project and submit a pull request.
 
+
 ## Setup
 
 Ruby 1.9.2 is required. If you're using RVM it should automatically switch to 1.9.2 when entering the directory.
@@ -18,9 +19,14 @@ rake db:create db:migrate
 brew install gnu-go beanstalk
 </pre>
 
-After that you should be able to start it up with `rails s` and run the specs with `rake`.
+You can start up the server with `rails s` and run the specs with `rake`.
 
-To get the AI working you'll need to run `beanstalkd` and `script/play_computer_moves`.
+
+## Background Process
+
+In production, the computer moves are handled in a background process because GNU Go can take a while and we don't want to tie up the Rails process during this time.
+
+If you want to test the background process, set `background_process: true` in your `config/private.yml` file. Next run `beanstalkd` and `script/play_computer_moves`. to start up the processes.
 
 
 ## Credits
