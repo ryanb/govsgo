@@ -234,10 +234,17 @@ form label {
   height: 80px;
 }
 
+.games .game .thumbnail {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  display: block;
+}
+
 .games .game .details {
   position: absolute;
-  top: 10px;
-  left: 90px;
+  top: 8px;
+  left: 92px;
 }
 
 .games .game .player {
@@ -253,11 +260,11 @@ form label {
   background: url(/images/game/small_white_stone.png) no-repeat 9px left;
 }
 
-.games .game .thumbnail {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  display: block;
+.games .game .status {
+  font-size: 10px;
+  color: #888;
+  padding-left: 22px;
+  padding-top: 2px;
 }
 
 .games .game .go_button {

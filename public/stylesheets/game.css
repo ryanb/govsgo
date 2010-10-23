@@ -362,6 +362,10 @@ body {
   color: #FFF;
 }
 
+.games .game .status {
+  color: #CCC;
+}
+
 .games .game_divider {
   background-image: url(/images/game/solid_white_overlay.png);
   height: 6px;

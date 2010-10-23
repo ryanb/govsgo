@@ -1,8 +1,12 @@
 <div class="game">
   <%= link_to_game_thumbnail game %>
   <div class="details">
-    <div class="player black"><%= game.black_player_name %> <%= online_status(game.black_player) %></div>
-    <div class="player white"><%= game.white_player_name %> <%= online_status(game.white_player) %></div>
+    <% game.profiles.sort_by { |p| p.current ? 0 : 1 }.each do |profile| %>
+      <div class="player <%= profile.color %>"><%= profile.name %> <%= online_status(profile.user) %></div>
+    <% end %>
+    <% if game.last_move_at %>
+      <div class="status">moved <%= time_ago_in_words(game.last_move_at) %> ago</div>
+    <% end %>
   </div>
   <%= link_to image_tag("game/go_button.png"), game, :size => "46x31", :class => "go_button" %>
 </div>

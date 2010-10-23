@@ -110,6 +110,7 @@ class Game < ActiveRecord::Base
     game_engine do |engine|
       engine.replay(moves)
       self.moves = [moves, engine.move(current_color, vertex)].reject(&:blank?).join("-")
+      self.last_move_at = Time.now
       self.black_positions = engine.positions(:black)
       self.white_positions = engine.positions(:white)
       self.current_player = next_player
@@ -187,7 +188,9 @@ class Game < ActiveRecord::Base
       end
       profile.score = send("#{color}_score")
       profile.user = send("#{color}_player")
-      if profile.user != current_player
+      if profile.user == current_player
+        profile.current = true
+      else
         case moves.to_s.split("-").last
         when "PASS" then profile.last_status = "passed"
         when "RESIGN" then profile.last_status = "resigned"

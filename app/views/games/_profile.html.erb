@@ -3,7 +3,7 @@
 <div class="profile">
   <div class="details">
     <div class="name"><%= profile.name %> as <%= profile.color.to_s.titleize %> <%= online_status(profile.user) %></div>
-    <div id="turn_<%= profile.user_id %>" class="turn"<%= raw ' style="display: none;"' unless @game.current_player_id.to_i == profile.user_id && !@game.finished? %>>current player</div>
+    <div id="turn_<%= profile.user_id %>" class="turn"<%= raw ' style="display: none;"' unless profile.current && !@game.finished? %>>current player</div>
     <div id="<%= profile.color.to_s[0] %>_status" class="status"><%= profile.last_status %></div>
     <div class="komi_or_handicap"><%= profile.handicap_or_komi %></div>
     <div id="score_<%= profile.user_id %>" class="score"><%= game_score profile.score, @game.finished? %></div>
