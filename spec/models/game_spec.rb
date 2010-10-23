@@ -90,4 +90,30 @@ describe Game do
     @game.update_attribute(:current_player_id, user.id)
     lambda { @game.move("bb", user) }.should_not raise_error(GameEngine::OutOfTurn)
   end
+
+  it "should generate profile for black" do
+    user = Factory(:user)
+    game = Factory(:game, :current_player => user, :black_player => user, :handicap => 4, :black_score => 3)
+    profile = game.profile_for(:black)
+    profile.handicap_or_komi.should == "4 handicap"
+    profile.score.should == 3
+    profile.user.should == user
+    profile.current.should be_true
+    profile.last_status.should be_blank
+  end
+
+  it "should generate profile for white as GNU Go" do
+    game = Factory(:game, :komi => 6.5, :white_player_id => nil, :white_score => 4, :current_player_id => Factory(:user).id, :moves => "PASS")
+    profile = game.profile_for(:white)
+    profile.handicap_or_komi.should == "6.5 komi"
+    profile.score.should == 4
+    profile.user.should be_nil
+    profile.current.should be_false
+    profile.last_status.should == "passed"
+  end
+
+  it "should have resigned as last status in profile" do
+    game = Factory(:game, :white_player => Factory(:user), :moves => "RESIGN")
+    game.profile_for(:white).last_status.should == "resigned"
+  end
 end
