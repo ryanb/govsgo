@@ -1,9 +1,9 @@
 module GamesHelper
   THUMB_DIR = Rails.root + "public" + "assets" + "games" + "thumbs"
 
-  def color_at(vertex, game = @game)
-    if    game.black_positions_list.include? vertex then "b"
-    elsif game.white_positions_list.include? vertex then "w"
+  def color_at(position, game = @game)
+    if    game.black_positions_list.include? position then "b"
+    elsif game.white_positions_list.include? position then "w"
     else                                                 "e"
     end
   end

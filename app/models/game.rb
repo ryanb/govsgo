@@ -94,7 +94,7 @@ class Game < ActiveRecord::Base
       self.black_player = opponent
       self.white_player = creator
     end
-    game_engine do |engine|
+    GameEngine.run(attributes.symbolize_keys) do |engine|
       if handicap.to_i.nonzero?
         self.black_positions = engine.positions(:black)
         self.current_player = white_player
@@ -105,25 +105,13 @@ class Game < ActiveRecord::Base
     self.position_changed = true
   end
 
-  def move(vertex, user)
+  # todo: This method needs to be tested better
+  def move(position, user)
     raise GameEngine::OutOfTurn if user.id != current_player_id
-    game_engine do |engine|
-      engine.replay(moves)
-      self.moves = [moves, engine.move(current_color, vertex)].reject(&:blank?).join("-")
-      self.last_move_at = Time.now
-      self.black_positions = engine.positions(:black)
-      self.white_positions = engine.positions(:white)
-      self.current_player = next_player
-      if engine.over?
-        self.finished_at = Time.now
-        self.black_score = engine.black_score
-        self.white_score = engine.white_score
-      else
-        self.black_score = engine.captures(:black)
-        self.white_score = engine.captures(:white)
-        self.position_changed = true
-      end
+    GameEngine.update_game_attributes_with_move(attributes.symbolize_keys, position).each do |name, value|
+      self.send("#{name}=", value)
     end
+    self.position_changed = true # todo: this could be made smarter
     # Check current_player again, fetching from database to async double move problem
     # This should probably be moved into a database lock so no updates happen between here and the save
     raise GameEngine::OutOfTurn if user.id != Game.find(id, :select => "current_player_id").current_player_id
@@ -156,6 +144,10 @@ class Game < ActiveRecord::Base
     current_player == black_player ? white_player : black_player
   end
 
+  def next_player_id
+    next_player.id if next_player
+  end
+
   def finished?
     not finished_at.blank?
   end
@@ -179,11 +171,6 @@ class Game < ActiveRecord::Base
       else
         profile.handicap_or_komi = "#{handicap} handicap"
       end
-      if color.to_sym == :white
-        profile.handicap_or_komi = "#{komi} komi"
-      else
-        profile.handicap_or_komi = "#{handicap} handicap"
-      end
       profile.score = send("#{color}_score")
       profile.user = send("#{color}_player")
       if profile.user == current_player
@@ -199,13 +186,5 @@ class Game < ActiveRecord::Base
 
   def profiles
     [profile_for(:white), profile_for(:black)]
-  end
-
-  private
-
-  def game_engine
-    GameEngine.run(:board_size => board_size, :handicap => handicap, :komi => komi) do |engine|
-      yield engine
-    end
   end
 end

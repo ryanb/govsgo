@@ -94,22 +94,9 @@ mysql  = Mysql2::Client.new(config)
 job "Game.move" do |args|
   id = args["id"]
   game = mysql.query("select * from games where id='#{id}' limit 1", :symbolize_keys => true).first
-  update = {}
-  GameEngine.run(:board_size => game[:board_size].to_i, :handicap => game[:handicap].to_i, :komi => game[:komi].to_f) do |engine|
-    engine.replay(game[:moves])
-    update[:moves] = [game[:moves].to_s, engine.move(args["current_color"])].reject(&:empty?).join("-")
-    update[:last_move_at] = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
-    update[:current_player_id] = args["next_player_id"]
-    update[:black_positions] = engine.positions(:black)
-    update[:white_positions] = engine.positions(:white)
-    if engine.over?
-      update[:finished_at] = Time.now.utc.strftime("%Y-%m-%d %H:%M:%S")
-      update[:black_score] = engine.black_score
-      update[:white_score] = engine.white_score
-    else
-      update[:black_score] = engine.captures(:black)
-      update[:white_score] = engine.captures(:white)
-    end
+  update = GameEngine.update_game_attributes_with_move(game)
+  update.each do |name, value|
+    update[name] = value.utc.strftime("%Y-%m-%d %H:%M:%S") if value.kind_of? Time
   end
   values = update.map { |col, val| "#{col}='#{mysql.escape(val.to_s)}'" }.join(", ")
   mysql.query("UPDATE games SET #{values} WHERE id=#{id} AND current_player_id IS NULL AND finished_at IS NULL")
