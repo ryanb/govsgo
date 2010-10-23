@@ -20,6 +20,8 @@ module GameThumb
     thumb = File.join(THUMB_DIR, "#{id}.png")
     board.save("#{thumb}~", :fast_rgba)
     FileUtils.mv("#{thumb}~", thumb)
+  rescue ChunkyPNG::Exception => e # Mainly to catch errors in earlier games with bad data
+    puts "Unable to generate image for game #{id}: #{e.message}"
   end
 
   def add_stones(board, stone, positions, offset)

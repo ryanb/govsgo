@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
   ### Callbacks ###
   #################
 
-  after_save :update_thumbnail
+  after_save :update_thumbnail, :if => :position_changed?
 
   ####################
   ### Associations ###
@@ -169,9 +169,7 @@ class Game < ActiveRecord::Base
   end
 
   def update_thumbnail
-    if Rails.env != "test" && position_changed?
-      GameThumb.generate(id, board_size, black_positions, white_positions)
-    end
+    GameThumb.generate(id, board_size, black_positions, white_positions) unless Rails.env.test?
   end
 
   def profile_for(color)
