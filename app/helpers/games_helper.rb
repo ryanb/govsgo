@@ -12,7 +12,7 @@ module GamesHelper
     thumb = THUMB_DIR + "#{game.id}.png"
     path  = thumb.exist? ? thumb.to_s.sub(/\A.*\bpublic\b/, "") :
                            "thumbnail/#{game.board_size}/board.png"
-    image_tag(path, :size => "76x76")
+    image_tag(path, :size => "80x80")
   end
 
   def link_to_game_thumbnail(game)

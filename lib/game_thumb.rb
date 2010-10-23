@@ -25,7 +25,7 @@ module GameThumb
   def add_stones(board, stone, positions, offset)
     positions.to_s.scan(/[a-s]{2}/).each do |position|
       x, y = Go::GTP::Point.new(position).to_indices
-      board.compose(stone, (x * offset).round, (y * offset).round)
+      board.compose(stone, 2 + (x * offset).round, 2 + (y * offset).round)
     end
   end
 end
