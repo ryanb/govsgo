@@ -35,11 +35,11 @@ module GamesHelper
     options = {
       "id" => "board",
       "class" => "size_#{game.board_size}",
-      "data-moves" => game.moves,
+      "data-moves" => game.moves.to_s,
       "data-handicap" => game.handicap.to_i,
       "data-current-player" => game.current_player_id.to_i,
-      "data-current-user" => current_user.try(:id),
-      "data-finished" => game.finished?,
+      "data-current-user" => current_user.try(:id).to_s,
+      "data-finished" => game.finished?.to_s,
     }
     content_tag(:div, options, &block)
   end
