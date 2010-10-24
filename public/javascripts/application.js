@@ -10,57 +10,61 @@ $(function() {
   });
 
   if ($("#board").length > 0) {
-    if ($("#board").attr("data-moves").length != "") {
-      moves = $("#board").attr("data-moves").split("-");
-    }
-    current_move = moves.length;
-    current_user = $("#board").attr("data-current-user");
-    current_player = $("#board").attr("data-current-player");
-    $("#board_spaces div").click(function() {
-      if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player && $("#board").attr("data-finished") != "true") {
-        playMove($(this).attr("id"));
-      }
-    });
-    $("#play_pass").click(function() {
-      playMove("PASS");
-      return false;
-    });
-    $("#play_resign").click(function() {
-      playMove("RESIGN");
-      return false;
-    });
-    $("#previous_move").click(function() {
-      if (current_move > 0) {
-        stepMove(-1);
-      }
-      return false;
-    });
-    $("#next_move").click(function() {
-      if (current_move < moves.length) {
-        stepMove(1);
-      }
-      return false;
-    });
-    $("#first_move").click(function() {
-      while (current_move > 0) {
-        stepMove(-1);
-      }
-      return false;
-    });
-    $("#last_move").click(function() {
-      while (current_move < moves.length) {
-        stepMove(1);
-      }
-      return false;
-    });
-    if ($("#board").attr("data-finished") != "true") {
-      startPolling();
-    }
+    setupGame();
   }
   $("#game_opponent_username").focus(function() {
     $("#game_chosen_opponent_user").attr("checked", "checked");
   });
 });
+
+function setupGame() {
+  if ($("#board").attr("data-moves").length != "") {
+    moves = $("#board").attr("data-moves").split("-");
+  }
+  current_move = moves.length;
+  current_user = $("#board").attr("data-current-user");
+  current_player = $("#board").attr("data-current-player");
+  $("#board_spaces div").click(function() {
+    if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player && $("#board").attr("data-finished") != "true") {
+      playMove($(this).attr("id"));
+    }
+  });
+  $("#play_pass").click(function() {
+    playMove("PASS");
+    return false;
+  });
+  $("#play_resign").click(function() {
+    playMove("RESIGN");
+    return false;
+  });
+  $("#previous_move").click(function() {
+    if (current_move > 0) {
+      stepMove(-1);
+    }
+    return false;
+  });
+  $("#next_move").click(function() {
+    if (current_move < moves.length) {
+      stepMove(1);
+    }
+    return false;
+  });
+  $("#first_move").click(function() {
+    while (current_move > 0) {
+      stepMove(-1);
+    }
+    return false;
+  });
+  $("#last_move").click(function() {
+    while (current_move < moves.length) {
+      stepMove(1);
+    }
+    return false;
+  });
+  if ($("#board").attr("data-finished") != "true") {
+    startPolling();
+  }
+}
 
 function playMove(move) {
   $.post(window.location.pathname + '/moves', {"move": move, "after": moves.length}, null, "script");

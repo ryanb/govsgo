@@ -30,4 +30,17 @@ module GamesHelper
       pluralize(score.to_i, "captured stone")
     end
   end
+
+  def board_div(game, &block)
+    options = {
+      "id" => "board",
+      "class" => "size_#{game.board_size}",
+      "data-moves" => game.moves,
+      "data-handicap" => game.handicap.to_i,
+      "data-current-player" => game.current_player_id.to_i,
+      "data-current-user" => current_user.try(:id),
+      "data-finished" => game.finished?,
+    }
+    content_tag(:div, options, &block)
+  end
 end
