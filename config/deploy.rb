@@ -15,7 +15,7 @@ set :ssh_options, :forward_agent => true
 
 set :scm,        "git"
 set :repository, "git://github.com/ryanb/govsgo.git"
-set :branch,     "rumble10"
+set :branch,     "master"
 
 namespace :deploy do
   desc "Tell Passenger to restart."
