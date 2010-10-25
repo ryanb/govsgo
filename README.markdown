@@ -7,7 +7,7 @@ If you find a bug in the site or have a suggestion please post it on the [Issue 
 
 ## Setup
 
-Ruby 1.9.2 is required. If you're using RVM it should automatically switch to 1.9.2 when entering the directory.
+Ruby 1.9.2 is required. If you're using [RVM](http://rvm.beginrescueend.com/) it should automatically switch to 1.9.2 when entering the directory.
 
 Run the following commands to set it up. Note the [Homebrew](http://github.com/mxcl/homebrew) command to install [GNU Go](http://www.gnu.org/software/gnugo/) and [Beanstalk](http://kr.github.com/beanstalkd/). You may want to use a different packaging system or install them from the source.
 
@@ -31,4 +31,4 @@ If you want to test the background process, set `background_process: true` in yo
 
 ## Credits
 
-This site was originally created for Rails Rumble 2010 by Phil Bates, James Edward Gray II and Ryan Bates.
+This site was originally created for [Rails Rumble 2010](http://r10.railsrumble.com/) by [Ryan Bates](http://railscasts.com/), [James Edward Gray II](http://blog.grayproductions.net/) and [Phil Bates](http://www.prbates.com/).
