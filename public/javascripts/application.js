@@ -3,6 +3,8 @@ var current_move   = 0;
 var current_user   = null;
 var current_player = null;
 var pollTimer      = null;
+var audioExtension = null;
+
 $(function() {
   $(".pagination a").live("click", function() {
     $.getScript(this.href);
@@ -39,25 +41,25 @@ function setupGame() {
   });
   $("#previous_move").click(function() {
     if (current_move > 0) {
-      stepMove(-1);
+      stepMove(-1, false);
     }
     return false;
   });
   $("#next_move").click(function() {
     if (current_move < moves.length) {
-      stepMove(1);
+      stepMove(1, false);
     }
     return false;
   });
   $("#first_move").click(function() {
     while (current_move > 0) {
-      stepMove(-1);
+      stepMove(-1, true);
     }
     return false;
   });
   $("#last_move").click(function() {
     while (current_move < moves.length) {
-      stepMove(1);
+      stepMove(1, true);
     }
     return false;
   });
@@ -78,22 +80,22 @@ function addMoves(new_moves, next_player) {
   $.each(new_moves.split("-"), function(index, move) {
     moves.push(move);
     if (current_move == moves.length-1) {
-      stepMove(1);
+      stepMove(1, index != new_moves.split("-").length-1);
     }
   });
   current_player = next_player;
 }
 
-function stepMove(step) {
+function stepMove(step, multistep) {
   current_move += step;
   var offset = $("#board").attr("data-handicap") > 0 ? 1 : 0;
   var color = (current_move + offset) % 2 ? "b" : "w";
 
   // Update move by adding or removing stones based on what is matched
   if (step > 0) {
-    updateStones(color, moves[current_move-1], false);
+    updateStones(color, moves[current_move-1], false, multistep);
   } else {
-    updateStones(color, moves[current_move], true);
+    updateStones(color, moves[current_move], true, multistep);
   }
 
   // Update status for passed/resigned
@@ -101,17 +103,26 @@ function stepMove(step) {
   $(".profile .status").text("");
   if (moves[current_move-1] == "PASS") {
     $("#" + color + "_status").text("passed");
+    if (!multistep) {
+      playSound("/sounds/pass");
+    }
   } else if (moves[current_move-1] == "RESIGN") {
     $("#" + color + "_status").text("resigned");
+    if (!multistep) {
+      playSound("/sounds/resign");
+    }
   } else if (current_move > 0) {
     $("#" + moves[current_move-1].substr(0, 2)).addClass("last");
   }
 }
 
-function updateStones(color, move, backwards) {
-  if (move != "") {
+function updateStones(color, move, backwards, multistep) {
+  if (move != "" && move != "PASS" && move != "RESIGN") {
     $.each(move.match(/../g), function(index, position) {
       if (index == 0) {
+        if (!backwards && !multistep) {
+          playSound("/sounds/stone");
+        }
         $("#" + position).attr("class", (backwards ? "e" : color));
       } else {
         $("#" + position).attr("class", (backwards ? color : "e"));
@@ -137,4 +148,25 @@ function pollMoves() {
 
 function resetPollTimer() {
   pollTimer = 1000;
+}
+
+function playSound(path) {
+  if (!audioExtension) {
+    if (!!document.createElement("audio").canPlayType) {
+      var audio = new Audio("");
+      if (audio.canPlayType("audio/ogg") != "no" && audio.canPlayType("audio/ogg") != "") {
+        audioExtension = ".ogg";
+      } else if (audio.canPlayType("audio/mpeg") != "no" && audio.canPlayType("audio/mpeg") != "") {
+        audioExtension = ".mp3";
+      } else {
+        audioExtension = "";
+      }
+    } else {
+      audioExtension = "";
+    }
+  }
+  if (audioExtension != "") {
+    var audio = new Audio(path + audioExtension);
+    audio.play();
+  }
 }
