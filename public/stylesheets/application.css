@@ -216,13 +216,18 @@ form label {
   clear: both;
   font-size: 12px;
   margin-top: 25px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   text-align: center;
-  color: #555;
+  color: #444;
 }
 
 #footer a {
-  color: #444;
+  color: #333;
+}
+
+#footer img {
+  vertical-align: bottom;
+  padding-left: 5px;
 }
 
 

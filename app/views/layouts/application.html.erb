@@ -30,7 +30,12 @@
     <%= yield %>
     <% unless @hide_footer %>
     <div id="footer">
-      <p>This site was created by <%= link_to "Ryan Bates", "http://railscasts.com" %>, <%= link_to "Phil Bates", "http://www.prbates.com" %> and <%= link_to "James Edward Gray II", "http://blog.grayproductions.net/" %> for <%= link_to "Rails Rumble 2010", "http://r10.railsrumble.com/" %></p>
+      <p>
+        Follow us on
+        <%= link_to image_tag("layout/twitter.png", :size => "65x17"), "http://twitter.com/govsgo" %>
+        <%= link_to image_tag("layout/facebook.png", :size => "60x20"), "http://www.facebook.com/pages/Go-vs-Go/171753022839121" %>
+      </p>
+      <p>Go vs Go is <%= link_to "open source", "http://github.com/ryanb/govsgo" %>. Problems or suggestions? Visit the <%= link_to "Issue Tracker", "http://github.com/ryanb/govsgo/issues" %>.</p>
     </div>
     <% end %>
   </body>
