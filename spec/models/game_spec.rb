@@ -89,4 +89,25 @@ describe Game do
     game = Factory(:game, :white_player => Factory(:user), :moves => "RESIGN")
     game.profile_for(:white).last_status.should == "resigned"
   end
+
+  it "should return SGF format for normal play" do
+    game = Factory(:game, :moves => "aa-bbcc-PASS-dd", :handicap => 0, :board_size => 9, :komi => 6.5, :finished_at => Time.now, :white_score => 30.5, :black_score => 0)
+    game.black_player.username = "foo"
+    game.black_player.rank = "4k"
+    game.white_player.username = ""
+    game.white_player.rank = ""
+    sgf = game.sgf
+    sgf.should include("(;FF[4]GM[1]CA[utf-8]AP[govsgo:0.1]RU[Japanese]SZ[9]KM[6.5]HA[0]")
+    sgf.should include("PB[foo]BR[4k]PW[Guest]WR[]")
+    sgf.should include("RE[W+30.5]")
+    sgf.should include(";B[aa];W[bb];B[];W[dd])")
+  end
+
+  it "should return SGF format for handicap game" do
+    game = Factory(:game, :moves => "aa-RESIGN", :handicap => 2, :board_size => 19, :white_player => nil, :black_score => 0, :white_score => 1, :finished_at => Time.now)
+    sgf = game.sgf
+    sgf.should include("RE[W+R]")
+    sgf.should include("HA[2]AB[pd][dp]")
+    sgf.should include(";W[aa])")
+  end
 end
