@@ -130,7 +130,7 @@ function updateStones(color, move, backwards, multistep) {
     $.each(move.match(/../g), function(index, position) {
       if (index == 0) {
         if (!backwards && !multistep) {
-          playSound("stone", 0.7);
+          playSound("stone2", 0.6);
         }
         $("#" + position).attr("class", (backwards ? "e" : color));
       } else {
