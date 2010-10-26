@@ -3,6 +3,7 @@ var current_move   = 0;
 var current_user   = null;
 var current_player = null;
 var pollTimer      = null;
+var sound          = true;
 var audioExtension = null;
 
 $(function() {
@@ -63,6 +64,14 @@ function setupGame() {
     }
     return false;
   });
+  $("#sound_switch").click(function() {
+    sound = !sound;
+    if (sound) {
+      $("#sound_switch img").attr("src", "/images/game/sound_on.png");
+    } else {
+      $("#sound_switch img").attr("src", "/images/game/sound_off.png");
+    }
+  });
   if ($("#board").attr("data-finished") != "true") {
     startPolling();
   }
@@ -104,12 +113,12 @@ function stepMove(step, multistep) {
   if (moves[current_move-1] == "PASS") {
     $("#" + color + "_status").text("passed");
     if (!multistep) {
-      playSound("/sounds/pass");
+      playSound("pass", 0.4);
     }
   } else if (moves[current_move-1] == "RESIGN") {
     $("#" + color + "_status").text("resigned");
     if (!multistep) {
-      playSound("/sounds/resign");
+      playSound("resign", 0.4);
     }
   } else if (current_move > 0) {
     $("#" + moves[current_move-1].substr(0, 2)).addClass("last");
@@ -121,7 +130,7 @@ function updateStones(color, move, backwards, multistep) {
     $.each(move.match(/../g), function(index, position) {
       if (index == 0) {
         if (!backwards && !multistep) {
-          playSound("/sounds/stone");
+          playSound("stone", 0.7);
         }
         $("#" + position).attr("class", (backwards ? "e" : color));
       } else {
@@ -150,23 +159,26 @@ function resetPollTimer() {
   pollTimer = 1000;
 }
 
-function playSound(path) {
-  if (!audioExtension) {
-    if (!!document.createElement("audio").canPlayType) {
-      var audio = new Audio("");
-      if (audio.canPlayType("audio/ogg") != "no" && audio.canPlayType("audio/ogg") != "") {
-        audioExtension = ".ogg";
-      } else if (audio.canPlayType("audio/mpeg") != "no" && audio.canPlayType("audio/mpeg") != "") {
-        audioExtension = ".mp3";
+function playSound(name, volume) {
+  if (sound) {
+    if (!audioExtension) {
+      if (!!document.createElement("audio").canPlayType) {
+        var audio = new Audio("");
+        if (audio.canPlayType("audio/ogg") != "no" && audio.canPlayType("audio/ogg") != "") {
+          audioExtension = ".ogg";
+        } else if (audio.canPlayType("audio/mpeg") != "no" && audio.canPlayType("audio/mpeg") != "") {
+          audioExtension = ".mp3";
+        } else {
+          audioExtension = "";
+        }
       } else {
         audioExtension = "";
       }
-    } else {
-      audioExtension = "";
     }
-  }
-  if (audioExtension != "") {
-    var audio = new Audio(path + audioExtension);
-    audio.play();
+    if (audioExtension != "") {
+      var audio = new Audio("/sounds/" + name + audioExtension);
+      audio.volume = volume;
+      audio.play();
+    }
   }
 }

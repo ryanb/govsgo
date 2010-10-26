@@ -140,11 +140,17 @@ body {
   width: 200px;
 }
 
+#sound_switch {
+  position: absolute;
+  left: 580px;
+  top: 833px;
+}
+
 #move_nav {
   position: absolute;
   left: 402px;
   top: 828px;
-  width: 200px;
+  width: 175px;
 }
 
 #move_nav a, #player_actions a {
