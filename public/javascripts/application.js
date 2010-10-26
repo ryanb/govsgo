@@ -33,11 +33,15 @@ function setupGame() {
     }
   });
   $("#play_pass").click(function() {
-    playMove("PASS");
+    if (confirm("Are you sure you want to pass?")) {
+      playMove("PASS");
+    }
     return false;
   });
   $("#play_resign").click(function() {
-    playMove("RESIGN");
+    if (confirm("Are you sure you want to resign?")) {
+      playMove("RESIGN");
+    }
     return false;
   });
   $("#previous_move").click(function() {

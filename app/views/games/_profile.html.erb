@@ -8,4 +8,10 @@
     <div class="komi_or_handicap"><%= profile.handicap_or_komi %></div>
     <div id="score_<%= profile.user_id %>" class="score"><%= game_score profile.score, @game.finished? %></div>
   </div>
+  <% if profile.user && profile.user == current_user %>
+    <div id="player_actions">
+      <%= link_to "Pass", '#', :id => "play_pass" %>
+      <%= link_to "Resign", '#', :id => "play_resign" %>
+    </div>
+  <% end %>
 </div>

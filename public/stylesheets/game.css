@@ -134,10 +134,7 @@ body {
 }
 
 #player_actions {
-  position: absolute;
-  left: 402px;
-  top: 960px;
-  width: 200px;
+  margin-top: 5px;
 }
 
 #sound_switch {
