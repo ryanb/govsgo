@@ -3,8 +3,8 @@ var current_move   = 0;
 var current_user   = null;
 var current_player = null;
 var pollTimer      = null;
-var sound          = true;
-var audioExtension = null;
+var soundEnabled   = true;
+var sounds         = new Array();
 
 $(function() {
   $(".pagination a").live("click", function() {
@@ -65,8 +65,8 @@ function setupGame() {
     return false;
   });
   $("#sound_switch").click(function() {
-    sound = !sound;
-    if (sound) {
+    soundEnabled = !soundEnabled;
+    if (soundEnabled) {
       $("#sound_switch img").attr("src", "/images/game/sound_on.png");
     } else {
       $("#sound_switch img").attr("src", "/images/game/sound_off.png");
@@ -113,12 +113,12 @@ function stepMove(step, multistep) {
   if (moves[current_move-1] == "PASS") {
     $("#" + color + "_status").text("passed");
     if (!multistep) {
-      playSound("pass", 0.4);
+      playSound("pass", 0.3);
     }
   } else if (moves[current_move-1] == "RESIGN") {
     $("#" + color + "_status").text("resigned");
     if (!multistep) {
-      playSound("resign", 0.4);
+      playSound("resign", 0.3);
     }
   } else if (current_move > 0) {
     $("#" + moves[current_move-1].substr(0, 2)).addClass("last");
@@ -129,9 +129,9 @@ function updateStones(color, move, backwards, multistep) {
   if (move != "" && move != "PASS" && move != "RESIGN") {
     $.each(move.match(/../g), function(index, position) {
       if (index == 0) {
-        // if (!backwards && !multistep) {
-        //   playSound("stone2", 0.6);
-        // }
+        if (!backwards && !multistep) {
+          playSound("stone2", 0.7);
+        }
         $("#" + position).attr("class", (backwards ? "e" : color));
       } else {
         $("#" + position).attr("class", (backwards ? color : "e"));
@@ -160,25 +160,9 @@ function resetPollTimer() {
 }
 
 function playSound(name, volume) {
-  if (sound) {
-    if (!audioExtension) {
-      if (!!document.createElement("audio").canPlayType) {
-        var audio = new Audio("");
-        if (audio.canPlayType("audio/ogg") != "no" && audio.canPlayType("audio/ogg") != "") {
-          audioExtension = ".ogg";
-        } else if (audio.canPlayType("audio/mpeg") != "no" && audio.canPlayType("audio/mpeg") != "") {
-          audioExtension = ".mp3";
-        } else {
-          audioExtension = "";
-        }
-      } else {
-        audioExtension = "";
-      }
-    }
-    if (audioExtension != "") {
-      var audio = new Audio("/sounds/" + name + audioExtension);
-      audio.volume = volume;
-      audio.play();
-    }
+  if (soundEnabled) {
+    var sound = $("#" + name + "_sound").get(0)
+    sound.volume = volume;
+    sound.play();
   }
 }
