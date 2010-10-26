@@ -98,7 +98,7 @@ body {
   top: 0;
 }
 
-#top_player .lid {
+#top_player .lid, #top_player .captured {
   position: absolute;
   left: 268px;
   top: 20px;
@@ -121,7 +121,7 @@ body {
   top: 0;
 }
 
-#bottom_player .lid {
+#bottom_player .lid, #bottom_player .captured {
   position: absolute;
   left: 200px;
   top: 40px;
@@ -325,6 +325,80 @@ body {
 #user_nav {
   float: right;
   font-size: 12px;
+}
+
+.captured .stone {
+  position: absolute;
+  width: 29px;
+  height: 29px;
+}
+
+.black_captured .stone {
+  background-image: url(/images/game/19/white_stone.png);
+}
+
+.white_captured .stone {
+  background-image: url(/images/game/19/black_stone.png);
+}
+
+.captured .stone1 {
+  z-index: 11;
+  left: 78px;
+  top: 58px;
+}
+
+.captured .stone2 {
+  z-index: 12;
+  left: 52px;
+  top: 67px;
+}
+
+.captured .stone3 {
+  z-index: 13;
+  left: 72px;
+  top: 83px;
+}
+
+.captured .stone4 {
+  z-index: 14;
+  left: 95px;
+  top: 72px;
+}
+
+.captured .stone5 {
+  z-index: 9;
+  left: 60px;
+  top: 45px;
+}
+
+.captured .stone6 {
+  z-index: 16;
+  left: 45px;
+  top: 85px;
+}
+
+.captured .stone7 {
+  z-index: 10;
+  left: 86px;
+  top: 40px;
+}
+
+.captured .stone8 {
+  z-index: 17;
+  left: 86px;
+  top: 93px;
+}
+
+.captured .stone9 {
+  z-index: 9;
+  left: 40px;
+  top: 58px;
+}
+
+.captured .stone10 {
+  z-index: 18;
+  left: 60px;
+  top: 98px;
 }
 
 
