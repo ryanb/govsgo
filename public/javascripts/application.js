@@ -129,9 +129,9 @@ function updateStones(color, move, backwards, multistep) {
   if (move != "" && move != "PASS" && move != "RESIGN") {
     $.each(move.match(/../g), function(index, position) {
       if (index == 0) {
-        if (!backwards && !multistep) {
-          playSound("stone2", 0.6);
-        }
+        // if (!backwards && !multistep) {
+        //   playSound("stone2", 0.6);
+        // }
         $("#" + position).attr("class", (backwards ? "e" : color));
       } else {
         $("#" + position).attr("class", (backwards ? color : "e"));
