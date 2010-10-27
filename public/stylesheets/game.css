@@ -350,7 +350,7 @@ body {
 
 .captured .stone2 {
   z-index: 12;
-  left: 52px;
+  left: 55px;
   top: 67px;
 }
 
@@ -369,7 +369,7 @@ body {
 .captured .stone5 {
   z-index: 9;
   left: 60px;
-  top: 45px;
+  top: 42px;
 }
 
 .captured .stone6 {
@@ -386,8 +386,8 @@ body {
 
 .captured .stone8 {
   z-index: 17;
-  left: 86px;
-  top: 93px;
+  left: 88px;
+  top: 98px;
 }
 
 .captured .stone9 {
@@ -400,6 +400,33 @@ body {
   z-index: 18;
   left: 60px;
   top: 98px;
+}
+
+.black_captured .info {
+  color: #000;
+  text-shadow: #EAEAEA 2px 2px 2px;
+}
+
+.white_captured .info {
+  color: #FFF;
+  text-shadow: #000 2px 2px 2px;
+}
+
+.captured .info {
+  position: absolute;
+  z-index: 22;
+  left: 22px;
+  top: 55px;
+  width: 100px;
+  text-align: center;
+  font-size: 11px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.captured .info .count {
+  display: block;
+  font-size: 24px;
 }
 
 
