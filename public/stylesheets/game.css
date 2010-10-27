@@ -145,9 +145,10 @@ body {
 
 #move_nav {
   position: absolute;
-  left: 402px;
+  left: 345px;
   top: 828px;
-  width: 175px;
+  width: 230px;
+  z-index: 30;
 }
 
 #move_nav a, #player_actions a {

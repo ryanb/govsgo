@@ -6,6 +6,7 @@ Govsgo::Application.routes.draw do
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'login' => 'sessions#new', :as => :login
   match 'go_resources' => 'games#resources', :as => :go_resources
+  match '/games/:id.sgf' => 'games#sgf', :format => "sgf", :as => "game_sgf"
   resources :authentications
   resources :sessions
   resources :users

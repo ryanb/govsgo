@@ -58,7 +58,11 @@ class GamesController < ApplicationController
   end
 
   def resources
+  end
 
+  def sgf
+    @game = Game.find(params[:id])
+    render :text => @game.sgf, :content_type => 'application/x-go-sgf'
   end
 
   private

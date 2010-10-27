@@ -31,4 +31,11 @@ describe GamesController do
     post :create
     response.should redirect_to(game_url(assigns[:game]))
   end
+
+  it "sgf action should return SGF data" do
+    Game.any_instance.stubs(:sgf).returns("sgf data")
+    get :sgf, :id => Game.first
+    response.content_type.should == "application/x-go-sgf"
+    response.body.should == "sgf data"
+  end
 end

@@ -77,13 +77,11 @@ class Game < ActiveRecord::Base
       self.black_player = opponent
       self.white_player = creator
     end
-    GameEngine.run(attributes.symbolize_keys) do |engine|
-      if handicap.to_i.nonzero?
-        self.black_positions = engine.positions(:black)
-        self.current_player = white_player
-      else
-        self.current_player = black_player
-      end
+    if handicap.to_i > 0
+      self.black_positions = handicap_positions
+      self.current_player = white_player
+    else
+      self.current_player = black_player
     end
     self.update_thumbnail = true
   end
@@ -153,5 +151,37 @@ class Game < ActiveRecord::Base
 
   def profiles_with_current_first
     profiles.sort_by { |p| p.current ? 0 : 1 }
+  end
+
+  def sgf
+    sgf = ";FF[4]GM[1]CA[utf-8]AP[govsgo:0.1]RU[Japanese]"
+    sgf << "SZ[#{board_size}]KM[#{komi}]HA[#{handicap.to_i}]"
+    colors = %w[B W].cycle
+    if handicap.to_i > 0
+      colors.next
+      sgf << "AB" + handicap_positions.gsub(/../, "[\\0]")
+    end
+    {"B" => black_player, "W" => white_player}.each do |color, player|
+      name = player ? (player.username.blank? ? "Guest" : player.username) : "GNU Go"
+      sgf << "P#{color}[#{name}]#{color}R[#{player.try(:rank)}]"
+    end
+    if finished?
+      score = last_move == "RESIGN" ? "R" : [white_score.to_f, black_score.to_f].max
+      sgf << "RE[#{black_score.to_i == 0 ? 'W' : 'B'}+#{score}]"
+    end
+    moves.to_s.split("-").each do |move|
+      unless move == "RESIGN"
+        sgf << ";#{colors.next}[#{move == 'PASS' ? '' : move[0..1]}]"
+      end
+    end
+    "(#{sgf})"
+  end
+
+  def handicap_positions
+    positions = ""
+    GameEngine.run(attributes.symbolize_keys) do |engine|
+      positions << engine.positions(:black)
+    end
+    positions
   end
 end
