@@ -1,15 +1,5 @@
 <div class="captured <%= profile.color %>_captured">
-  <div class="stone1 stone"></div>
-  <div class="stone2 stone"></div>
-  <div class="stone3 stone"></div>
-  <div class="stone4 stone"></div>
-  <div class="stone5 stone"></div>
-  <div class="stone6 stone"></div>
-  <div class="stone7 stone"></div>
-  <div class="stone8 stone"></div>
-  <div class="stone9 stone"></div>
-  <div class="stone10 stone"></div>
-  <div class="info"><span class="count">14</span> stones</div>  
+  <div class="info" style="display: none;"><span class="count"><%= profile.captured %></span> stones</div>
 </div>
 <%= image_tag "game/bowl_#{profile.color}.png", :class => "bowl" %>
 <%= image_tag "game/lid_#{profile.color}.png", :class => "lid" %>

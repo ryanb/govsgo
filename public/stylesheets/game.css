@@ -408,7 +408,7 @@ body {
 }
 
 .white_captured .info {
-  color: #FFF;
+  color: #E8E8E8;
   text-shadow: #000 2px 2px 2px;
 }
 
@@ -421,7 +421,6 @@ body {
   text-align: center;
   font-size: 11px;
   padding: 4px 8px;
-  white-space: nowrap;
 }
 
 .captured .info .count {

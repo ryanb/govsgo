@@ -21,6 +21,8 @@ $(function() {
 });
 
 function setupGame() {
+  updateCapturedStones("black");
+  updateCapturedStones("white");
   if ($("#board").attr("data-moves").length != "") {
     moves = $("#board").attr("data-moves").split("-");
   }
@@ -131,6 +133,8 @@ function stepMove(step, multistep) {
 
 function updateStones(color, move, backwards, multistep) {
   if (move != "" && move != "PASS" && move != "RESIGN") {
+    var capture_change = 0;
+    var capturer = null;
     $.each(move.match(/../g), function(index, position) {
       if (index == 0) {
         if (!backwards && !multistep) {
@@ -138,9 +142,21 @@ function updateStones(color, move, backwards, multistep) {
         }
         $("#" + position).attr("class", (backwards ? "e" : color));
       } else {
+        if (backwards) {
+          capturer = (color == "b" ? "white" : "black");
+          capture_change -= 1;
+        } else {
+          capturer = (color == "b" ? "black" : "white");
+          capture_change += 1;
+        }
         $("#" + position).attr("class", (backwards ? color : "e"));
       }
     });
+    if (capturer) {
+      var $count = $("." + capturer + "_captured .count");
+      $count.text(parseInt($count.text())+capture_change);
+      updateCapturedStones(capturer);
+    }
   }
 }
 
@@ -165,8 +181,24 @@ function resetPollTimer() {
 
 function playSound(name, volume) {
   if (soundEnabled) {
-    var sound = $("#" + name + "_sound").get(0)
+    var sound = $("#" + name + "_sound").get(0);
     sound.volume = volume;
     sound.play();
+  }
+}
+
+function updateCapturedStones(color) {
+  var count = $("." + color + "_captured .count").text();
+  for (var i = 1; i <= 10; i++) {
+    if (i <= count && $("." + color + "_captured .stone" + i).length == 0) {
+      $("." + color + "_captured").prepend("<div class='stone stone" + i + "'></div>");
+    } else if (i > count) {
+      $("." + color + "_captured .stone" + i).remove();
+    }
+  }
+  if (count > 6) {
+    $("." + color + "_captured .info").show();
+  } else {
+    $("." + color + "_captured .info").hide();
   }
 }

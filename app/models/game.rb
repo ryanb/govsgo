@@ -133,6 +133,7 @@ class Game < ActiveRecord::Base
         profile.handicap_or_komi = "#{handicap} handicap"
       end
       profile.score = send("#{color}_score")
+      profile.captured = captured(color)
       profile.user = send("#{color}_player")
       if profile.user == current_player
         profile.current = true
@@ -183,5 +184,20 @@ class Game < ActiveRecord::Base
       positions << engine.positions(:black)
     end
     positions
+  end
+
+  def captured(color)
+    if finished?
+      count = 0
+      offset = (color == :white && handicap.to_i == 0 || color == :black && handicap.to_i > 0) ? 1 : 0
+      moves.split("-").each_with_index do |move, index|
+        if (index+offset) % 2 == 0
+          count += move.length/2-1 if move =~ /^[a-z]/
+        end
+      end
+      count
+    else
+      send("#{color}_score").to_i
+    end
   end
 end

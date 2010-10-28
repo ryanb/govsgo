@@ -4,7 +4,7 @@ module GamesHelper
   def color_at(position, game = @game)
     if    game.black_positions_list.include? position then "b"
     elsif game.white_positions_list.include? position then "w"
-    else                                                 "e"
+    else                                                   "e"
     end
   end
 

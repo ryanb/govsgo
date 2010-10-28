@@ -80,6 +80,7 @@ describe Game do
     profile = game.profile_for(:white)
     profile.handicap_or_komi.should == "6.5 komi"
     profile.score.should == 4
+    profile.captured.should == 4
     profile.user.should be_nil
     profile.current.should be_false
     profile.last_status.should == "passed"
@@ -109,5 +110,23 @@ describe Game do
     sgf.should include("RE[W+R]")
     sgf.should include("HA[2]AB[pd][dp]")
     sgf.should include(";W[aa])")
+  end
+
+  it "should determine capture count from score when game hasn't ended" do
+    game = Factory(:game, :black_score => 2, :white_score => 3)
+    game.captured(:black).should == 2
+    game.captured(:white).should == 3
+  end
+
+  it "should determine capture count from moves when game has ended" do
+    game = Factory(:game, :moves => "aa-bb-PASS-ccdd-ffgghh-RESIGN", :finished_at => Time.now)
+    game.captured(:black).should == 2
+    game.captured(:white).should == 1
+  end
+
+  it "should determine capture count from moves when game with handicap has ended" do
+    game = Factory(:game, :moves => "aa-bb-PASS-ccdd-ffgghh-RESIGN", :finished_at => Time.now, :handicap => 2)
+    game.captured(:black).should == 1
+    game.captured(:white).should == 2
   end
 end
