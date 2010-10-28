@@ -33,3 +33,11 @@ task :fix_moves => :environment do
     end
   end
 end
+
+desc "Generate tokens for users who don't have them"
+task :user_tokens => :environment do
+  User.where(:token => nil).find_each do |user|
+    user.generate_token
+    user.save(:validate => false)
+  end
+end

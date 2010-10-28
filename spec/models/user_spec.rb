@@ -126,4 +126,9 @@ describe User do
     game.black_player.should == other_user
     game.current_player.should == other_user
   end
+
+  it "should generate a unique 16 digit token for each user" do
+    User.create!(:guest => true).token.should_not == User.create!(:guest => true).token
+    User.create!(:guest => true).token.length.should == 16
+  end
 end

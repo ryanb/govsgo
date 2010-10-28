@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password
   before_save :prepare_password
+  before_create :generate_token
 
   validates_presence_of :username, :unless => :guest?
   validates_uniqueness_of :username, :email, :allow_blank => true
@@ -62,6 +63,15 @@ class User < ActiveRecord::Base
       %w[black white current].each do |type|
         game.update_attribute("#{type}_player_id", user.id) if game.send("#{type}_player_id") == id
       end
+    end
+  end
+
+  def generate_token
+    if token.blank?
+      characters = ('a'..'z').to_a + ('A'..'Z').to_a + ('1'..'9').to_a
+      begin
+        self.token = Array.new(16) { characters.sample }.join
+      end while self.class.exists?(:token => token)
     end
   end
 
