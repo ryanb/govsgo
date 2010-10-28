@@ -12,6 +12,7 @@ gem 'go_gtp',   '0.0.4', :require => 'go/gtp'
 gem 'stalker',  '0.5.0'
 gem 'oily_png', '0.1.0'
 
+gem 'exception_notification', :git => 'git://github.com/rails/exception_notification.git', :require => 'exception_notifier'
 
 group :development, :test do
   gem 'mocha'

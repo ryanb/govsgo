@@ -3,6 +3,7 @@ class GamesController < ApplicationController
   before_filter :fetch_games, :only => [:index, :show, :other, :my, :new]
 
   def index
+    raise "Just testing" if params[:raise_exception]
     @other_games_limit = @my_games.blank? ? 8 : 4
     @other_games = @other_games.paginate(:page => 1, :per_page => @other_games_limit)
     @my_games = @my_games.paginate(:page => 1, :per_page => 4) if @my_games

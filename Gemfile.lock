@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/rails/exception_notification.git
+  revision: 192a49a02d63d28b23ed41cebadfedd490929cf1
+  specs:
+    exception_notification (1.0.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -179,6 +185,7 @@ DEPENDENCIES
   autotest-rails
   bcrypt-ruby
   capistrano
+  exception_notification!
   factory_girl_rails
   go_gtp (= 0.0.4)
   jquery-rails
