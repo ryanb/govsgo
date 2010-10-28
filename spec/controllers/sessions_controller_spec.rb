@@ -13,13 +13,14 @@ describe SessionsController do
     User.stubs(:authenticate).returns(nil)
     post :create
     response.should render_template(:new)
-    session['user_id'].should be_nil
+    cookies["token"].should be_nil
   end
 
   it "create action should redirect when authentication is valid" do
-    User.stubs(:authenticate).returns(User.first)
+    user = Factory(:user)
+    User.stubs(:authenticate).returns(user)
     post :create
     response.should redirect_to("/")
-    session['user_id'].should == User.first.id
+    cookies["token"].should == user.token
   end
 end

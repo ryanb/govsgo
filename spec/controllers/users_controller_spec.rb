@@ -31,7 +31,7 @@ describe UsersController do
     User.any_instance.stubs(:valid?).returns(true)
     post :create
     response.should redirect_to("/")
-    session['user_id'].should == assigns['user'].id
+    cookies["token"].should == assigns["user"].token
   end
 
   it "edit action should redirect when not logged in" do

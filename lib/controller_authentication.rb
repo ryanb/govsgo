@@ -21,7 +21,15 @@ module ControllerAuthentication
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= fetch_current_user
+  end
+
+  def fetch_current_user
+    if session[:user_id]
+      User.find_by_id(session[:user_id])
+    elsif cookies[:token]
+      User.find_by_token(cookies[:token])
+    end
   end
 
   def current_user_or_guest
@@ -54,7 +62,12 @@ module ControllerAuthentication
   end
 
   def remember_user(user)
-    session[:user_id] = user.id
+    cookies.permanent[:token] = user.token
+  end
+
+  def forget_user
+    session[:user_id] = nil
+    cookies.delete(:token)
   end
 
   private

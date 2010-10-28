@@ -15,7 +15,7 @@ describe AuthenticationsController do
     request.env["omniauth.auth"] = {"provider" => "foo", "uid" => "123"}
     post :create
     response.should redirect_to(root_url)
-    session[:user_id].should == user.id
+    cookies["token"].should == user.token
   end
 
   it "create action should add authentication when logged in to a full user" do
@@ -31,7 +31,7 @@ describe AuthenticationsController do
     request.env["omniauth.auth"] = {"provider" => "bar", "uid" => "789", "user_info" => {}}
     post :create
     response.should redirect_to(edit_current_user_url)
-    session[:user_id].should_not be_nil
+    cookies["token"].should_not be_nil
     session[:omniauth].should_not be_nil
   end
 
@@ -41,7 +41,7 @@ describe AuthenticationsController do
     request.env["omniauth.auth"] = {"provider" => "bar", "uid" => "123", "user_info" => {"email" => "foo@example.com", "nickname" => "foo"}}
     post :create
     response.should redirect_to(root_url)
-    session[:user_id].should_not be_nil
+    cookies["token"].should_not be_nil
     session[:omniauth].should be_nil
   end
 
@@ -63,7 +63,7 @@ describe AuthenticationsController do
     request.env["omniauth.auth"] = {"provider" => "foo", "uid" => "123"}
     post :create
     response.should redirect_to(root_url)
-    session[:user_id].should == user.id
+    cookies["token"].should == user.token
     game.reload.black_player.should == user
   end
 end
