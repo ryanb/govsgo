@@ -183,6 +183,7 @@ function playSound(name, volume) {
   if (soundEnabled) {
     var sound = $("#" + name + "_sound").get(0);
     sound.volume = volume;
+    sound.currentTime = 0;
     sound.play();
   }
 }
