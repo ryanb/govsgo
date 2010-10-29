@@ -4,7 +4,7 @@ var current_user   = null;
 var current_player = null;
 var pollTimer      = null;
 var soundEnabled   = true;
-var sounds         = new Array();
+var loadedSounds   = new Array();
 
 $(function() {
   $(".pagination a").live("click", function() {
@@ -29,6 +29,9 @@ function setupGame() {
   current_move = moves.length;
   current_user = $("#board").attr("data-current-user");
   current_player = $("#board").attr("data-current-player");
+  $("audio").bind("canplaythrough", function() {
+    loadedSounds.push($(this).attr("data-name"));
+  }, false);
   $("#board_spaces div").click(function() {
     if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player && $("#board").attr("data-finished") != "true") {
       playMove($(this).attr("id"));
@@ -180,11 +183,15 @@ function resetPollTimer() {
 }
 
 function playSound(name, volume) {
-  if (soundEnabled) {
-    var sound = $("#" + name + "_sound").get(0);
-    sound.volume = volume;
-    sound.currentTime = 0;
-    sound.play();
+  try {
+    if (soundEnabled && $.inArray(name, loadedSounds) != -1) {
+      var sound = $("#" + name + "_sound").get(0);
+      sound.volume = volume;
+      sound.currentTime = 0;
+      sound.play();
+    }
+  } catch(err) {
+    alert("There was an error attempting to play a sound. Press OK to continue. " + err);
   }
 }
 

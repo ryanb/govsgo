@@ -43,7 +43,7 @@
   http://stackoverflow.com/questions/1995589/html5-audio-safari-live-broadcast-vs-not
 -->
 <% for sound in %w[pass resign stone2] %>
-<audio preload="auto" id="<%= sound %>_sound">
+<audio preload="auto" id="<%= sound %>_sound" data-name="<%= sound %>">
   <source src="http://govsgo.com/sounds/<%= sound %>.ogg">
   <source src="http://govsgo.com/sounds/<%= sound %>.mp3">
 </audio>
