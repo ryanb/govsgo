@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def gnugo_level
+    @gnugo_level ||= calculate_gnugo_level
+  end
+
   private
 
   def prepare_password
@@ -87,5 +91,16 @@ class User < ActiveRecord::Base
 
   def encrypt_password(pass)
     BCrypt::Engine.hash_secret(pass, password_salt)
+  end
+
+  def calculate_gnugo_level
+    finished_games = games.finished.with_gnugo
+    if finished_games.size > 0
+      levels = finished_games.order("finished_at desc").limit(3).map { |g| g.resulting_level_for(self) }
+      level = (levels.inject(:+).to_f / levels.size).round
+      [[level, 20].min, 1].max
+    else
+      6
+    end
   end
 end

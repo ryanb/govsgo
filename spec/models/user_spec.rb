@@ -119,7 +119,7 @@ describe User do
 
   it "should update black, white, and current player id when moving games" do
     user = Factory(:user)
-    game = Factory(:game, :black_player => user, :white_player => user, :white_player => user)
+    game = Factory(:game, :black_player => user, :white_player => user)
     other_user = Factory(:user)
     user.move_games_to(other_user)
     game.reload.black_player.should == other_user
@@ -130,5 +130,20 @@ describe User do
   it "should generate a unique 16 digit token for each user" do
     User.create!(:guest => true).token.should_not == User.create!(:guest => true).token
     User.create!(:guest => true).token.length.should == 16
+  end
+
+  it "gnugo_level defaults to 6" do
+    User.new.gnugo_level.should == 6
+  end
+
+  it "gnugo_level should average out resulting level for past games" do
+    user = Factory(:user)
+    Factory(:game, :black_player => user, :white_player => nil, :finished_at => Time.now, :black_score => 1, :white_score => 0, :handicap => 9, :komi => 6.5) # resulting level 2
+    Factory(:game, :black_player => user, :white_player => nil, :finished_at => Time.now, :black_score => 0, :white_score => 1, :handicap => 5, :komi => 6.5) # resulting level 4
+    Factory(:game, :black_player => user, :white_player => nil, :finished_at => Time.now, :black_score => 1, :white_score => 0, :handicap => 5, :komi => 6.5) # resulting level 6
+    Factory(:game, :black_player => user, :white_player => nil, :finished_at => 2.days.ago, :black_score => 1, :white_score => 0, :handicap => 0, :komi => 6.5) # ignore since older
+    Factory(:game, :black_player => user, :white_player => nil, :handicap => 5, :komi => 6.5) # ignore since not finished
+    Factory(:game, :black_player => user, :handicap => 4, :komi => 6.5) # ignore since not against GNU Go
+    user.gnugo_level.should == 4
   end
 end

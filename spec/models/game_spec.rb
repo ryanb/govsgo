@@ -129,4 +129,85 @@ describe Game do
     game.captured(:black).should == 1
     game.captured(:white).should == 2
   end
+
+  it "black level is 10 when even" do
+    game = Factory.build(:game, :handicap => 0, :komi => 6.5)
+    game.level_for(game.black_player).should == 10
+  end
+
+  it "black level is 1 when 9 handicap and 6.5 komi" do
+    game = Factory.build(:game, :handicap => 9, :komi => 6.5)
+    game.level_for(game.black_player).should == 1
+  end
+
+  it "black level is 9 when 0.5 komi" do
+    game = Factory.build(:game, :handicap => 0, :komi => 0.5)
+    game.level_for(game.black_player).should == 9
+  end
+
+  it "white level is 11 when even" do
+    game = Factory.build(:game, :handicap => 0, :komi => 6.5)
+    game.level_for(game.white_player).should == 11
+  end
+
+  it "white level is 20 when 9 handicap and 6.5 komi" do
+    game = Factory.build(:game, :handicap => 9, :komi => 6.5)
+    game.level_for(game.white_player).should == 20
+  end
+
+  it "is even with black when setting level to 10" do
+    game = Factory.build(:game)
+    game.adjust_to_level(10)
+    game.chosen_color.should == "black"
+    game.handicap.should == 0
+    game.komi.should == 6.5
+  end
+
+  it "chooses black with 9 handicap and 6.5 komi when setting level to 1" do
+    game = Factory.build(:game)
+    game.adjust_to_level(1)
+    game.chosen_color.should == "black"
+    game.handicap.should == 9
+    game.komi.should == 6.5
+  end
+
+  it "chooses black with 0 handicap and 0.5 komi when setting level to 9" do
+    game = Factory.build(:game)
+    game.adjust_to_level(9)
+    game.chosen_color.should == "black"
+    game.handicap.should == 0
+    game.komi.should == 0.5
+  end
+
+  it "is even with white when setting level to 11" do
+    game = Factory.build(:game)
+    game.adjust_to_level(11)
+    game.chosen_color.should == "white"
+    game.handicap.should == 0
+    game.komi.should == 6.5
+  end
+
+  it "chooses white with 7 handicap and 6.5 komi when setting level to 18" do
+    game = Factory.build(:game)
+    game.adjust_to_level(18)
+    game.chosen_color.should == "white"
+    game.handicap.should == 7
+    game.komi.should == 6.5
+  end
+
+  it "chooses white with 0 handicap and 0.5 komi when setting level to 12" do
+    game = Factory.build(:game)
+    game.adjust_to_level(12)
+    game.chosen_color.should == "white"
+    game.handicap.should == 0
+    game.komi.should == 0.5
+  end
+
+  it "resulting level should be minus one for loss and plus one for win" do
+    game = Factory.build(:game, :black_score => 0, :white_score => 1, :finished_at => Time.now, :handicap => 0, :komi => 6.5)
+    game.level_for(game.black_player).should == 10
+    game.resulting_level_for(game.black_player).should == 9
+    game.level_for(game.white_player).should == 11
+    game.resulting_level_for(game.white_player).should == 12
+  end
 end

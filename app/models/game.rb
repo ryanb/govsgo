@@ -40,6 +40,7 @@ class Game < ActiveRecord::Base
 
   scope :finished,   where("finished_at is not null")
   scope :unfinished, where("finished_at is null")
+  scope :with_gnugo, where("white_player_id is null or black_player_id is null")
   scope :recent,     order("updated_at desc")
 
   ########################
@@ -199,5 +200,40 @@ class Game < ActiveRecord::Base
     else
       send("#{color}_score").to_i
     end
+  end
+
+  def level_for(user)
+    adjust = 0
+    adjust += 1 if komi < 1.0
+    adjust += handicap.to_i
+    if user == black_player
+      10 - adjust
+    elsif user == white_player
+      11 + adjust
+    end
+  end
+
+  def adjust_to_level(level)
+    self.chosen_color = level > 10 ? "white" : "black"
+    self.komi = [9, 12].include?(level) ? 0.5 : 6.5
+    if (9..12).include? level
+      self.handicap = 0
+    elsif level < 9
+      self.handicap = (level - 10).abs
+    elsif level > 12
+      self.handicap = level - 11
+    end
+  end
+
+  def resulting_level_for(user)
+    if winner == user
+      level_for(user) + 1
+    else
+      level_for(user) - 1
+    end
+  end
+
+  def winner
+    black_score > white_score ? black_player : white_player if finished_at
   end
 end
