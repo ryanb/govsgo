@@ -20,16 +20,16 @@ $(function() {
     $("#game_chosen_opponent_user").click();
   });
   $("#game_chosen_opponent_gnugo, #game_chosen_opponent_user, #game_adjust_difficulty").click(function() {
-    if ($('#game_chosen_opponent_gnugo').is(":checked")) {
+    if ($('#game_chosen_opponent_user').is(":checked")) {
+      $("#new_game .auto_difficulty").hide();
+      $("#new_game .manual_difficulty").show();
+    } else {
       $("#new_game .auto_difficulty").show();
       if ($("#game_adjust_difficulty").is(":checked")) {
         $("#new_game .manual_difficulty").hide();
       } else {
         $("#new_game .manual_difficulty").show();
       }
-    } else {
-      $("#new_game .auto_difficulty").hide();
-      $("#new_game .manual_difficulty").show();
     }
   });
 });
