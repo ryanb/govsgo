@@ -450,6 +450,10 @@ body {
   color: #FFF;
 }
 
+#new_game .play_against {
+  line-height: 24px;
+}
+
 /*** Games Column ***/
 
 #game #side {

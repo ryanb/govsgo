@@ -21,7 +21,7 @@ class Game < ActiveRecord::Base
   ### Validations ###
   ###################
 
-  attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username
+  attr_accessible :komi, :handicap, :board_size, :chosen_color, :chosen_opponent, :opponent_username, :adjust_difficulty
 
   validates_inclusion_of :board_size, :in => [9, 13, 19],     :allow_nil => true
   validates_inclusion_of :handicap,   :in => (0..9).to_a,     :allow_nil => true
@@ -47,7 +47,11 @@ class Game < ActiveRecord::Base
   ### Instance Methods ###
   ########################
 
-  attr_accessor :chosen_color, :creator, :chosen_opponent, :opponent_username, :update_thumbnail
+  attr_accessor :chosen_color, :creator, :chosen_opponent, :opponent_username, :update_thumbnail, :adjust_difficulty
+
+  def adjust_difficulty?
+    adjust_difficulty == true || adjust_difficulty.to_i == 1
+  end
 
   def black_positions_list
     if black_positions && @black_positions_list && @black_positions_list.size != black_positions.size / 2
@@ -68,6 +72,8 @@ class Game < ActiveRecord::Base
     opponent = nil
     if chosen_opponent == "user"
       opponent = User.find_by_username(opponent_username)
+    else
+      adjust_to_level(creator.gnugo_level) if creator && adjust_difficulty?
     end
     color = chosen_color.blank? ? %w[black white].sample : chosen_color
     case color

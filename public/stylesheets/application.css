@@ -199,6 +199,13 @@ form label {
   padding-top: 2px;
 }
 
+form label.inline {
+  float: none;
+  width: auto;
+  text-align: left;
+  padding: 0;
+}
+
 .field {
   margin-left: 150px;
 }

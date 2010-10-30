@@ -24,6 +24,7 @@ class GamesController < ApplicationController
     else
       @game.chosen_opponent = "gnugo"
       @game.chosen_color = "black"
+      @game.adjust_difficulty = true
     end
     @game.komi = params[:komi] || 6.5
     @game.handicap = params[:handicap] || 0
