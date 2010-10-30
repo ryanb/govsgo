@@ -289,3 +289,9 @@ form label {
 .user_online {
   color: #00A200;
 }
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+}

@@ -104,10 +104,16 @@ body {
   top: 20px;
 }
 
-#top_player .profile {
+#top_player .avatar {
   position: absolute;
   left: 0;
-  top: 100px;
+  top: 80px;
+}
+
+#top_player .profile {
+  position: absolute;
+  left: 58px;
+  top: 80px;
 }
 
 #bottom_player {
@@ -127,9 +133,15 @@ body {
   top: 40px;
 }
 
-#bottom_player .profile {
+#bottom_player .avatar {
   position: absolute;
   left: 400px;
+  top: 80px;
+}
+
+#bottom_player .profile {
+  position: absolute;
+  left: 458px;
   top: 80px;
 }
 
@@ -198,17 +210,6 @@ body {
 
 .player .name {
   font-weight: bold;
-}
-
-.player .avatar {
-  width: 64px;
-  height: 64px;
-  background-color: #2D6677;
-  border: solid 1px #000;
-  float: left;
-}
-
-.player .details {
 }
 
 #board {

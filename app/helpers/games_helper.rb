@@ -43,4 +43,23 @@ module GamesHelper
     }
     content_tag(:div, options, &block)
   end
+
+  def avatar_image_tag(user)
+    content_tag(:div, :class => "avatar") do
+      image_tag(avatar_url(user))
+    end
+  end
+
+  def avatar_url(user)
+    if user.nil?
+      "avatars/gnugo.png"
+    elsif user.avatar_url.present?
+      user.avatar_url
+    elsif user.email.present?
+      default_url = request.protocol + request.host_with_port + "/images/avatars/guest.png"
+      "http://gravatar.com/avatar/#{Digest::MD5.hexdigest(user.email.downcase)}.png?s=48&d=#{CGI.escape(default_url)}"
+    else
+      "avatars/guest.png"
+    end
+  end
 end

@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
   def apply_omniauth(omniauth)
     self.email = omniauth['user_info']['email'] if email.blank?
     self.username = omniauth['user_info']['nickname'] if username.blank?
+    self.avatar_url = omniauth['user_info']['image'] unless omniauth['user_info']['image'].blank?
   end
 
   def online?
