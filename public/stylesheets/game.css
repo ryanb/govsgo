@@ -429,17 +429,45 @@ body {
   font-size: 24px;
 }
 
+.board_overlay {
+  background: url(/images/game/black_overlay.png);
+  border: solid 8px #513F2C;
+  position: absolute;
+  z-index: 40;
+}
+
+#message_overlay {
+  left: 95px;
+  top: 420px;
+  width: 410px;
+  text-align: center;
+}
+
+#message_overlay {
+  font-size: 16px;
+}
+
+#message_overlay h2 {
+  font-size: 22px;
+  font-weight: normal;
+}
+
+#message_overlay a {
+  color: #FFF;
+}
+
+#message_overlay .resources {
+  font-size: 13px;
+  color: #DDD;
+}
+
 
 /*** New Game Form ***/
 
 #new_game_overlay {
-  background: url(/images/game/black_overlay.png);
-  position: absolute;
-  left: 95px;
+  left: 87px;
   top: 320px;
   width: 430px;
-  z-index: 40;
-  border: solid 8px #513F2C;
 }
 
 #new_game {

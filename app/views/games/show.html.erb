@@ -34,6 +34,7 @@
       <%= link_to ">>", '#', :id => "last_move" %>
     </div>
     <div id="bottom_player" class="player"><%= render "profile", :profile => @profiles.last %></div>
+    <%= render "moves/finished_message" if @game.finished? %>
   </div>
 </div>
 

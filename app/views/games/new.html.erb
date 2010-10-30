@@ -18,7 +18,7 @@
       <%= image_tag "game/bowl_white.png", :class => "bowl" %>
       <%= image_tag "game/lid_white.png", :class => "lid" %>
     </div>
-    <div id="new_game_overlay">
+    <div id="new_game_overlay" class="board_overlay">
     <%= form_for @game do |f| %>
       <%= f.error_messages %>
       <% if guest? %>

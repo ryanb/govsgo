@@ -62,24 +62,28 @@ function setupGame() {
     return false;
   });
   $("#previous_move").click(function() {
+    $("#message_overlay").hide();
     if (current_move > 0) {
       stepMove(-1, false);
     }
     return false;
   });
   $("#next_move").click(function() {
+    $("#message_overlay").hide();
     if (current_move < moves.length) {
       stepMove(1, false);
     }
     return false;
   });
   $("#first_move").click(function() {
+    $("#message_overlay").hide();
     while (current_move > 0) {
       stepMove(-1, true);
     }
     return false;
   });
   $("#last_move").click(function() {
+    $("#message_overlay").hide();
     while (current_move < moves.length) {
       stepMove(1, true);
     }

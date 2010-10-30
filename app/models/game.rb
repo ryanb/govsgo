@@ -240,6 +240,10 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    black_score > white_score ? black_player : white_player if finished_at
+    black_score >= white_score ? black_player : white_player if finished_at
+  end
+
+  def loser
+    black_score < white_score ? black_player : white_player if finished_at
   end
 end
