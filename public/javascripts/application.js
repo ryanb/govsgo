@@ -199,15 +199,16 @@ function resetPollTimer() {
 }
 
 function playSound(name, volume) {
-  try {
-    if (soundEnabled && $.inArray(name, loadedSounds) != -1) {
+  if (soundEnabled && $.inArray(name, loadedSounds) != -1) {
+    try {
       var sound = $("#" + name + "_sound").get(0);
       sound.volume = volume;
       sound.currentTime = 0;
       sound.play();
+    } catch(err) {
+      alert("There was an error attempting to play a sound. Press OK to continue. " + err);
+      loadedSounds.splice($.inArray(name, loadedSounds), 1);
     }
-  } catch(err) {
-    alert("There was an error attempting to play a sound. Press OK to continue. " + err);
   }
 }
 
