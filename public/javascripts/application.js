@@ -96,6 +96,7 @@ function setupGame() {
     } else {
       $("#sound_switch img").attr("src", "/images/game/sound_off.png");
     }
+    return false;
   });
   if ($("#board").attr("data-finished") != "true") {
     startPolling();
