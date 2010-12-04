@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+STDERR.sync = STDOUT.sync = true
+
+RAILS_ENV  = ENV.fetch("RAILS_ENV", "development")
+RAILS_ROOT = File.expand_path("../..", __FILE__)
+
+require "stalker"
+require "mysql2"
+require "go/gtp"
+require "oily_png"
+require "#{RAILS_ROOT}/lib/game_thumb"
+require "#{RAILS_ROOT}/lib/game_engine"
+
+mysql_config = Hash[YAML.load_file("#{RAILS_ROOT}/config/database.yml")[RAILS_ENV].map { |k, v| [k.to_sym, v] }]
+mysql = Mysql2::Client.new(mysql_config.merge(:reconnect => true))
+
+Stalker.job("Game.move") do |args|
+  id = args["id"]
+  game = mysql.query("select * from games where id='#{id}' limit 1", :symbolize_keys => true).first
+  update = GameEngine.update_game_attributes_with_move(game)
+  update.each do |name, value|
+    update[name] = value.utc.strftime("%Y-%m-%d %H:%M:%S") if value.kind_of? Time
+  end
+  values = update.map { |col, val| "#{col}='#{mysql.escape(val.to_s)}'" }.join(", ")
+  mysql.query("UPDATE games SET #{values} WHERE id=#{id} AND current_player_id IS NULL AND finished_at IS NULL")
+  GameThumb.generate(id, game[:board_size], update[:black_positions], update[:white_positions])
+end
+
+Stalker.work

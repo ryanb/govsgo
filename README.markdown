@@ -26,7 +26,7 @@ You can start up the server with `rails s` and run the specs with `rake`.
 
 In production, the computer moves are handled in a background process because GNU Go can take a while and we don't want to tie up the Rails process during this time.
 
-If you want to test the background process, set `background_process: true` in your `config/private.yml` file. Next run `beanstalkd` and `script/play_computer_moves`. to start up the processes.
+If you want to test the background process, set `background_process: true` in your `config/private.yml` file. Next run `beanstalkd` and `script/worker`. to start up the processes. Alternatively you can use [god](http://god.rubyforge.org/) to start and monitor it. See the `config/god.rb` file.
 
 
 ## Credits
