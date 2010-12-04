@@ -1,7 +1,13 @@
 # run with: god -c config/god.rb
 RAILS_ROOT = File.expand_path("../..", __FILE__)
 
-def general_monitor(w)
+God.watch do |w|
+  w.name = "govsgo-worker"
+  w.interval = 30.seconds
+  w.env = {"RAILS_ENV" => "production"}
+  w.start = "#{RAILS_ROOT}/script/worker"
+  w.log = "#{RAILS_ROOT}/log/worker.log"
+
   w.start_if do |start|
     start.condition(:process_running) do |c|
       c.running = false
@@ -31,23 +37,4 @@ def general_monitor(w)
       c.retry_within = 2.hours
     end
   end
-end
-
-God.watch do |w|
-  w.name = "govsgo-worker"
-  w.interval = 30.seconds
-  w.env = {"RAILS_ENV" => "production"}
-  w.start = "#{RAILS_ROOT}/script/worker"
-  w.log = "#{RAILS_ROOT}/log/worker.log"
-
-  general_monitor(w)
-end
-
-God.watch do |w|
-  w.name = "beanstalkd"
-  w.interval = 30.seconds
-  w.start = "beanstalkd"
-  w.log = "#{RAILS_ROOT}/log/beanstalkd.log"
-
-  general_monitor(w)
 end

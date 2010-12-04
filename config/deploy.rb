@@ -1,5 +1,8 @@
 require "bundler/capistrano"
 
+set :whenever_command, "bundle exec whenever"
+require "whenever/capistrano"
+
 default_run_options[:pty] = true
 
 set  :application, "govsgo.com"
@@ -65,23 +68,17 @@ namespace :deploy do
 
     desc "Start workers"
     task :start_workers do
-      sudo "RAILS_ENV=production #{current_path}/script/play_computer_moves"
+      run "god start govsgo-worker"
     end
 
     desc "Stop workers"
     task :stop_workers do
-      sudo "RAILS_ENV=production #{current_path}/script/play_computer_moves stop"
+      run "god stop govsgo-worker"
     end
 
     desc "Restart workers"
     task :restart_workers do
-      sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves stop"
-      sudo "RAILS_ENV=production #{release_path}/script/play_computer_moves"
-    end
-
-    desc "Requeue all games waiting on a computer move"
-    task :queue_all_for_computer do
-      run "cd #{current_path} && RAILS_ENV=production rake data:game:queue_all_for_computer"
+      run "god restart govsgo-worker"
     end
   end
 end

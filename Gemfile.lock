@@ -8,6 +8,7 @@ GEM
   remote: http://rubygems.org/
   specs:
     ZenTest (4.4.0)
+    aaronh-chronic (0.3.9)
     abstract (1.0.0)
     actionmailer (3.0.1)
       actionpack (= 3.0.1)
@@ -175,6 +176,9 @@ GEM
     treetop (1.4.8)
       polyglot (>= 0.3.1)
     tzinfo (0.3.23)
+    whenever (0.6.2)
+      aaronh-chronic (>= 0.3.9)
+      activesupport (>= 2.3.4)
     will_paginate (3.0.pre2)
 
 PLATFORMS
@@ -198,4 +202,5 @@ DEPENDENCIES
   rails (= 3.0.1)
   rspec-rails (>= 2.0.1)
   stalker (= 0.5.0)
+  whenever
   will_paginate (= 3.0.pre2)

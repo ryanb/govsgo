@@ -7,6 +7,7 @@ gem 'omniauth'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'will_paginate', '3.0.pre2'
+gem 'whenever', :require => false
 
 gem 'go_gtp',   '0.0.4', :require => 'go/gtp'
 gem 'stalker',  '0.5.0'
