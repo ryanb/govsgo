@@ -34,7 +34,7 @@
         <%= f.text_field :opponent_username %>
       </p>
       <% end %>
-      <% div_hidden_if @game.chosen_opponent == "user", :class => "auto_difficulty" do %>
+      <%= div_hidden_if @game.chosen_opponent == "user", :class => "auto_difficulty" do %>
         <p>
           <%= f.check_box :adjust_difficulty %>
           <%= f.label :adjust_difficulty, "Automatically adjust difficulty", :class => "inline" %>
@@ -45,7 +45,7 @@
         <%= f.label :board_size %>
         <%= f.select :board_size, [["19 x 19", 19], ["13 x 13", 13], ["9 x 9", 9]] %>
       </p>
-      <% div_hidden_if @game.adjust_difficulty? && @game.chosen_opponent != "user", :class => "manual_difficulty" do %>
+      <%= div_hidden_if @game.adjust_difficulty? && @game.chosen_opponent != "user", :class => "manual_difficulty" do %>
         <p>
           <%= f.label :chosen_color, "Play as" %>
           <%= f.select :chosen_color, [["Random", ""], ["Black", "black"], ["White", "white"]] %>
