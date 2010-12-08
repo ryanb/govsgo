@@ -4,8 +4,10 @@ STDERR.sync = STDOUT.sync = true
 RAILS_ENV  = ENV.fetch("RAILS_ENV", "development")
 RAILS_ROOT = File.expand_path("../..", __FILE__)
 
+ENV["BUNDLE_GEMFILE"] = "#{RAILS_ROOT}/Gemfile"
 require "bundler"
 Bundler.setup(:default, RAILS_ENV.to_sym)
+
 require "stalker"
 require "mysql2"
 require "go/gtp"
