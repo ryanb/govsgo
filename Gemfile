@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.3'
 gem 'mysql2'
-gem 'nifty-generators'
 gem 'omniauth'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
@@ -24,4 +23,5 @@ end
 group :development do
   gem 'capistrano'
   gem 'mongrel', '1.2.0.pre2'
+  gem 'nifty-generators'
 end
