@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_filter :login_required, :only => :my
+  before_filter :login_required, :only => [:my, :edit, :update]
   before_filter :fetch_games, :only => [:index, :show, :other, :my, :new]
 
   def index
@@ -47,6 +47,25 @@ class GamesController < ApplicationController
       @other_games = @other_games.paginate(:page => 1, :per_page => 5)
       @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
       render :action => 'new'
+    end
+  end
+
+  def edit
+    
+  end
+
+  def update
+    @game = Game.find(params[:id])
+    raise "Unable to update game because you are not the current player" if @game.current_player != current_user
+    raise "Unable to update game because it has already started." if @game.started?
+    if params[:invitation_button] == "Accept"
+      @game.start
+      @game.save!
+    elsif params[:invitation_button] == "Decline"
+      @game.update_attribute(:finished_at, Time.now)
+    else
+      @game.switch_current_player
+      @game.update_attributes!(params[:game])
     end
   end
 

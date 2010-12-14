@@ -1,0 +1,35 @@
+<% if @game.finished? %>
+  <div class="short_panel">
+    <% if !@game.started? %>
+      <h2>Game has been declined.</h2>
+    <% elsif current_user && @game.winner == current_user %>
+      <h2>Congratulations, you won!</h2>
+      <p><%= link_to "Play Again", new_game_path(:board_size => @game.board_size) %></p>
+    <% elsif current_user && @game.loser == current_user %>
+      <h2>Sorry, you lost.</h2>
+      <p class="resources">Need some help? Check out the <%= link_to "Go Resources", go_resources_path %>.</p>
+      <p><%= link_to "Play Again", new_game_path(:board_size => @game.board_size) %></p>
+    <% else %>
+      <h2><%= @game.winner ? (@game.winner.username || "Guest") : "GNU Go" %> won!</h2>
+    <% end %>
+  </div>
+<% elsif @game.current_player == current_user %>
+  <div class="tall_panel">
+    <%= form_for @game do |f| %>
+      <h2><%= @game.opponent(current_user).username %> has challenged you to a game.</h2>
+      <p>Size: <%= @game.board_size %></p>
+      <p>Komi: <%= @game.komi %></p>
+      <p>Handicap: <%= @game.handicap %></p>
+      <p>Playing as: <%= @game.white_player == current_user ? "White" : "Black" %></p>
+      <p>Don't like these settings? <%= link_to "Edit Settings", edit_game_path(@game) %></p>
+      <p>
+        <%= f.submit "Accept", :name => "invitation_button" %>
+        <%= f.submit "Decline", :name => "invitation_button" %>
+      </p>
+    <% end %>
+  </div>
+<% else %>
+  <div class="short_panel">
+    <p>Waiting for opponent to accept game.</p>
+  </div>
+<% end %>

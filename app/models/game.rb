@@ -76,20 +76,25 @@ class Game < ActiveRecord::Base
       adjust_to_level(creator.gnugo_level) if creator && adjust_difficulty?
     end
     color = chosen_color.blank? ? %w[black white].sample : chosen_color
-    case color
-    when "black"
+    if color == "black"
       self.black_player = creator
       self.white_player = opponent
-    when "white"
+    elsif color == "white"
       self.black_player = opponent
       self.white_player = creator
     end
+    self.current_player = opponent
+    start if opponent.nil? # Skip invitation when playing GNU Go
+  end
+
+  def start
     if handicap.to_i > 0
       self.black_positions = handicap_positions
       self.current_player = white_player
     else
       self.current_player = black_player
     end
+    self.started_at = Time.now
     self.update_thumbnail = true
   end
 
@@ -129,7 +134,15 @@ class Game < ActiveRecord::Base
   end
 
   def finished?
-    finished_at
+    finished_at.present?
+  end
+
+  def started?
+    started_at.present?
+  end
+
+  def active?
+    started? && !finished?
   end
 
   def profile_for(color)
@@ -194,7 +207,7 @@ class Game < ActiveRecord::Base
   end
 
   def captured(color)
-    if finished?
+    if started? && finished?
       count = 0
       offset = (color == :white && handicap.to_i == 0 || color == :black && handicap.to_i > 0) ? 1 : 0
       moves.split("-").each_with_index do |move, index|
@@ -240,10 +253,18 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    black_score >= white_score ? black_player : white_player if finished_at
+    black_score >= white_score ? black_player : white_player if started? && finished?
   end
 
   def loser
-    black_score < white_score ? black_player : white_player if finished_at
+    black_score < white_score ? black_player : white_player if started? && finished?
+  end
+
+  def switch_current_player
+    self.current_player = opponent(current_player)
+  end
+
+  def opponent(player)
+    player == black_player ? white_player : black_player
   end
 end

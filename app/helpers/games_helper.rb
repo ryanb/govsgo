@@ -39,6 +39,7 @@ module GamesHelper
       "data-handicap" => game.handicap.to_i,
       "data-current-player" => game.current_player_id.to_i,
       "data-current-user" => current_user.try(:id).to_s,
+      "data-started" => game.started?.to_s,
       "data-finished" => game.finished?.to_s,
     }
     content_tag(:div, options, &block)

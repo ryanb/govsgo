@@ -39,3 +39,52 @@ describe GamesController do
     response.body.should == "sgf data"
   end
 end
+
+describe GamesController, "logged in" do
+  fixtures :all
+  render_views
+
+  before(:each) do
+    @user = Factory(:user)
+    @controller.stubs(:current_user).returns(@user)
+  end
+
+  it "edit action should render edit javascript template" do
+    get :edit, :id => Game.first, :format => :js
+    response.should render_template(:edit)
+  end
+
+  it "update action should raise an error when already started" do
+    lambda {
+      put :update, :id => Factory(:game, :started_at => Time.now, :current_player => @user)
+    }.should raise_error(RuntimeError)
+  end
+
+  it "update action should not allow user to update a game when he is not current player" do
+    lambda {
+      put :update, :id => Factory(:game, :started_at => nil, :current_player => nil)
+    }.should raise_error(RuntimeError)
+  end
+
+  it "update action should mark game as started when accepting and adjust current player" do
+    game = Factory(:game, :started_at => nil, :white_player => @user, :current_player => @user)
+    put :update, :id => game, :invitation_button => "Accept", :format => :js
+    game.reload.started_at.should_not be_nil
+    game.current_player.should == game.black_player
+  end
+
+  it "update action should mark game as finished when declining" do
+    game = Factory(:game, :started_at => nil, :white_player => @user, :current_player => @user)
+    put :update, :id => game, :invitation_button => "Decline", :format => :js
+    game.reload.started_at.should be_nil
+    game.finished_at.should_not be_nil
+  end
+
+  it "update action should update game attributes" do
+    game = Factory(:game, :started_at => nil, :white_player => @user, :current_player => @user, :board_size => 19)
+    put :update, :id => game, :game => {:board_size => 9}, :format => :js
+    game.reload.started_at.should be_nil
+    game.board_size.should == 9
+    game.current_player.should == game.black_player
+  end
+end

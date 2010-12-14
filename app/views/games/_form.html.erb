@@ -1,0 +1,44 @@
+<%= form_for @game do |f| %>
+  <%= f.error_messages %>
+  <% if @game.new_record? %>
+    <% if guest? %>
+    <p>
+      <strong>Playing against computer (GNU Go).</strong><br />
+      To play against others you must first <%= link_to "sign in", signin_path %>.
+    </p>
+    <% else %>
+    <p class="play_against">
+      <strong>Play against:</strong><br />
+      <%= f.radio_button :chosen_opponent, "gnugo" %> Computer (GNU Go)<br />
+      <%= f.radio_button :chosen_opponent, "user" %> Username:
+      <%= f.text_field :opponent_username %>
+    </p>
+    <% end %>
+    <%= div_hidden_if @game.chosen_opponent == "user", :class => "auto_difficulty" do %>
+      <p>
+        <%= f.check_box :adjust_difficulty %>
+        <%= f.label :adjust_difficulty, "Automatically adjust difficulty", :class => "inline" %>
+        <%= "(Level #{current_user.gnugo_level})" if current_user %>
+      </p>
+    <% end %>
+  <% end %>
+  <p>
+    <%= f.label :board_size %>
+    <%= f.select :board_size, [["19 x 19", 19], ["13 x 13", 13], ["9 x 9", 9]] %>
+  </p>
+  <%= div_hidden_if @game.new_record? && @game.adjust_difficulty? && @game.chosen_opponent != "user", :class => "manual_difficulty" do %>
+    <p>
+      <%= f.label :chosen_color, "Play as" %>
+      <%= f.select :chosen_color, [["Random", ""], ["Black", "black"], ["White", "white"]] %>
+    </p>
+    <p>
+      <%= f.label :handicap %>
+      <%= f.select :handicap, [0, 2, 3, 4, 5, 6, 7, 8, 9] %>
+    </p>
+    <p>
+      <%= f.label :komi %>
+      <%= f.select :komi, [0.5, 5.5, 6.5] %>
+    </p>
+  <% end %>
+  <p class="field"><%= f.submit (@game.new_record? ? "Start Game" : "Update Game") %></p>
+<% end %>

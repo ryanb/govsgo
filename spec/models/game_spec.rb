@@ -210,4 +210,22 @@ describe Game do
     game.level_for(game.white_player).should == 11
     game.resulting_level_for(game.white_player).should == 12
   end
+
+  it "should be an active game when started and not finished" do
+    Factory.build(:game, :started_at => Time.now, :finished_at => nil).should be_active
+    Factory.build(:game, :started_at => nil, :finished_at => nil).should_not be_active
+    Factory.build(:game, :started_at => nil, :finished_at => Time.now).should_not be_active
+    Factory.build(:game, :started_at => Time.now, :finished_at => Time.now).should_not be_active
+  end
+
+  it "should know other player is opponent" do
+    game = Factory.build(:game)
+    game.opponent(game.black_player).should == game.white_player
+  end
+
+  it "should have nil winner/loser for game which hasn't started" do
+    game = Factory.build(:game, :started_at => nil, :finished_at => Time.now)
+    game.winner.should be_nil
+    game.loser.should be_nil
+  end
 end

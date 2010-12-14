@@ -1,0 +1,10 @@
+<div id="side">
+    <% unless @my_games.blank? %>
+    <div id="my_games" class="games">
+      <%= render "my_games" %>
+    </div>
+    <% end %>
+    <div id="other_games" class="games">
+      <%= render "other_games" %>
+    </div>
+  </div>

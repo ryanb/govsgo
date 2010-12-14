@@ -3,24 +3,14 @@
 <% @hide_footer = true %>
 
 <div id="game">
-  <div id="side">
-    <% unless @my_games.blank? %>
-    <div id="my_games" class="games">
-      <%= render "my_games" %>
-    </div>
-    <% end %>
-    <div id="other_games" class="games">
-      <%= render "other_games" %>
-    </div>
-  </div>
+  <%= render "side" %>
   <div id="game_area">
     <div id="top_player" class="player"><%= render "profile", :profile => @profiles.first %></div>
     <%= board_div(@game) do %>
       <div id="board_spaces">
       <% for y in ('a'..'s').first(@game.board_size) %>
         <% for x in ('a'..'s').first(@game.board_size) %>
-          <% position = x + y %>
-          <div class="<%= color_at position %><%= ' last' if @game.last_position == position %>" id="<%= position %>"></div>
+          <div class="<%= color_at(x + y) %><%= " last" if @game.last_position == x + y %>" id="<%= x + y %>"></div>
         <% end %>
       <% end %>
       </div>
@@ -34,7 +24,7 @@
       <%= link_to ">>", '#', :id => "last_move" %>
     </div>
     <div id="bottom_player" class="player"><%= render "profile", :profile => @profiles.last %></div>
-    <%= render "moves/finished_message" if @game.finished? %>
+    <div id="panel_container"><%= render "panel" unless @game.active? %></div>
   </div>
 </div>
 
