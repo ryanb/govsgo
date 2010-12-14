@@ -47,7 +47,7 @@ function setupGame() {
     loadedSounds.push($(this).attr("data-name"));
   }, false);
   $("#board_spaces div").click(function() {
-    if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player && $("#board").attr("data-finished") != "true") {
+    if ($(this).hasClass("e") && current_move == moves.length && current_user == current_player && $("#board").attr("data-finished") != "true" && $("#board").attr("data-started") == "true") {
       playMove($(this).attr("id"));
     }
   });
@@ -100,7 +100,6 @@ function setupGame() {
   });
   $("#accept_button, #decline_button").live("click", function() {
     $('<input/>', {type:"hidden", name:"invitation_button", value:this.value}).appendTo("form.edit_game");
-    alert(this.value);
     return true;
   });
   $("form.edit_game").live("submit", function() {
@@ -111,7 +110,7 @@ function setupGame() {
     $.getScript(this.href);
     return false;
   });
-  if ($("#board").attr("data-finished") != "true") {
+  if ($("#board").attr("data-finished") != "true" && $("#board").attr("data-started") == "true") {
     startPolling();
   }
 }
@@ -122,7 +121,7 @@ function playMove(move) {
 
 function addMoves(new_moves, next_player) {
   $('.profile .details .turn').hide();
-  if ($("#board").attr("data-finished") != "true") {
+  if ($("#board").attr("data-finished") != "true" && $("#board").attr("data-started") == "true") {
     $('.profile .details #turn_' + next_player).show();
   }
   $.each(new_moves.split("-"), function(index, move) {

@@ -13,15 +13,19 @@
       <h2><%= @game.winner ? (@game.winner.username || "Guest") : "GNU Go" %> won!</h2>
     <% end %>
   </div>
+<% elsif @game.started? %>
+  <div class="short_panel">
+    <p>Looks like the game has started, <%= link_to "reload", @game %> to play.</p>
+  </div>
 <% elsif @game.current_player == current_user %>
   <div class="tall_panel">
     <%= form_for @game do |f| %>
-      <h2><%= @game.opponent(current_user).username %> has challenged you to a game.</h2>
-      <p>Size: <%= @game.board_size %></p>
-      <p>Komi: <%= @game.komi %></p>
-      <p>Handicap: <%= @game.handicap %></p>
-      <p>Playing as: <%= @game.white_player == current_user ? "White" : "Black" %></p>
-      <p>Don't like these settings? <%= link_to "Edit Settings", edit_game_path(@game) %></p>
+      <h2>Challenge from <%= @game.opponent(current_user).username %></h2>
+      <p class="game_setting">Board Size: <%= @game.board_size %></p>
+      <p class="game_setting">Playing as: <%= @game.white_player == current_user ? "White" : "Black" %></p>
+      <p class="game_setting">Komi: <%= @game.komi %></p>
+      <p class="game_setting">Handicap: <%= @game.handicap %></p>
+      <p>Want to change something? <%= link_to "Edit Settings", edit_game_path(@game) %></p>
       <p>
         <%= f.submit "Accept", :name => "invitation_button", :id => "accept_button" %>
         <%= f.submit "Decline", :name => "invitation_button", :id => "decline_button" %>

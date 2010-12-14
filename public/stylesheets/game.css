@@ -476,6 +476,10 @@ body {
   line-height: 24px;
 }
 
+#panel_container .game_setting {
+  margin: 3px;
+}
+
 
 /*** Games Column ***/
 
