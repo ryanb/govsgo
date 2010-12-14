@@ -41,3 +41,10 @@ task :user_tokens => :environment do
     user.save(:validate => false)
   end
 end
+
+desc "Set the started_at time for all existing games"
+task :fix_started_at => :environment do
+  Game.find_each do |game|
+    game.update_attribute(:started_at, game.created_at)
+  end
+end
