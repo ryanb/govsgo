@@ -21,6 +21,9 @@
         <%= "(Level #{current_user.gnugo_level})" if current_user %>
       </p>
     <% end %>
+  <% else %>
+    <%= f.hidden_field :chosen_opponent %>
+    <%= f.hidden_field :opponent_username %>
   <% end %>
   <p>
     <%= f.label :board_size %>

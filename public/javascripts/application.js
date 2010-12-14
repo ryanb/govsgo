@@ -98,6 +98,19 @@ function setupGame() {
     }
     return false;
   });
+  $("#accept_button, #decline_button").live("click", function() {
+    $('<input/>', {type:"hidden", name:"invitation_button", value:this.value}).appendTo("form.edit_game");
+    alert(this.value);
+    return true;
+  });
+  $("form.edit_game").live("submit", function() {
+    $.post($(this).attr("action"), $(this).serialize(), null, "script");
+    return false;
+  });
+  $("form.edit_game a").live("click", function() {
+    $.getScript(this.href);
+    return false;
+  });
   if ($("#board").attr("data-finished") != "true") {
     startPolling();
   }

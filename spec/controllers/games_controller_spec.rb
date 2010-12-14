@@ -49,9 +49,13 @@ describe GamesController, "logged in" do
     @controller.stubs(:current_user).returns(@user)
   end
 
-  it "edit action should render edit javascript template" do
-    get :edit, :id => Game.first, :format => :js
+  it "edit action should render edit javascript template and fill in user attributes" do
+    game = Factory(:game, :white_player => @user, :current_player => @user)
+    get :edit, :id => game, :format => :js
     response.should render_template(:edit)
+    assigns(:game).chosen_opponent.should == "user"
+    assigns(:game).opponent_username.should == game.black_player.username
+    assigns(:game).chosen_color.should == "white"
   end
 
   it "update action should raise an error when already started" do
@@ -82,7 +86,7 @@ describe GamesController, "logged in" do
 
   it "update action should update game attributes" do
     game = Factory(:game, :started_at => nil, :white_player => @user, :current_player => @user, :board_size => 19)
-    put :update, :id => game, :game => {:board_size => 9}, :format => :js
+    put :update, :id => game, :game => {:board_size => 9, :chosen_color => "white", :chosen_opponent => "user", :opponent_username => game.black_player.username}, :format => :js
     game.reload.started_at.should be_nil
     game.board_size.should == 9
     game.current_player.should == game.black_player

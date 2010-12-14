@@ -23,8 +23,8 @@
       <p>Playing as: <%= @game.white_player == current_user ? "White" : "Black" %></p>
       <p>Don't like these settings? <%= link_to "Edit Settings", edit_game_path(@game) %></p>
       <p>
-        <%= f.submit "Accept", :name => "invitation_button" %>
-        <%= f.submit "Decline", :name => "invitation_button" %>
+        <%= f.submit "Accept", :name => "invitation_button", :id => "accept_button" %>
+        <%= f.submit "Decline", :name => "invitation_button", :id => "decline_button" %>
       </p>
     <% end %>
   </div>

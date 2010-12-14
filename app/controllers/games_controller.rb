@@ -51,7 +51,10 @@ class GamesController < ApplicationController
   end
 
   def edit
-    
+    @game = Game.find(params[:id])
+    @game.chosen_opponent = "user"
+    @game.opponent_username = @game.opponent(current_user).username
+    @game.chosen_color = @game.black_player == current_user ? "black" : "white"
   end
 
   def update
@@ -64,8 +67,10 @@ class GamesController < ApplicationController
     elsif params[:invitation_button] == "Decline"
       @game.update_attribute(:finished_at, Time.now)
     else
-      @game.switch_current_player
-      @game.update_attributes!(params[:game])
+      @game.creator = current_user
+      @game.attributes = params[:game]
+      @game.prepare
+      @game.save!
     end
   end
 
