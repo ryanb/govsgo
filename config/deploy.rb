@@ -5,7 +5,7 @@ require "whenever/capistrano"
 
 default_run_options[:pty] = true
 
-set  :application, "beta.govsgo.com"
+set  :application, "govsgo.com"
 role :app,         application
 role :web,         application
 role :db,          application, :primary => true
