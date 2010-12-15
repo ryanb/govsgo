@@ -1,0 +1,14 @@
+Hi <%= @game.current_player.username %>,
+
+A move has been made on your game against <%= @game.opponent.username %> on Go vs Go.
+
+Game: <%= game_url(@game) %>
+
+This is an automated message sent from Go vs Go.
+
+--
+
+If you no longer wish to receive notifications from Go vs Go you can unsubscribe.
+
+Unsubscribe: <%# unsubscribe_url(@user.unsubscribe_token) %>
+

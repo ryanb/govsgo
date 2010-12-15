@@ -261,10 +261,10 @@ class Game < ActiveRecord::Base
   end
 
   def switch_current_player
-    self.current_player = opponent(current_player)
+    self.current_player = opponent
   end
 
-  def opponent(player)
+  def opponent(player = current_player)
     player == black_player ? white_player : black_player
   end
 end

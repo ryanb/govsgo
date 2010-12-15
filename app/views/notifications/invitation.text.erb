@@ -1,0 +1,14 @@
+Hi <%= @game.current_player.username %>,
+
+You have been challenged by <%= @game.opponent.username %> to play a game on Go vs Go.
+
+Game: <%= game_url(@game) %>
+
+This is an automated message sent from Go vs Go.
+
+--
+
+If you no longer wish to receive notifications from Go vs Go you can unsubscribe.
+
+Unsubscribe: <%# unsubscribe_url(@user.unsubscribe_token) %>
+

@@ -48,5 +48,6 @@ Govsgo::Application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.default_url_options = { :host => "govsgo.com" }
   config.middleware.use ExceptionNotifier, :email_prefix => "[ERROR] ", :sender_address => 'noreply@govsgo.com', :exception_recipients => "ryan@govsgo.com"
 end
