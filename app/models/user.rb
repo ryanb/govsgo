@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank
+  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank, :email_on_invitation, :email_on_move
 
   has_many :authentications
 
   attr_accessor :password
   before_save :prepare_password
-  before_create :generate_token
+  before_create :generate_tokens
 
   validates_presence_of :username, :unless => :guest?
   validates_uniqueness_of :username, :email, :allow_blank => true
@@ -46,7 +46,10 @@ class User < ActiveRecord::Base
   end
 
   def apply_omniauth(omniauth)
-    self.email = omniauth['user_info']['email'] if email.blank?
+    if email.blank?
+      self.email = omniauth['user_info']['email']
+      self.email_on_invitation = true unless email.blank?
+    end
     self.username = omniauth['user_info']['nickname'] if username.blank?
     self.avatar_url = omniauth['user_info']['image'] if omniauth['user_info'] && omniauth['user_info']['image'].present?
   end
@@ -67,12 +70,17 @@ class User < ActiveRecord::Base
     end
   end
 
-  def generate_token
-    if token.blank?
+  def generate_tokens
+    generate_token(:token)
+    generate_token(:unsubscribe_token)
+  end
+
+  def generate_token(name)
+    if self[name].blank?
       characters = ('a'..'z').to_a + ('A'..'Z').to_a + ('1'..'9').to_a
       begin
-        self.token = Array.new(16) { characters.sample }.join
-      end while self.class.exists?(:token => token)
+        self[name] = Array.new(16) { characters.sample }.join
+      end while self.class.exists?(name => token)
     end
   end
 

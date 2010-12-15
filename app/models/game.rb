@@ -210,7 +210,7 @@ class Game < ActiveRecord::Base
     if started? && finished?
       count = 0
       offset = (color == :white && handicap.to_i == 0 || color == :black && handicap.to_i > 0) ? 1 : 0
-      moves.split("-").each_with_index do |move, index|
+      moves.to_s.split("-").each_with_index do |move, index|
         if (index+offset) % 2 == 0
           count += move.length/2-1 if move =~ /^[a-z]/
         end
@@ -253,11 +253,11 @@ class Game < ActiveRecord::Base
   end
 
   def winner
-    black_score >= white_score ? black_player : white_player if started? && finished?
+    black_score.to_f >= white_score.to_f ? black_player : white_player if started? && finished?
   end
 
   def loser
-    black_score < white_score ? black_player : white_player if started? && finished?
+    black_score.to_f < white_score.to_f ? black_player : white_player if started? && finished?
   end
 
   def switch_current_player

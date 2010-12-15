@@ -30,7 +30,7 @@ describe UsersController do
   it "create action should redirect when model is valid" do
     User.any_instance.stubs(:valid?).returns(true)
     post :create
-    response.should redirect_to("/")
+    response.should redirect_to(root_url)
     cookies["token"].should == assigns["user"].token
   end
 
@@ -61,6 +61,12 @@ describe UsersController do
     @controller.stubs(:current_user).returns(User.first)
     User.any_instance.stubs(:valid?).returns(true)
     put :update, :id => "ignored"
-    response.should redirect_to("/")
+    response.should redirect_to(root_url)
+  end
+
+  it "unsubscribe action should remove email options from user with matching token" do
+    user = Factory(:user, :email_on_invitation => true, :email_on_move => true)
+    get :unsubscribe, :token => user.unsubscribe_token
+    response.should redirect_to(root_url)
   end
 end

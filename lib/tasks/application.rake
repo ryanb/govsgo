@@ -48,3 +48,12 @@ task :fix_started_at => :environment do
     game.update_attribute(:started_at, game.created_at)
   end
 end
+
+desc "Set the unsubscribe_token for existing users"
+task :fix_unsubscribe_token => :environment do
+  User.where(:unsubscribe_token => nil).find_each do |user|
+    user.email_on_invitation = true
+    user.generate_token(:unsubscribe_token)
+    user.save!
+  end
+end

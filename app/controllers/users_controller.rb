@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :except => [:new, :create]
+  before_filter :login_required, :except => [:new, :create, :unsubscribe]
 
   def new
     if params[:email]
@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         redirect_to login_url(:login => params[:email])
       end
     end
-    @user = User.new(:email => params[:email])
+    @user = User.new(:email => params[:email], :email_on_invitation => true)
   end
 
   def create
@@ -47,5 +47,12 @@ class UsersController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+
+  def unsubscribe
+    @user = User.find_by_unsubscribe_token!(params[:token])
+    @user.update_attributes!(:email_on_invitation => false, :email_on_move => false)
+    flash[:notice] = "You have been unsubscribed from further email notifications."
+    redirect_to root_url
   end
 end

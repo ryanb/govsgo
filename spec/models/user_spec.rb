@@ -130,6 +130,7 @@ describe User do
   it "should generate a unique 16 digit token for each user" do
     User.create!(:guest => true).token.should_not == User.create!(:guest => true).token
     User.create!(:guest => true).token.length.should == 16
+    User.create!(:guest => true).unsubscribe_token.length.should == 16
   end
 
   it "gnugo_level defaults to 6" do

@@ -8,6 +8,14 @@
     <%= f.label :email, "Email Address" %>
     <%= f.text_field :email %>
   </p>
+  <p class="field">
+    <%= f.check_box :email_on_invitation %>
+    <%= f.label :email_on_invitation, "Email me on new games", :class => "inline" %>
+  </p>
+  <p class="field">
+    <%= f.check_box :email_on_move %>
+    <%= f.label :email_on_move, "Email me when opponent moves", :class => "inline" %>
+  </p>
   <p>
     <%= f.label :rank %>
     <%= f.text_field :rank, :size => 10 %>

@@ -40,6 +40,7 @@ class GamesController < ApplicationController
     @game.prepare
     if @game.save
       @game.queue_computer_move
+      Notifications.invitation(@game).deliver if @game.current_player && @game.current_player.email.present? && @game.current_player.email_on_invitation?
       flash[:notice] = "Game started. Click on a point below to place your stone."
       redirect_to @game
     else

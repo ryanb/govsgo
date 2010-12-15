@@ -1,12 +1,13 @@
 Govsgo::Application.routes.draw do
-  match '/auth/:provider/callback' => 'authentications#create'
+  match 'auth/:provider/callback' => 'authentications#create'
   match 'user/edit' => 'users#edit', :as => :edit_current_user
   match 'signin' => 'authentications#index', :as => :signin
   match 'signup' => 'users#new', :as => :signup
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'login' => 'sessions#new', :as => :login
   match 'go_resources' => 'games#resources', :as => :go_resources
-  match '/games/:id.sgf' => 'games#sgf', :format => "sgf", :as => "game_sgf"
+  match 'games/:id.sgf' => 'games#sgf', :format => "sgf", :as => "game_sgf"
+  match 'unsubscribe/:token' => 'users#unsubscribe', :as => "unsubscribe"
   resources :authentications
   resources :sessions
   resources :users

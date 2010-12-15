@@ -4,11 +4,11 @@ You have been challenged by <%= @game.opponent.username %> to play a game on Go 
 
 Game: <%= game_url(@game) %>
 
-This is an automated message sent from Go vs Go.
+This is an automated message sent from govsgo.com.
 
 --
 
 If you no longer wish to receive notifications from Go vs Go you can unsubscribe.
 
-Unsubscribe: <%# unsubscribe_url(@user.unsubscribe_token) %>
+Unsubscribe: <%= unsubscribe_url(@game.current_player.unsubscribe_token) %>
 

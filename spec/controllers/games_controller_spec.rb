@@ -49,6 +49,21 @@ describe GamesController, "logged in" do
     @controller.stubs(:current_user).returns(@user)
   end
 
+  it "create action should send email to opponent user" do
+    opponent = Factory(:user, :email_on_invitation => true)
+    post :create, :game => { :chosen_opponent => "user", :opponent_username => opponent.username, :chosen_color => "black" }
+    response.should redirect_to(game_url(assigns[:game]))
+    Notifications.deliveries.size.should == 1
+    Notifications.deliveries.first.subject.should == "[Go vs Go] Invitation from #{@user.username}"
+  end
+
+  it "create action should not send email to opponent user when unwanted" do
+    opponent = Factory(:user, :email_on_invitation => false)
+    post :create, :game => { :chosen_opponent => "user", :opponent_username => opponent.username, :chosen_color => "black" }
+    response.should redirect_to(game_url(assigns[:game]))
+    Notifications.deliveries.size.should == 0
+  end
+
   it "edit action should render edit javascript template and fill in user attributes" do
     game = Factory(:game, :white_player => @user, :current_player => @user)
     get :edit, :id => game, :format => :js

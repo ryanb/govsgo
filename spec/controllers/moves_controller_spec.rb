@@ -10,10 +10,23 @@ describe MovesController do
     response.body.should include("\"bb-cc\"")
   end
 
-  it "should add a move and respond with javascript" do
+  it "should add a move and respond with javascript and send email if user requests" do
+    game = Factory(:game)
+    game.opponent.update_attribute(:email_on_move, true)
+    @controller.stubs(:current_user).returns(game.current_player)
+    post "create", :game_id => game.id, :format => "js", :move => "aa"
+    response.should be_success
+    game.reload
+    Notifications.deliveries.size.should == 1
+    Notifications.deliveries.first.subject.should == "[Go vs Go] Move by #{game.opponent.username}"
+  end
+
+  it "should not send move email when user doesn't want it" do
     game = Factory(:game)
     @controller.stubs(:current_user).returns(game.current_player)
     post "create", :game_id => game.id, :format => "js", :move => "aa"
     response.should be_success
+    game.reload
+    Notifications.deliveries.size.should == 0
   end
 end
