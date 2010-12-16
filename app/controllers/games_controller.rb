@@ -3,8 +3,8 @@ class GamesController < ApplicationController
   before_filter :fetch_games, :only => [:index, :show, :other, :my, :new]
 
   def index
-    @other_games_limit = @my_games.blank? ? 8 : 4
-    @other_games = @other_games.paginate(:page => 1, :per_page => @other_games_limit)
+    @users = User.where(:guest => false).paginate(:page => 1, :per_page => 7)
+    @other_games = @other_games.paginate(:page => 1, :per_page => 4)
     @my_games = @my_games.paginate(:page => 1, :per_page => 4) if @my_games
   end
 

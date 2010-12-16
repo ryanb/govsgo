@@ -489,46 +489,58 @@ body {
   top: 0px;
 }
 
-.games {
+.column {
   margin-bottom: 40px;
+  width: 300px;
 }
 
-.games .game {
+.column .game {
   background-image: url(/images/game/clear_white_overlay.png);
   color: #FFF;
 }
 
-.games .game .status {
+.column .game .status {
   color: #CCC;
 }
 
-.games .game_divider {
+.column .game_divider {
   background-image: url(/images/game/solid_white_overlay.png);
   height: 6px;
 }
 
-#game .games h2 {
-  color: #FFF;
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 8px;
-  font-size: 17px;
-  font-weight: normal;
-  background-color: #0D1216;
-  margin: 0;
-  padding: 8px 0;
-  font-weight: bold;
+.column h2 {
   font-size: 14px;
+  background-color: #0D1216;
   color: #E3E3E3;
+  padding: 8px 10px;
+  margin: 0;
+  position: relative;
 }
 
-.games .pagination {
+.column h2 a {
+  position: absolute;
+  display: block;
+  right: 10px;
+  top: 6px;
+  font-size: 10px;
+  text-decoration: none;
+  padding: 4px 10px 5px 10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  color: #FFF;
+  background: #D3D3D3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#6E6E6E), to(#323232));
+  background: -moz-linear-gradient(top,  #6E6E6E,  #323232);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6E6E6E', endColorstr='#323232');
+}
+
+.column .pagination {
   margin: 10px 0;
   text-align: center;
   color: #DDD;
 }
 
-.games .pagination a {
+.column .pagination a {
   color: #DDD;
   text-decoration: none;
   background-color: #000;
@@ -539,7 +551,7 @@ body {
   -webkit-border-radius: 4px;
 }
 
-.games .pagination a:hover {
+.column .pagination a:hover {
   color: #FFF;
   background-color: #444;
 }

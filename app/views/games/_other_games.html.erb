@@ -1,8 +1,10 @@
-<h2>Watch a Game</h2>
-<% @other_games.each_with_index do |game, index| %>
-  <% unless index.zero? %>
-    <div class="game_divider"></div>
+<div id="other_games">
+  <h2>Watch a Game</h2>
+  <% @other_games.each_with_index do |game, index| %>
+    <% unless index.zero? %>
+      <div class="game_divider"></div>
+    <% end %>
+    <%= render game %>
   <% end %>
-  <%= render game %>
-<% end %>
-<%= render "pagination", :games => @other_games, :game_type => "other" %>
+  <%= render "pagination", :games => @other_games, :game_type => "other" %>
+</div>

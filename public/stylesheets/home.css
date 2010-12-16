@@ -14,59 +14,68 @@
   font-size: 25px;
 }
 
-#game_actions {
+.columns {
   padding-top: 350px;
   padding-bottom: 30px;
+  margin-left: 50px;
+  margin-right: 30px;
 }
 
-#games {
-  margin-left: 385px;
-  min-width: 660px;
+.column {
+  float: left;
+  width: 33.333%;
 }
 
-#container .games h2 {
-  font-size: 22px;
+.column_padding {
+  margin-right: 20px;
+}
+
+.column h2 {
+  font-size: 20px;
   background-color: #A3A4A5;
   color: #FFF;
   padding: 8px 10px;
   margin: 0;
+  position: relative;
 }
 
-.games .game {
+.column h2 a {
+  position: absolute;
+  display: block;
+  right: 10px;
+  top: 7px;
+  font-size: 12px;
+  text-decoration: none;
+  padding: 5px 10px 6px 10px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  color: #000;
+  background: #D3D3D3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F2F2F2), to(#CCC));
+  background: -moz-linear-gradient(top,  #F2F2F2,  #CCC);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2F2F2', endColorstr='#CCC');
+}
+
+.column #my_games h2 {
+  background-color: #7B7DC7;
+}
+
+.column .item {
   background-color: #D6D4DC;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
-.game .details {
+.column .item .details {
   color: #696969;
 }
 
-.games {
-  float: right;
-  margin-right: 20px;
-}
-
-.full #other_games {
-  float: none;
-  margin-right: 0;
-}
-
-.full #other_games .game {
-  float: left;
-  margin-right: 10px;
-}
-
-.full .pagination {
-  clear: both;
-}
-
-.games .pagination {
+.column .pagination {
   margin: 10px 0;
   text-align: center;
   color: #777;
 }
 
-.games .pagination a {
+.column .pagination a {
   color: #777;
   text-decoration: none;
   background-color: #D5D5D5;
@@ -77,44 +86,58 @@
   -webkit-border-radius: 4px;
 }
 
-.games .pagination a:hover {
+.column .pagination a:hover {
   color: #FFF;
   background-color: #444;
 }
 
-
-
-#play {
-  float: left;
-  width: 350px;
-}
-
-#click_to_play {
-  background-color: #7B7DC7;
-  font-size: 22px;
-  color: #FFF;
-  padding: 8px 15px;
-  text-decoration: none;
-  display: block;
-  font-weight: bold;
-  text-align: right;
-}
-
-#click_to_play img {
-  vertical-align: top;
-  padding-top: 1px;
-  padding-right: 3px;
-}
-
-#screencast {
+.no_games {
+  background-color: #D6D4DC;
+  color: #484848;
+  margin-top: 8px;
   text-align: center;
-  padding-top: 10px;
+  padding: 10px 0;
 }
 
-.screencast_placeholder {
-  background-color: #CCC;
-  border: solid 1px #999;
-  width: 280px;
-  height: 220px;
-  margin: 0 auto;
+.no_games .details {
+  margin-bottom: 12px;
+}
+
+
+
+/*** Users List ***/
+
+.column .user {
+  position: relative;
+  height: 48px;
+}
+
+.user .avatar {
+  position: absolute;
+  display: block;
+}
+
+.user .details {
+  position: absolute;
+  top: 14px;
+  left: 72px;
+  font-size: 14px;
+}
+
+.user .go_button {
+  position: absolute;
+  right: 15px;
+  top: 8px;
+}
+
+.user_offline, .user_online {
+  padding-left: 3px;
+}
+
+.user_offline {
+  color: #C61B19;
+}
+
+.user_online {
+  color: #00A200;
 }

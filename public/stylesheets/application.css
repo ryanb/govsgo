@@ -167,7 +167,7 @@ a {
   background: #F5F1F9 url(/images/layout/three_stones.png) top right no-repeat;
 }
 
-#container h2, #container h3 {
+h2, h3 {
   color: #979797;
 }
 
@@ -240,46 +240,45 @@ form label.inline {
 
 /*** Games ***/
 
-.games .game {
+.column .game {
   position: relative;
-  width: 300px;
   height: 80px;
 }
 
-.games .game .thumbnail {
+.column .game .thumbnail {
   position: absolute;
   width: 80px;
   height: 80px;
   display: block;
 }
 
-.games .game .details {
+.column .game .details {
   position: absolute;
   top: 8px;
   left: 92px;
 }
 
-.games .game .player {
+.column .game .player {
   padding-top: 8px;
   padding-left: 22px;
 }
 
-.games .game .black {
+.column .game .black {
   background: url(/images/game/small_black_stone.png) no-repeat 9px left;
 }
 
-.games .game .white {
+.column .game .white {
   background: url(/images/game/small_white_stone.png) no-repeat 9px left;
 }
 
-.games .game .status {
+.column .game .status {
   font-size: 10px;
   color: #888;
   padding-left: 22px;
   padding-top: 2px;
 }
 
-.games .game .go_button {
+.column .game .go_button {
   position: absolute;
   right: 15px;
   top: 25px;
