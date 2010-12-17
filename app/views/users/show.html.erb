@@ -4,7 +4,7 @@
 <div id="container">
   <div id="profile">
     <%= avatar_image_tag(@user) %>
-    <h2><%= @user.username %></h2>
+    <h2 class="username"><%= @user.username %></h2>
     <div class="clear"></div>
     <div class="details">
       <p>
@@ -28,7 +28,11 @@
         <%= @user.games.without_gnugo.size %>
       </p>
     </div>
-    <%= link_to "Challenge to a Game", new_game_path(:username => @user.username), :class => "button" %>
+    <% if @user == current_user %>
+      <h3><%= link_to "Edit Profile", edit_current_user_path %> or <%= link_to "Log Out", logout_path %></h3>
+    <% else %>
+      <%= link_to "Challenge to a Game", new_game_path(:username => @user.username), :class => "button" %>
+    <% end %>
   </div>
   <div class="column">
     <h2><%= @user.username %>'s Games</h2>

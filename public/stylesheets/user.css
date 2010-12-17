@@ -11,7 +11,7 @@
   float: left;
 }
 
-#profile h2 {
+#profile .username {
   margin-left: 65px;
 }
 
