@@ -92,13 +92,13 @@ describe User do
     user.games.should == [black_game, white_game]
   end
 
-  it "should separate games for my turn vs their turn" do
+  it "should separate games for your turn vs their turn" do
     user = Factory(:user)
     black_game = Factory(:game, :black_player => user, :current_player => user)
     white_game = Factory(:game, :white_player => user, :current_player => nil)
     Factory(:game, :black_player => user, :current_player => user, :finished_at => Time.now)
     Factory(:game, :white_player => user, :finished_at => Time.now)
-    user.games_my_turn.should == [black_game]
+    user.games_your_turn.should == [black_game]
     user.games_their_turn.should == [white_game]
   end
 

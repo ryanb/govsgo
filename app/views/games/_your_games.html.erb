@@ -1,6 +1,6 @@
-<div id="my_games">
-  <h2>My Games <%= link_to "New Game", new_game_path(:board_size => 9) %></h2>
-  <% if @my_games.blank? %>
+<div id="your_games">
+  <h2>Your Games <%= link_to "New Game", new_game_path(:board_size => 9) %></h2>
+  <% if @your_games.blank? %>
     <div class="no_games">
       <div class="details">
         <strong>You do not have any games yet.</strong><br />
@@ -10,12 +10,12 @@
       <a href="http://media.railscasts.com/videos/govsgo.mov"><%= link_to image_tag("screencast.png", :size => "259x278", :alt => "Watch the Screencast"), "http://media.railscasts.com/videos/govsgo.mov", :class => "screencast" %></a>
     </div>
   <% else %>
-    <% @my_games.each_with_index do |game, index| %>
+    <% @your_games.each_with_index do |game, index| %>
       <% unless index.zero? %>
         <div class="game_divider"></div>
       <% end %>
       <%= render game %>
     <% end %>
-    <%= render "pagination", :games => @my_games, :game_type => "my" %>
+    <%= render "pagination", :games => @your_games, :game_type => "your" %>
   <% end %>
 </div>

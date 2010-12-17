@@ -1,17 +1,17 @@
 class GamesController < ApplicationController
-  before_filter :login_required, :only => [:my, :edit, :update]
-  before_filter :fetch_games, :only => [:index, :show, :other, :my, :new]
+  before_filter :login_required, :only => [:your, :edit, :update]
+  before_filter :fetch_games, :only => [:index, :show, :other, :your, :new]
 
   def index
     @users = User.where("publicized_at is not null").order("publicized_at desc").limit(7)
     @other_games = @other_games.paginate(:page => 1, :per_page => 4)
-    @my_games = @my_games.paginate(:page => 1, :per_page => 4) if @my_games
+    @your_games = @your_games.paginate(:page => 1, :per_page => 4) if @your_games
   end
 
   def show
     @game = Game.find(params[:id])
     @other_games = @other_games.paginate(:page => 1, :per_page => 5)
-    @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
+    @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
     @profiles = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
   end
@@ -30,7 +30,7 @@ class GamesController < ApplicationController
     @game.handicap = params[:handicap] || 0
     @game.board_size = params[:board_size] || 19
     @other_games = @other_games.paginate(:page => 1, :per_page => 5)
-    @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
+    @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
   end
 
   def create
@@ -46,7 +46,7 @@ class GamesController < ApplicationController
     else
       fetch_games
       @other_games = @other_games.paginate(:page => 1, :per_page => 5)
-      @my_games = @my_games.paginate(:page => 1, :per_page => 5) if @my_games
+      @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
       render :action => 'new'
     end
   end
@@ -79,8 +79,8 @@ class GamesController < ApplicationController
     @other_games = @other_games.paginate(:page => params[:page], :per_page => params[:per_page])
   end
 
-  def my
-    @my_games = @my_games.paginate(:page => params[:page], :per_page => params[:per_page])
+  def your
+    @your_games = @your_games.paginate(:page => params[:page], :per_page => params[:per_page])
   end
 
   def resources
@@ -95,7 +95,7 @@ class GamesController < ApplicationController
 
   def fetch_games
     if logged_in?
-      @my_games = current_user.games.recent
+      @your_games = current_user.games.recent
       @other_games = current_user.other_games.recent
     else
       @other_games = Game.recent

@@ -12,7 +12,7 @@
   <div class="columns">
     <div class="column">
       <div class="column_padding">
-        <%= render "my_games" %>
+        <%= render "your_games" %>
       </div>
     </div>
     <div class="column">
@@ -39,9 +39,9 @@
           <% if guest? %>
             To add yourself to this list, first <%= link_to "sign in", signin_url %>.
           <% elsif @users.include? current_user %>
-            <%= link_to "Remove Myself from List", publicize_path(:remove => true), :method => :put, :class => "button" %>
+            <%= link_to "Remove Yourself from List", publicize_path(:remove => true), :method => :put, :class => "button" %>
           <% else %>
-            <%= link_to "Add Myself to List", publicize_path, :method => :put, :class => "button" %>
+            <%= link_to "Add Yourself to List", publicize_path, :method => :put, :class => "button" %>
           <% end %>
         </div>
       </div>

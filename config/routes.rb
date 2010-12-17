@@ -15,7 +15,7 @@ Govsgo::Application.routes.draw do
   resources :games do
     resources :moves
     collection do
-      get :my
+      get :your
       get :other
     end
   end
