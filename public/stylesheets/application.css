@@ -16,11 +16,23 @@ a {
   color: #3C50B1;
 }
 
+a.subtle {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.subtle:hover {
+  text-decoration: underline;
+}
+
 .clear {
   clear: both;
   height: 0;
   overflow: hidden;
 }
+
+
+/*** Notices and Errors ***/
 
 #flash_notice, #flash_error, #flash_alert {
   padding: 6px 50px;
@@ -300,4 +312,42 @@ form label.inline {
   width: 48px;
   height: 48px;
   overflow: hidden;
+}
+
+
+#container .column h2 {
+  font-size: 20px;
+  background-color: #A3A4A5;
+  color: #FFF;
+  padding: 8px 10px;
+  margin: 0;
+  position: relative;
+}
+
+#container .column .item {
+  background-color: #D6D4DC;
+  margin-top: 8px;
+}
+
+#container .column .item .details {
+  color: #696969;
+}
+
+
+/*** Buttons ***/
+
+.button {
+  text-decoration: none;
+  padding: 5px 10px 6px 10px;
+  border: 1px solid rgba(0,0,0,0.4);
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+  -moz-box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+  color: #000;
+  background: #D3D3D3;
+  background: -webkit-gradient(linear, left top, left bottom, from(#F2F2F2), to(#CCC));
+  background: -moz-linear-gradient(top,  #F2F2F2,  #CCC);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2F2F2', endColorstr='#CCC');
 }

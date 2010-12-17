@@ -1,0 +1,43 @@
+<% title @user.username %>
+<% stylesheet "user" %>
+
+<div id="container">
+  <div id="profile">
+    <%= avatar_image_tag(@user) %>
+    <h2><%= @user.username %></h2>
+    <div class="clear"></div>
+    <div class="details">
+      <% if @user.rank.present? %>
+      <p>
+        Go Rank: <%= @user.rank %>
+      </p>
+      <% end %>
+      <p>
+        Currently: <%= @user.online? ? "Online" : "Offline" %>
+      </p>
+      <p>
+        Games with GNU Go:
+        <%= @user.games.with_gnugo.size %>
+      </p>
+      <p>
+        Games with Others:
+        <%= @user.games.without_gnugo.size %>
+      </p>
+      <p>
+        GNU Go Auto-level:
+        <%= @user.gnugo_level %>
+      </p>
+    </div>
+    <%= link_to "Challenge to a Game", new_game_path(:username => @user.username), :class => "button" %>
+  </div>
+  <div class="column">
+    <h2><%= @user.username %>'s Games</h2>
+    <% @games.each_with_index do |game, index| %>
+      <% unless index.zero? %>
+        <div class="game_divider"></div>
+      <% end %>
+      <%= render game %>
+    <% end %>
+  </div>
+  <div class="clear"></div>
+</div>

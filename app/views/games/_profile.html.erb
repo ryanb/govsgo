@@ -6,7 +6,7 @@
 <%= avatar_image_tag(profile.user) %>
 <div class="profile">
   <div class="details">
-    <div class="name"><%= profile.name %> as <%= profile.color.to_s.titleize %> <%= online_status(profile.user) %></div>
+    <div class="name"><%= link_to_user(profile.user) %> as <%= profile.color.to_s.titleize %> <%= online_status(profile.user) %></div>
     <div id="turn_<%= profile.user_id %>" class="turn"<%= raw ' style="display: none;"' unless profile.current && !@game.finished? %>>current player</div>
     <div id="<%= profile.color.to_s[0] %>_status" class="status"><%= profile.last_status %></div>
     <div class="komi_or_handicap"><%= profile.handicap_or_komi %></div>

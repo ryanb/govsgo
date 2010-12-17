@@ -1,5 +1,10 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :except => [:new, :create, :unsubscribe]
+  before_filter :login_required, :except => [:show, :new, :create, :unsubscribe]
+
+  def show
+    @user = User.find(params[:id])
+    @games = @user.games.recent.paginate(:per_page => 4, :page => params[:page])
+  end
 
   def new
     if params[:email]

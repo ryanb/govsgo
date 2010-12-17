@@ -38,10 +38,12 @@ class Game < ActiveRecord::Base
   ### Scopes ###
   ##############
 
-  scope :finished,   where("finished_at is not null")
-  scope :unfinished, where("finished_at is null")
-  scope :with_gnugo, where("white_player_id is null or black_player_id is null")
-  scope :recent,     order("updated_at desc")
+  scope :finished,      where("finished_at is not null")
+  scope :unfinished,    where("finished_at is null")
+  scope :with_gnugo,    where("white_player_id is null or black_player_id is null")
+  scope :without_gnugo, where("white_player_id is not null and black_player_id is not null")
+  
+  scope :recent, order("updated_at desc")
 
   ########################
   ### Instance Methods ###

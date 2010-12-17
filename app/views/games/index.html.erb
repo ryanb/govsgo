@@ -6,7 +6,7 @@
   <div id="welcome">
     <h2>Welcome</h2>
     <p>Go is a board game invented in China more than 4,000 years ago. It is more popular in the far East than Chess in the West. The rules are simple but mastering the game can take a lifetime.</p>
-    <p>We invite you to try a game against the computer or online with other players.</p>
+    <p>We invite you to <%= link_to "try a game", new_game_path(:board_size => 9) %> against the computer or online with other players.</p>
   </div>
 
   <div class="columns">
@@ -30,7 +30,7 @@
           <div class="item user">
             <%= avatar_image_tag(user) %>
             <div class="details">
-              <%= user.username %> <%= online_status(user) %>
+              <%= link_to user.username, user, :class => "subtle" %> <%= online_status(user) %>
             </div>
             <%= link_to image_tag("game/go_button.png"), user, :size => "46x31", :class => "go_button" %>
           </div>
