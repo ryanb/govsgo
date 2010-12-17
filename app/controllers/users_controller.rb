@@ -57,8 +57,12 @@ class UsersController < ApplicationController
   end
 
   def publicize
-    @user = current_user
-    @user.update_attribute(:publicized_at, (params[:remove] ? nil : Time.now))
-    redirect_to root_url, :notice => "You have been #{params[:remove] ? 'removed from' : 'added to'} the Looking for Games list."
+    if guest?
+      redirect_to signin_url, :alert => "You must first sign in to be added to the Looking for Games list."
+    else
+      @user = current_user
+      @user.update_attribute(:publicized_at, (params[:remove] ? nil : Time.now))
+      redirect_to root_url, :notice => "You have been #{params[:remove] ? 'removed from' : 'added to'} the Looking for Games list."
+    end
   end
 end

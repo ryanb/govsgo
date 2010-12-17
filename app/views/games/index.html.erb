@@ -36,7 +36,9 @@
           </div>
         <% end %>
         <div class="buttons">
-          <% if @users.include? current_user %>
+          <% if guest? %>
+            To add yourself to this list, first <%= link_to "sign in", signin_url %>.
+          <% elsif @users.include? current_user %>
             <%= link_to "Remove Myself from List", publicize_path(:remove => true), :method => :put, :class => "button" %>
           <% else %>
             <%= link_to "Add Myself to List", publicize_path, :method => :put, :class => "button" %>
