@@ -8,5 +8,5 @@
       <div class="status">moved <%= time_ago_in_words(game.last_move_at) %> ago</div>
     <% end %>
   </div>
-  <%= link_to image_tag("game/go_button.png"), game, :size => "46x31", :class => "go_button" %>
+  <%= link_to "Go", game, :class => "go_button" %>
 </div>

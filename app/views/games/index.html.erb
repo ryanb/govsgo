@@ -32,7 +32,9 @@
             <div class="details">
               <%= link_to user.username, user, :class => "subtle" %> <%= online_status(user) %>
             </div>
-            <%= link_to image_tag("game/go_button.png"), user, :size => "46x31", :class => "go_button" %>
+            <% unless user == current_user %>
+              <%= link_to "Challenge", new_game_path(:username => user.username), :class => "go_button" %>
+            <% end %>
           </div>
         <% end %>
         <div class="buttons">

@@ -290,6 +290,32 @@ form label.inline {
   padding-top: 2px;
 }
 
+.column .item .go_button {
+  padding: 5px 10px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #E9E1DC;
+  background: -webkit-gradient(
+      linear,
+      left bottom,
+      left top,
+      color-stop(0, #3E282F),
+      color-stop(0.25, #845765),
+      color-stop(0.74, #9C7581),
+      color-stop(1, #FDF1E9)
+  );
+  background: -moz-linear-gradient(
+      center bottom,
+      #3E282F 0%,
+      #764F5B 25%,
+      #9C7581 85%,
+      #FFFFFF 100%
+  );
+  -webkit-box-shadow: 1px 2px 4px #434343;
+  -moz-box-shadow: -5px -5px 5px #888;
+  box-shadow: -5px -5px 5px #888;
+}
+
 .column .game .go_button {
   position: absolute;
   right: 15px;

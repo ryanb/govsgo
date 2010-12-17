@@ -114,6 +114,7 @@
   position: absolute;
   right: 15px;
   top: 8px;
+  font-size: 13px;
 }
 
 .user_offline, .user_online {
