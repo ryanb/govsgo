@@ -7,13 +7,17 @@
     <h2><%= @user.username %></h2>
     <div class="clear"></div>
     <div class="details">
+      <p>
+        Currently: <%= @user.online? ? "Online" : "Offline" %>
+      </p>
       <% if @user.rank.present? %>
       <p>
         Go Rank: <%= @user.rank %>
       </p>
       <% end %>
       <p>
-        Currently: <%= @user.online? ? "Online" : "Offline" %>
+        GNU Go Auto-level:
+        <%= @user.gnugo_level %>
       </p>
       <p>
         Games with GNU Go:
@@ -22,10 +26,6 @@
       <p>
         Games with Others:
         <%= @user.games.without_gnugo.size %>
-      </p>
-      <p>
-        GNU Go Auto-level:
-        <%= @user.gnugo_level %>
       </p>
     </div>
     <%= link_to "Challenge to a Game", new_game_path(:username => @user.username), :class => "button" %>
