@@ -168,15 +168,15 @@ a.subtle:hover {
 }
 
 #container {
-  background-color: #F5F1F9;
+  background-color: #F3F1F6;
 }
 
 #container.two_stones {
-  background: #F5F1F9 url(/images/layout/two_stones.png) top right no-repeat;
+  background: #F3F1F6 url(/images/layout/two_stones.png) top right no-repeat;
 }
 
 #container.three_stones {
-  background: #F5F1F9 url(/images/layout/three_stones.png) top right no-repeat;
+  background: #F3F1F6 url(/images/layout/three_stones.png) top right no-repeat;
 }
 
 h2, h3 {
@@ -325,7 +325,7 @@ form label.inline {
 }
 
 #container .column .item {
-  background-color: #D6D4DC;
+  background-color: #D4D4D8;
   margin-top: 8px;
 }
 
