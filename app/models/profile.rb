@@ -5,14 +5,6 @@ class Profile
     @color = color
   end
 
-  def name
-    if user
-      user.guest? ? "Guest" : user.name_with_rank
-    else
-      "GNU Go"
-    end
-  end
-
   def user_id
     user ? user.id : 0
   end
