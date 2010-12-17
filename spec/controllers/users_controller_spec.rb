@@ -69,4 +69,17 @@ describe UsersController do
     get :unsubscribe, :token => user.unsubscribe_token
     response.should redirect_to(root_url)
   end
+
+  it "publicize action should redirect when not logged in" do
+    put :publicize, :id => "ignored"
+    response.should redirect_to(login_url)
+  end
+
+  it "publicize action should redirect to root url and update publicized_at time" do
+    user = Factory(:user, :publicized_at => nil)
+    @controller.stubs(:current_user).returns(user)
+    put :publicize, :id => "ignored"
+    response.should redirect_to(root_url)
+    user.reload.publicized_at.to_date.should == Date.today
+  end
 end

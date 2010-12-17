@@ -8,6 +8,7 @@ Govsgo::Application.routes.draw do
   match 'go_resources' => 'games#resources', :as => :go_resources
   match 'games/:id.sgf' => 'games#sgf', :format => "sgf", :as => "game_sgf"
   match 'unsubscribe/:token' => 'users#unsubscribe', :as => "unsubscribe"
+  match 'publicize' => 'users#publicize', :as => "publicize"
   resources :authentications
   resources :sessions
   resources :users

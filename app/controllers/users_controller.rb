@@ -55,4 +55,10 @@ class UsersController < ApplicationController
     flash[:notice] = "You have been unsubscribed from further email notifications."
     redirect_to root_url
   end
+
+  def publicize
+    @user = current_user
+    @user.update_attribute(:publicized_at, Time.now)
+    redirect_to root_url, :notice => "You have been added to the Looking for Games list."
+  end
 end
