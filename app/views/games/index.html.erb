@@ -30,7 +30,7 @@
           <div class="item user">
             <%= avatar_image_tag(user) %>
             <div class="details">
-              <%= link_to user.username, user, :class => "subtle" %> <%= online_status(user) %>
+              <%= link_to_user user %> <%= online_status(user) %>
             </div>
             <% unless user == current_user %>
               <%= link_to "Challenge", new_game_path(:username => user.username), :class => "go_button" %>
