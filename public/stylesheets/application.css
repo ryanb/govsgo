@@ -301,19 +301,19 @@ form label.inline {
       left top,
       color-stop(0, #3E282F),
       color-stop(0.25, #845765),
-      color-stop(0.74, #9C7581),
+      color-stop(0.75, #9C7581),
       color-stop(1, #FDF1E9)
   );
   background: -moz-linear-gradient(
       center bottom,
       #3E282F 0%,
-      #764F5B 25%,
-      #9C7581 85%,
-      #FFFFFF 100%
+      #845765 25%,
+      #9C7581 75%,
+      #FDF1E9 100%
   );
-  -webkit-box-shadow: 1px 2px 4px #434343;
-  -moz-box-shadow: -5px -5px 5px #888;
-  box-shadow: -5px -5px 5px #888;
+  -webkit-box-shadow: 1px 2px 4px #444;
+  -moz-box-shadow: 1px 2px 4px #444;
+  box-shadow: 1px 2px 4px #444;
 }
 
 .column .game .go_button {
