@@ -48,9 +48,9 @@ module ControllerAuthentication
     current_user.nil? || current_user.guest?
   end
 
-  def login_required
+  def login_required(message = "You must first log in or sign up before accessing this page.")
     unless logged_in?
-      flash[:alert] = "You must first log in or sign up before accessing this page."
+      flash[:alert] = message
       store_target_location
       redirect_to signin_url
     end

@@ -20,7 +20,7 @@ class GamesController < ApplicationController
     @game = Game.new
     if params[:username]
       if guest?
-        flash.now[:alert] = "You must first sign in before you can challenge another player to a game."
+        login_required("You must first sign in before you can challenge another player to a game.")
       else
         @game.chosen_opponent = "user"
         @game.opponent_username = params[:username]

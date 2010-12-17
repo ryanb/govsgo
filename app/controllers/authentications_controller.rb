@@ -10,8 +10,8 @@ class AuthenticationsController < ApplicationController
       authentication.user.apply_omniauth(omniauth)
       authentication.user.save!
       remember_user(authentication.user)
-      flash[:notice] = "Signed in successfully."
-      redirect_to root_url
+      flash[:notice] = "Signed in as #{authentication.user.username}"
+      redirect_to_target_or_default root_url
     else
       user = current_user_or_guest
       user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
@@ -20,9 +20,9 @@ class AuthenticationsController < ApplicationController
       user.guest = false
       if user.save
         if was_guest
-          flash[:notice] = "Signed in successfully."
+          flash[:notice] = "Signed in as #{user.username}."
           remember_user(user)
-          redirect_to root_url
+          redirect_to_target_or_default root_url
         else
           flash[:notice] = "Authentication successful."
           redirect_to edit_current_user_url

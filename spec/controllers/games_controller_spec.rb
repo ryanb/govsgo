@@ -19,6 +19,11 @@ describe GamesController do
     response.should render_template(:new)
   end
 
+  it "new action should redirect user to signin when trying to challenge username" do
+    get :new, :username => "foo"
+    response.should redirect_to(signin_url)
+  end
+
   it "create action should render new template when model is invalid" do
     Game.any_instance.stubs(:valid?).returns(false)
     post :create
@@ -47,6 +52,11 @@ describe GamesController, "logged in" do
   before(:each) do
     @user = Factory(:user)
     @controller.stubs(:current_user).returns(@user)
+  end
+
+  it "new action should render new template with custom username" do
+    get :new, :username => "foo"
+    response.should render_template(:new)
   end
 
   it "create action should send email to opponent user" do
