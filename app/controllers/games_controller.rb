@@ -4,8 +4,8 @@ class GamesController < ApplicationController
 
   def index
     @users = User.where("publicized_at is not null").order("publicized_at desc").limit(7)
-    @other_games = @other_games.paginate(:page => 1, :per_page => 4)
-    @your_games = @your_games.paginate(:page => 1, :per_page => 4) if @your_games
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
   end
 
   def show

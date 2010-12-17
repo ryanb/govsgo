@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(:guest => false).find(params[:id])
-    @games = @user.games.recent.paginate(:per_page => 4, :page => params[:page])
+    @games = @user.games.recent.paginate(:per_page => 5, :page => params[:page])
   end
 
   def new
