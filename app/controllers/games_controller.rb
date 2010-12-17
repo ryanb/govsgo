@@ -19,12 +19,9 @@ class GamesController < ApplicationController
   def new
     @game = Game.new
     if params[:username]
-      if guest?
-        login_required("You must first sign in before you can challenge another player to a game.")
-      else
-        @game.chosen_opponent = "user"
-        @game.opponent_username = params[:username]
-      end
+      user_required("You must first sign in before you can challenge another player to a game.")
+      @game.chosen_opponent = "user"
+      @game.opponent_username = params[:username]
     else
       @game.chosen_opponent = "gnugo"
       @game.chosen_color = "black"

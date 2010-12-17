@@ -56,6 +56,14 @@ module ControllerAuthentication
     end
   end
 
+  def user_required(message = "You must first log in or sign up before accessing this page.")
+    if guest?
+      flash[:alert] = message
+      store_target_location
+      redirect_to signin_url
+    end
+  end
+
   def redirect_to_target_or_default(default)
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
