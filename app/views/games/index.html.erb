@@ -36,7 +36,11 @@
           </div>
         <% end %>
         <div class="buttons">
-          <%= link_to "Add Myself to List", publicize_path, :method => :put, :class => "button" %>
+          <% if @users.include? current_user %>
+            <%= link_to "Remove Myself from List", publicize_path(:remove => true), :method => :put, :class => "button" %>
+          <% else %>
+            <%= link_to "Add Myself to List", publicize_path, :method => :put, :class => "button" %>
+          <% end %>
         </div>
       </div>
     </div>

@@ -82,4 +82,12 @@ describe UsersController do
     response.should redirect_to(root_url)
     user.reload.publicized_at.to_date.should == Date.today
   end
+
+  it "publicize action should remove publicized_at time when asked" do
+    user = Factory(:user, :publicized_at => Time.now)
+    @controller.stubs(:current_user).returns(user)
+    put :publicize, :id => "ignored", :remove => true
+    response.should redirect_to(root_url)
+    user.reload.publicized_at.should be_nil
+  end
 end
