@@ -74,15 +74,17 @@
 }
 
 .no_games {
-  background-color: #D6D4DC;
+  background-color: #D4D4D8;
   color: #484848;
   margin-top: 8px;
   text-align: center;
-  padding: 10px 0;
+  padding-top: 20px;
+  padding-bottom: 30px;
 }
 
 .no_games .details {
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  line-height: 20px;
 }
 
 .column .buttons {
