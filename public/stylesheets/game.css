@@ -4,6 +4,10 @@ body {
   background-image: url(/images/game/background.png);
 }
 
+h2, h3 {
+  color: #FFF;
+}
+
 #logo {
   margin-bottom: 0;
 }
