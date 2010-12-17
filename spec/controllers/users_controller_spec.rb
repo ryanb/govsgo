@@ -4,6 +4,19 @@ describe UsersController do
   fixtures :all
   render_views
 
+  it "show action should render show template" do
+    user = Factory(:user)
+    get :show, :id => user
+    response.should render_template(:show)
+  end
+
+  it "show action should report 404 for guest user" do
+    user = Factory(:user, :guest => true)
+    lambda {
+      get :show, :id => user
+    }.should raise_error(ActiveRecord::RecordNotFound)
+  end
+
   it "new action should render new template" do
     get :new
     response.should render_template(:new)
