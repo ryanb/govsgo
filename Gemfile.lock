@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/JEG2/go_gtp.git
+  revision: 2753f3ebeb3c058bfc05eca20810df67557844c6
+  specs:
+    go_gtp (0.0.4)
+
+GIT
   remote: git://github.com/rails/exception_notification.git
   revision: 192a49a02d63d28b23ed41cebadfedd490929cf1
   specs:
@@ -63,7 +69,6 @@ GEM
       addressable (>= 2.1.1)
       rack (>= 1.0.1)
     gem_plugin (0.2.3)
-    go_gtp (0.0.4)
     highline (1.6.1)
     i18n (0.5.0)
     jquery-rails (0.2.4)
@@ -191,7 +196,7 @@ DEPENDENCIES
   capistrano
   exception_notification!
   factory_girl_rails
-  go_gtp (= 0.0.4)
+  go_gtp (= 0.0.4)!
   jquery-rails
   mocha
   mongrel (= 1.2.0.pre2)
