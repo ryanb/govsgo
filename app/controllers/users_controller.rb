@@ -56,7 +56,7 @@ class UsersController < ApplicationController
 
   def unsubscribe
     @user = User.find_by_unsubscribe_token!(params[:token])
-    @user.update_attributes!(:email_on_invitation => false, :email_on_move => false)
+    @user.update_attributes!(:email_on_invitation => false, :email_on_move => false, :email_on_message => false)
     flash[:notice] = "You have been unsubscribed from further email notifications."
     redirect_to root_url
   end

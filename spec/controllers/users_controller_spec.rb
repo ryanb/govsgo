@@ -78,9 +78,13 @@ describe UsersController do
   end
 
   it "unsubscribe action should remove email options from user with matching token" do
-    user = Factory(:user, :email_on_invitation => true, :email_on_move => true)
+    user = Factory(:user, :email_on_invitation => true, :email_on_move => true, :email_on_message => true)
     get :unsubscribe, :token => user.unsubscribe_token
     response.should redirect_to(root_url)
+    user.reload
+    user.email_on_invitation.should be_false
+    user.email_on_move.should be_false
+    user.email_on_message.should be_false
   end
 
   it "publicize action should redirect when not logged in" do

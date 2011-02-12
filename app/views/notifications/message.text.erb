@@ -1,0 +1,13 @@
+Hi <%= @message.recipient.username %>,
+
+<%= @message.user.username %> has sent you a message on Go vs Go: <%= @message.content %>
+
+Game: <%= game_url(@game) %>
+
+This is an automated message sent from govsgo.com.
+
+--
+
+If you no longer wish to receive notifications from Go vs Go you can unsubscribe.
+
+Unsubscribe: <%= unsubscribe_url(@game.current_player.unsubscribe_token) %>

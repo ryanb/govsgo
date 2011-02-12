@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank, :email_on_invitation, :email_on_move, :time_zone
+  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank, :email_on_invitation, :email_on_move, :email_on_message, :time_zone
 
   has_many :authentications
   has_many :messages

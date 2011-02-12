@@ -8,24 +8,6 @@
     <%= f.label :email, "Email Address" %>
     <%= f.text_field :email %>
   </p>
-  <p>
-    <%= f.label :time_zone, "Time Zone" %>
-    <%= f.time_zone_select :time_zone, nil, :include_blank => true %>
-  </p>
-  <p class="field">
-    <%= f.check_box :email_on_invitation %>
-    <%= f.label :email_on_invitation, "Email me on new games", :class => "inline" %>
-  </p>
-  <p class="field">
-    <%= f.check_box :email_on_move %>
-    <%= f.label :email_on_move, "Email me when opponent moves", :class => "inline" %>
-  </p>
-  <p>
-    <%= f.label :rank %>
-    <%= f.text_field :rank, :size => 10 %>
-    <span class="hint">such as "4k"</span><br>
-    <span class="field hint">leave blank if unknown</span>
-  </p>
   <% unless session[:omniauth] %>
   <p>
     <%= f.label :password %>
@@ -36,5 +18,27 @@
     <%= f.password_field :password_confirmation %>
   </p>
   <% end %>
+  <p>
+    <%= f.label :rank %>
+    <%= f.text_field :rank, :size => 10 %>
+    <span class="hint">such as "4k"</span><br>
+    <span class="field hint">leave blank if unknown</span>
+  </p>
+  <p>
+    <%= f.label :time_zone, "Time Zone" %>
+    <%= f.time_zone_select :time_zone, nil, :include_blank => true %>
+  </p>
+  <p class="field">
+    <%= f.check_box :email_on_invitation %>
+    <%= f.label :email_on_invitation, "Email me new game invitations", :class => "inline" %>
+  </p>
+  <p class="field">
+    <%= f.check_box :email_on_move %>
+    <%= f.label :email_on_move, "Email me when opponent moves", :class => "inline" %>
+  </p>
+  <p class="field">
+    <%= f.check_box :email_on_message %>
+    <%= f.label :email_on_message, "Email me when opponent chats", :class => "inline" %>
+  </p>
   <p class="field"><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
 <% end %>

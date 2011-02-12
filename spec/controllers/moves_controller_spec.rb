@@ -26,7 +26,6 @@ describe MovesController do
     @controller.stubs(:current_user).returns(game.current_player)
     post "create", :game_id => game.id, :format => "js", :move => "aa"
     response.should be_success
-    game.reload
     Notifications.deliveries.size.should == 0
   end
 end

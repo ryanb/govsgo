@@ -17,4 +17,12 @@ class Message < ActiveRecord::Base
   def remember_move_index
     self.move_index = game.split_moves.size-1 if game && game.moves.present?
   end
+
+  def send_email?
+    recipient && recipient.email_on_message?
+  end
+
+  def recipient
+    game && game.opponent(user)
+  end
 end
