@@ -110,8 +110,15 @@ function setupGame() {
     $.getScript(this.href);
     return false;
   });
+  $("#new_message").submit(function(e) {
+    $.post($(this).attr("action"), $(this).serialize());
+    e.preventDefault();
+  });
   if ($("#board").attr("data-finished") != "true" && $("#board").attr("data-started") == "true") {
     startPolling();
+  }
+  if ($("#messages").length > 0) {
+    $("#messages")[0].scrollTop = $("#messages")[0].scrollHeight;
   }
 }
 

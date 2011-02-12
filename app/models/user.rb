@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank, :email_on_invitation, :email_on_move
 
   has_many :authentications
+  has_many :messages
 
   attr_accessor :password
   before_save :prepare_password

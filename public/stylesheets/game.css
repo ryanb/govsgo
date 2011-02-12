@@ -559,3 +559,38 @@ h2, h3 {
   color: #FFF;
   background-color: #444;
 }
+
+
+/*** Messages ***/
+
+#messages {
+  background-image: url(/images/game/clear_white_overlay.png);
+  height: 150px;
+  overflow: auto;
+}
+
+#messages .message {
+  margin: 5px 10px;
+  font-size: 12px;
+}
+
+#messages .user {
+  font-weight: bold;
+}
+
+#messages .time {
+  float: right;
+  color: #CCC;
+  font-size: 10px;
+  margin-left: 10px;
+}
+
+#new_message {
+  background-image: url(/images/game/solid_white_overlay.png);
+  padding: 8px 10px;
+  margin: 0;
+}
+
+#new_message #message_content {
+  width: 210px;
+}

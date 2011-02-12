@@ -4,7 +4,19 @@
     <%= render "your_games" %>
   </div>
   <% end %>
-  <div class="column">
-    <%= render "other_games" %>
-  </div>
+  <% if @game.player?(current_user) && @game.black_player.present? && @game.white_player.present? %>
+    <div class="column">
+      <h2>Private Chat</h2>
+      <div id="messages"><%= render @game.messages.order(:created_at) %></div>
+      <%= form_for Message.new(:game_id => @game.id) do |f| %>
+        <%= f.hidden_field :game_id %>
+        <%= f.text_field :content %>
+        <%= f.submit "Send" %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="column">
+      <%= render "other_games" %>
+    </div>
+  <% end %>
 </div>

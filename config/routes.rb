@@ -1,4 +1,6 @@
 Govsgo::Application.routes.draw do
+  resources :messages
+
   match 'auth/:provider/callback' => 'authentications#create'
   match 'user/edit' => 'users#edit', :as => :edit_current_user
   match 'signin' => 'authentications#index', :as => :signin

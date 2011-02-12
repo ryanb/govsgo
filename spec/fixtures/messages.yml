@@ -1,0 +1,11 @@
+one:
+  game_id: 1
+  user_id: 1
+  content: MyText
+  move_index: 1
+
+two:
+  game_id: 1
+  user_id: 1
+  content: MyText
+  move_index: 1

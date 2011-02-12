@@ -34,4 +34,21 @@ module ApplicationHelper
       "GNU Go"
     end
   end
+
+  def relative_time(time)
+    [relative_date(time.to_date), time.strftime("%I:%M %p")].compact.join(" ")
+  end
+
+  def relative_date(date)
+    today = Time.zone.now.to_date
+    if date == today
+      nil
+    elsif date == today-1
+      "yesterday"
+    elsif date.year == today.year
+      date.strftime("%b %d")
+    else
+      date.strftime("%b %d, %Y")
+    end
+  end
 end

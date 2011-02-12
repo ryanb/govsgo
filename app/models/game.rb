@@ -16,6 +16,7 @@ class Game < ActiveRecord::Base
   belongs_to :black_player,   :class_name => "User"
   belongs_to :white_player,   :class_name => "User"
   belongs_to :current_player, :class_name => "User"
+  has_many :messages
 
   ###################
   ### Validations ###
@@ -268,5 +269,9 @@ class Game < ActiveRecord::Base
 
   def opponent(player = current_player)
     player == black_player ? white_player : black_player
+  end
+
+  def player?(user)
+    black_player == user || white_player == user
   end
 end

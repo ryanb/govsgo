@@ -12,3 +12,9 @@ Factory.define :game do |f|
   f.board_size 19
   f.started_at Time.now
 end
+
+Factory.define :message do |f|
+  f.association(:game, :factory => :game)
+  f.user { |m| m.game.black_player }
+  f.content "Hello World"
+end

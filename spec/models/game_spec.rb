@@ -228,4 +228,11 @@ describe Game do
     game.winner.should be_nil
     game.loser.should be_nil
   end
+
+  it "should know if a user is a player in a game" do
+    game = Factory.build(:game)
+    game.should be_player(game.black_player)
+    game.should be_player(game.white_player)
+    game.should_not be_player(Factory.build(:user))
+  end
 end

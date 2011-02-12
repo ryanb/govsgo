@@ -1,0 +1,5 @@
+<% if @message.persisted? %>
+  $("#messages").append("<%= escape_javascript(render(@message)) %>");
+  $("#messages")[0].scrollTop = $("#messages")[0].scrollHeight;
+  $("#new_message")[0].reset();
+<% end %>

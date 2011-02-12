@@ -1,0 +1,4 @@
+<div class="message">
+  <div class="time"><%= relative_time(message.created_at) %></div>
+  <span class="user"><%= message.user.username %>:</span> <%= message.content %>
+</div>
