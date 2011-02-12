@@ -3,12 +3,18 @@ class Message < ActiveRecord::Base
   belongs_to :game
   belongs_to :user
 
-  validate :user_playing_game
+  validate :ensure_player
   validates_presence_of :user_id, :game_id, :content
 
-  def user_playing_game
+  before_create :remember_move_index
+
+  def ensure_player
     if game && !game.player?(user)
       errors.add :game_id, "is not owned by you so you cannot send the message."
     end
+  end
+
+  def remember_move_index
+    self.move_index = game.split_moves.size-1 if game && game.moves.present?
   end
 end

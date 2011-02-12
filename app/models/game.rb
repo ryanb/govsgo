@@ -124,12 +124,16 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def split_moves
+    moves.to_s.split("-")
+  end
+
   def moves_after(index)
-    (moves.to_s.split('-')[index..-1] || []).join('-')
+    (split_moves[index..-1] || []).join('-')
   end
 
   def last_move
-    moves.to_s.split("-").last.to_s
+    split_moves.last.to_s
   end
 
   def last_position
@@ -193,7 +197,7 @@ class Game < ActiveRecord::Base
       score = last_move == "RESIGN" ? "R" : [white_score.to_f, black_score.to_f].max
       sgf << "RE[#{black_score.to_i == 0 ? 'W' : 'B'}+#{score}]"
     end
-    moves.to_s.split("-").each do |move|
+    split_moves.each do |move|
       unless move == "RESIGN"
         sgf << ";#{colors.next}[#{move == 'PASS' ? '' : move[0..1]}]"
       end
@@ -213,7 +217,7 @@ class Game < ActiveRecord::Base
     if started? && finished?
       count = 0
       offset = (color == :white && handicap.to_i == 0 || color == :black && handicap.to_i > 0) ? 1 : 0
-      moves.to_s.split("-").each_with_index do |move, index|
+      split_moves.each_with_index do |move, index|
         if (index+offset) % 2 == 0
           count += move.length/2-1 if move =~ /^[a-z]/
         end

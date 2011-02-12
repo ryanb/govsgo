@@ -13,4 +13,10 @@ describe Message do
     message.should have(1).error_on(:user_id)
     message.should have(1).error_on(:content)
   end
+
+  it "should set the move index to the last move position" do
+    game = Factory(:game, :moves => "aa-bb-cc")
+    Factory(:message, :game => game).move_index.should == 2
+    Factory(:message).move_index.should be_nil
+  end
 end
