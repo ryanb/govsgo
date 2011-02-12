@@ -8,6 +8,10 @@
     <%= f.label :email, "Email Address" %>
     <%= f.text_field :email %>
   </p>
+  <p>
+    <%= f.label :time_zone, "Time Zone" %>
+    <%= f.time_zone_select :time_zone, nil, :include_blank => true %>
+  </p>
   <p class="field">
     <%= f.check_box :email_on_invitation %>
     <%= f.label :email_on_invitation, "Email me on new games", :class => "inline" %>
