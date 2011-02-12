@@ -28,4 +28,14 @@ describe MovesController do
     response.should be_success
     Notifications.deliveries.size.should == 0
   end
+
+  it "should not send move email when user is online" do
+    game = Factory(:game)
+    game.opponent.update_attribute(:email_on_move, true)
+    game.opponent.update_attribute(:last_request_at, Time.now)
+    @controller.stubs(:current_user).returns(game.current_player)
+    post "create", :game_id => game.id, :format => "js", :move => "aa"
+    response.should be_success
+    Notifications.deliveries.size.should == 0
+  end
 end

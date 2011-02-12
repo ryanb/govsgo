@@ -37,5 +37,15 @@ describe MessagesController do
       response.should be_success
       Notifications.deliveries.size.should == 0
     end
+
+    it "should not send message email when user is online" do
+      game = Factory(:game, :black_player => @user)
+      game.opponent(@user).update_attribute(:email_on_message, true)
+      game.opponent(@user).update_attribute(:last_request_at, Time.now)
+      Message.any_instance.stubs(:valid?).returns(true)
+      post :create, :format => "js", :message => {:game_id => game.id}
+      response.should be_success
+      Notifications.deliveries.size.should == 0
+    end
   end
 end

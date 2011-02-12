@@ -19,7 +19,7 @@ class Message < ActiveRecord::Base
   end
 
   def send_email?
-    recipient && recipient.email_on_message?
+    recipient && recipient.email_on_message? && !recipient.online?
   end
 
   def recipient
