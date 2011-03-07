@@ -1,3 +1,8 @@
+/* Fix ajax timeout so it doesn't leave request hanging, see http://code.google.com/p/phusion-passenger/issues/detail?id=419 */
+jQuery.ajaxSetup({
+   timeout: 30000
+});
+
 var moves          = new Array();
 var current_move   = 0;
 var current_user   = null;
