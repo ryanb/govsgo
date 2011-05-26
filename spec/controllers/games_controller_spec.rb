@@ -67,6 +67,12 @@ describe GamesController, "logged in" do
     Notifications.deliveries.first.subject.should == "[Go vs Go] Invitation from #{@user.username}"
   end
 
+  it "create action should not send email to gnugo user" do
+    post :create, :game => { :chosen_opponent => "gnugo", :opponent_username => '', :chosen_color => "black" }
+    response.should redirect_to(game_url(assigns[:game]))
+    Notifications.deliveries.size.should == 0
+  end
+
   it "create action should not send email to opponent user when unwanted" do
     opponent = Factory(:user, :email_on_invitation => false)
     post :create, :game => { :chosen_opponent => "user", :opponent_username => opponent.username, :chosen_color => "black" }
