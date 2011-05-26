@@ -24,6 +24,7 @@
 .column {
   float: left;
   width: 33.333%;
+	min-height: 520px;
 }
 
 .column_padding {
@@ -51,27 +52,7 @@
   background-color: #7B7DC7;
 }
 
-.column .pagination {
-  margin: 10px 0;
-  text-align: center;
-  color: #777;
-}
 
-.column .pagination a {
-  color: #777;
-  text-decoration: none;
-  background-color: #D4D4D8;
-  padding: 4px 8px;
-  margin: 0 8px;
-  font-size: 14px;
-  -moz-border-radius: 4px;
-  -webkit-border-radius: 4px;
-}
-
-.column .pagination a:hover {
-  color: #FFF;
-  background-color: #444;
-}
 
 .no_games {
   background-color: #D4D4D8;

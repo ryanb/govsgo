@@ -1,1 +1,1 @@
-$("#your_games").replaceWith("<%= escape_javascript(render("your_games")) %>");
+$("#your_games_list").replaceWith("<%= escape_javascript(render("games", :games => @your_games, :game_type => 'your')) %>");

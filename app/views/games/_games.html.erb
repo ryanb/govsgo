@@ -1,0 +1,9 @@
+<div id="<%= game_type %>_games_list">
+  <% games.each_with_index do |game, index| %>
+    <% unless index.zero? %>
+      <div class="game_divider"></div>
+    <% end %>
+    <%= render game %>
+  <% end %>
+  <%= render "games/pagination", :games => games, :game_type => game_type %>
+</div>
