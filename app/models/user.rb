@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   def other_public_games
     other_games.recent.includes(:black_player, :white_player).select{|game|
-      !game.black_player.private && !game.white_player.private
+      (!game.black_player || !game.black_player.private) && (!game.white_player || !game.white_player.private)
     }
   end
 

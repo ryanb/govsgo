@@ -52,7 +52,7 @@ class Game < ActiveRecord::Base
 
   def self.public_recent
     scoped.recent.includes(:black_player, :white_player).select{|game|
-      !game.black_player.private && !game.white_player.private
+      (!game.black_player || !game.black_player.private) && (!game.white_player || !game.white_player.private)
     }
   end
 

@@ -11,7 +11,7 @@ class GamesController < ApplicationController
   def show
     @game = Game.find(params[:id])
     private_game
-    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5) if @other_games
     @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
     @profiles = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
@@ -31,7 +31,7 @@ class GamesController < ApplicationController
     @game.komi = params[:komi] || 6.5
     @game.handicap = params[:handicap] || 0
     @game.board_size = params[:board_size] || 19
-    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5) if @other_games
     @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
   end
 
@@ -98,14 +98,14 @@ class GamesController < ApplicationController
   def fetch_games
     if logged_in?
       @your_games = current_user.games.recent
-      @other_games = current_user.other_public_games
+      @other_games = current_user.other_public_games || []
     else
       @other_games = Game.public_recent
     end
   end
 
   def private_game
-    if @game.players.any?(&:private)
+    if @game.players.compact.any?(&:private)
       redirect_to root_url, :notice => "This game is private" if !current_user || !@game.player?(current_user)
     end
   end

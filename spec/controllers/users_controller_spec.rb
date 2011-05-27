@@ -17,6 +17,12 @@ describe UsersController do
     }.should raise_error(ActiveRecord::RecordNotFound)
   end
 
+  it "show action should redirect to root if profile is private" do
+    user = Factory(:user, :private => true)
+    get :show, :id => user
+    response.should redirect_to(root_url)
+  end
+
   it "new action should render new template" do
     get :new
     response.should render_template(:new)
@@ -115,5 +121,32 @@ describe UsersController do
     put :publicize, :id => "ignored", :remove => true
     response.should redirect_to(root_url)
     user.reload.publicized_at.should be_nil
+  end
+end
+
+describe UsersController, "logged in" do
+  fixtures :all
+  render_views
+
+  before(:each) do
+    @user = Factory(:user)
+    @controller.stubs(:current_user).returns(@user)
+  end
+
+  it "show action should redirect if profile is private" do
+    another_user = Factory(:user, :private => true)
+    get :show, :id => another_user.id
+    response.should redirect_to(root_url)
+  end
+
+  it "show action should render public user profile" do
+    another_user = Factory(:user)
+    get :show, :id => another_user.id
+    response.should render_template(:show)
+  end
+
+  it "show action should show current user profile" do
+    get :show, :id => @user.id
+    response.should render_template(:show)
   end
 end
