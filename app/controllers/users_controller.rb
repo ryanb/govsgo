@@ -3,6 +3,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.where(:guest => false).find(params[:id])
+    private_profile
     @games = @user.games.paginate(:page => 1, :per_page => 5)
   end
 
@@ -70,4 +71,11 @@ class UsersController < ApplicationController
       redirect_to root_url, :notice => "You have been #{params[:remove] ? 'removed from' : 'added to'} the Looking for Games list."
     end
   end
+
+  private
+    def private_profile
+      if !current_user || current_user.id != params[:id].to_i
+        redirect_to root_url, :notice => "This profile is private" if @user.private
+      end
+    end
 end

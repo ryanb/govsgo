@@ -10,6 +10,7 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
+    private_game
     @other_games = @other_games.paginate(:page => 1, :per_page => 5)
     @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
     @profiles = @game.profiles
@@ -97,9 +98,15 @@ class GamesController < ApplicationController
   def fetch_games
     if logged_in?
       @your_games = current_user.games.recent
-      @other_games = current_user.other_games.recent
+      @other_games = current_user.other_public_games
     else
-      @other_games = Game.recent
+      @other_games = Game.public_recent
+    end
+  end
+
+  def private_game
+    if @game.players.any?(&:private)
+      redirect_to root_url, :notice => "This game is private" if !current_user || !@game.player?(current_user)
     end
   end
 end
