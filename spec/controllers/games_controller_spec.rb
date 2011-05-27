@@ -14,6 +14,13 @@ describe GamesController do
     response.should render_template(:show)
   end
 
+  it "show action should redirect to root if one of player profiles is private" do
+    private_user = Factory(:user, :private => true)
+    game = Factory(:game, :black_player => private_user)
+    get :show, :id => game
+    response.should redirect_to(root_url)
+  end
+
   it "new action should render new template" do
     get :new
     response.should render_template(:new)
@@ -52,11 +59,25 @@ describe GamesController, "logged in" do
   before(:each) do
     @user = Factory(:user)
     @controller.stubs(:current_user).returns(@user)
+    @controller.stubs(:fetch_games).returns(@user)
   end
 
   it "new action should render new template with custom username" do
     get :new, :username => "foo"
     response.should render_template(:new)
+  end
+
+  it "show action should render show template" do
+    game = Factory(:game, :white_player => @user, :current_player => @user)
+    get :show, :id => game
+    response.should render_template(:show)
+  end
+
+  it "show action should render redirect to root_url if one of players is private" do
+    private_user = Factory(:user, :private => true)
+    game = Factory(:game, :white_player => private_user, :current_player => private_user)
+    get :show, :id => game
+    response.should redirect_to(root_url)
   end
 
   it "create action should send email to opponent user" do
@@ -65,6 +86,12 @@ describe GamesController, "logged in" do
     response.should redirect_to(game_url(assigns[:game]))
     Notifications.deliveries.size.should == 1
     Notifications.deliveries.first.subject.should == "[Go vs Go] Invitation from #{@user.username}"
+  end
+
+  it "create action should not send email to gnugo user" do
+    post :create, :game => { :chosen_opponent => "gnugo", :opponent_username => '', :chosen_color => "black" }
+    response.should redirect_to(game_url(assigns[:game]))
+    Notifications.deliveries.size.should == 0
   end
 
   it "create action should not send email to opponent user when unwanted" do

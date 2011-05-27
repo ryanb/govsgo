@@ -40,5 +40,9 @@
     <%= f.check_box :email_on_message %>
     <%= f.label :email_on_message, "Email me when opponent chats", :class => "inline" %>
   </p>
+  <p class="field">
+    <%= f.check_box :private %>
+    <%= f.label :private, "Private Profile", :class => "inline" %>
+  </p>
   <p class="field"><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
 <% end %>

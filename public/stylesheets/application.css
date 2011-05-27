@@ -316,6 +316,28 @@ form label.inline {
   box-shadow: 1px 2px 4px #444;
 }
 
+.column .pagination {
+  margin: 10px 0;
+  text-align: center;
+  color: #777;
+}
+
+.column .pagination a {
+  color: #777;
+  text-decoration: none;
+  background-color: #D4D4D8;
+  padding: 4px 8px;
+  margin: 0 8px;
+  font-size: 14px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+}
+
+.column .pagination a:hover {
+  color: #FFF;
+  background-color: #444;
+}
+
 .column .game .go_button {
   position: absolute;
   right: 15px;

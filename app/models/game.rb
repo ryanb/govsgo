@@ -44,7 +44,17 @@ class Game < ActiveRecord::Base
   scope :with_gnugo,    where("white_player_id is null or black_player_id is null")
   scope :without_gnugo, where("white_player_id is not null and black_player_id is not null")
 
-  scope :recent, order("updated_at desc")
+  scope :recent, order("games.updated_at desc")
+
+  #####################
+  ### Class Methods ###
+  #####################
+
+  def self.public_recent
+    scoped.recent.includes(:black_player, :white_player).select{|game|
+      (!game.black_player || !game.black_player.private) && (!game.white_player || !game.white_player.private)
+    }
+  end
 
   ########################
   ### Instance Methods ###
@@ -179,6 +189,10 @@ class Game < ActiveRecord::Base
 
   def profiles_with_current_first
     profiles.sort_by { |p| p.current ? 0 : 1 }
+  end
+
+  def players
+    [black_player, white_player]
   end
 
   def sgf

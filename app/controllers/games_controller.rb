@@ -10,7 +10,8 @@ class GamesController < ApplicationController
 
   def show
     @game = Game.find(params[:id])
-    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    private_game
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5) if @other_games
     @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
     @profiles = @game.profiles
     @profiles.reverse! if current_user && @profiles.first.user == current_user
@@ -30,7 +31,7 @@ class GamesController < ApplicationController
     @game.komi = params[:komi] || 6.5
     @game.handicap = params[:handicap] || 0
     @game.board_size = params[:board_size] || 19
-    @other_games = @other_games.paginate(:page => 1, :per_page => 5)
+    @other_games = @other_games.paginate(:page => 1, :per_page => 5) if @other_games
     @your_games = @your_games.paginate(:page => 1, :per_page => 5) if @your_games
   end
 
@@ -41,7 +42,7 @@ class GamesController < ApplicationController
     @game.prepare
     if @game.save
       @game.queue_computer_move
-      Notifications.invitation(@game).deliver if @game.current_player && @game.current_player.email.present? && @game.current_player.email_on_invitation?
+      Notifications.invitation(@game).deliver if @game.current_player && @game.current_player.email.present? && @game.current_player.email_on_invitation? && @game.opponent
       flash[:notice] = "Game started. Click on a point below to place your stone."
       redirect_to @game
     else
@@ -97,9 +98,15 @@ class GamesController < ApplicationController
   def fetch_games
     if logged_in?
       @your_games = current_user.games.recent
-      @other_games = current_user.other_games.recent
+      @other_games = current_user.other_public_games || []
     else
-      @other_games = Game.recent
+      @other_games = Game.public_recent
+    end
+  end
+
+  def private_game
+    if @game.players.compact.any?(&:private)
+      redirect_to root_url, :notice => "This game is private" if !current_user || !@game.player?(current_user)
     end
   end
 end

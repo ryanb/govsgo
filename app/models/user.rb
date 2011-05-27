@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank, :email_on_invitation, :email_on_move, :email_on_message, :time_zone
+  attr_accessible :username, :email, :password, :password_confirmation, :guest, :rank, :email_on_invitation, :email_on_move, :email_on_message, :time_zone, :private
 
   has_many :authentications
   has_many :messages
@@ -32,6 +32,12 @@ class User < ActiveRecord::Base
 
   def other_games
     Game.where("(black_player_id != ? or black_player_id is null) and (white_player_id != ? or white_player_id is null)", id, id)
+  end
+
+  def other_public_games
+    other_games.recent.includes(:black_player, :white_player).select{|game|
+      (!game.black_player || !game.black_player.private) && (!game.white_player || !game.white_player.private)
+    }
   end
 
   def games_your_turn

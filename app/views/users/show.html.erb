@@ -35,13 +35,10 @@
     <% end %>
   </div>
   <div class="column">
-    <h2><%= @user.username %>'s Games</h2>
-    <% @games.each_with_index do |game, index| %>
-      <% unless index.zero? %>
-        <div class="game_divider"></div>
-      <% end %>
-      <%= render game %>
-    <% end %>
+    <div id="your_games">
+      <h2><%= @user.username %>'s Games</h2>
+      <%= render 'games/games_with_video', :games => @games, :game_type => 'your' %>
+    </div>
   </div>
   <div class="clear"></div>
 </div>

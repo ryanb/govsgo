@@ -1,0 +1,12 @@
+<% if games.blank? %>
+  <div class="no_games">
+    <div class="details">
+      <strong>You do not have any games yet.</strong><br />
+      <%= link_to "Try a quick game", new_game_path(:board_size => 9) %>
+      or <%= link_to "watch a video tour", "http://media.railscasts.com/videos/govsgo.mov" %>.
+    </div>
+    <a href="http://media.railscasts.com/videos/govsgo.mov"><%= link_to image_tag("screencast.png", :size => "259x278", :alt => "Watch the Screencast"), "http://media.railscasts.com/videos/govsgo.mov", :class => "screencast" %></a>
+  </div>
+<% else %>
+  <%= render 'games/games', :games => games, :game_type => game_type %>
+<% end %>

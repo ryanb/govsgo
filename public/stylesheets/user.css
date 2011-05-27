@@ -22,4 +22,5 @@
 .column {
   margin-left: 450px;
   width: 350px;
+	min-height: 520px;
 }
