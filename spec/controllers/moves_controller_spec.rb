@@ -29,13 +29,14 @@ describe MovesController do
     Notifications.deliveries.size.should == 0
   end
 
-  it "should not send move email when user is online" do
+  # It used to not behave this way but it caused some confusion as to why it sometimes wouldn't send notifications
+  it "should send move email even when user is online" do
     game = Factory(:game)
     game.opponent.update_attribute(:email_on_move, true)
     game.opponent.update_attribute(:last_request_at, Time.now)
     @controller.stubs(:current_user).returns(game.current_player)
     post "create", :game_id => game.id, :format => "js", :move => "aa"
     response.should be_success
-    Notifications.deliveries.size.should == 0
+    Notifications.deliveries.size.should == 1
   end
 end
