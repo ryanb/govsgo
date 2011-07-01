@@ -74,6 +74,13 @@ describe GamesController, "logged in" do
     Notifications.deliveries.size.should == 0
   end
 
+  it "create action should not send email to opponent user when playing against gnugo" do
+    @user.update_attribute(:email_on_invitation, true)
+    post :create, :game => { :chosen_opponent => "gnugo", :chosen_color => "black" }
+    response.should redirect_to(game_url(assigns[:game]))
+    Notifications.deliveries.size.should == 0
+  end
+
   it "edit action should render edit javascript template and fill in user attributes" do
     game = Factory(:game, :white_player => @user, :current_player => @user)
     get :edit, :id => game, :format => :js

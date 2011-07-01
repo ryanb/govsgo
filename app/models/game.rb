@@ -278,4 +278,8 @@ class Game < ActiveRecord::Base
   def player?(user)
     black_player == user || white_player == user
   end
+
+  def send_invitation_email?
+    black_player && white_player && current_player && current_player.email.present? && current_player.email_on_invitation?
+  end
 end
