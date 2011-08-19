@@ -11,6 +11,8 @@ gem 'go_gtp',   '0.0.4', :require => 'go/gtp', :git => "git://github.com/JEG2/go
 gem 'stalker',  '0.5.0'
 gem 'oily_png', '0.1.0'
 gem 'exception_notification', :git => 'git://github.com/rails/exception_notification.git', :require => 'exception_notifier'
+gem 'private_pub', :git => 'git://github.com/ryanb/private_pub.git'
+
 
 group :development, :test do
   gem 'mocha'
@@ -24,6 +26,7 @@ group :development do
   gem 'capistrano'
   gem 'mongrel', '1.2.0.pre2'
   gem 'nifty-generators'
+  gem 'thin'
 end
 
 group :test do

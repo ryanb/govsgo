@@ -1,5 +1,3 @@
-<% if @moves.blank? %>
-  setTimeout(pollMoves, pollTimer);
-<% else %>
+<% if @moves.present? %>
   <%= render "update_moves" %>
 <% end %>

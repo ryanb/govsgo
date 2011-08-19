@@ -7,7 +7,6 @@ var moves          = new Array();
 var current_move   = 0;
 var current_user   = null;
 var current_player = null;
-var pollTimer      = null;
 var soundEnabled   = true;
 var loadedSounds   = new Array();
 
@@ -119,9 +118,6 @@ function setupGame() {
     $.post($(this).attr("action"), $(this).serialize());
     e.preventDefault();
   });
-  if ($("#board").attr("data-finished") != "true" && $("#board").attr("data-started") == "true") {
-    startPolling();
-  }
   if ($("#messages").length > 0) {
     $("#messages")[0].scrollTop = $("#messages")[0].scrollHeight;
   }
@@ -202,25 +198,6 @@ function updateStones(color, move, backwards, multistep) {
       updateCapturedStones(capturer);
     }
   }
-}
-
-function startPolling() {
-  if (current_user != current_player) {
-    resetPollTimer();
-    setTimeout(pollMoves, pollTimer);
-  }
-}
-
-function pollMoves() {
-  // Slow down polling until it's 30 seconds apart
-  if (pollTimer < 30000) {
-    pollTimer += 1000;
-  }
-  $.getScript(window.location.pathname + '/moves?after=' + moves.length);
-}
-
-function resetPollTimer() {
-  pollTimer = 1000;
 }
 
 function playSound(name, volume) {

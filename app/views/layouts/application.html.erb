@@ -3,7 +3,7 @@
   <head>
     <title><%= content_for?(:title) ? yield(:title) : "" %> - Go vs Go</title>
     <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag :defaults %>
+    <%= javascript_include_tag :defaults, "private_pub", :cache => true %>
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>

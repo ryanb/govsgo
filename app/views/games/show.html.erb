@@ -2,6 +2,8 @@
 <% stylesheet "game" %>
 <% @hide_footer = true %>
 
+<%= subscribe_to "/games/#{@game.id}" %>
+
 <div id="game">
   <%= render "side" %>
   <div id="game_area">

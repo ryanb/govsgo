@@ -12,6 +12,7 @@ require "stalker"
 require "mysql2"
 require "go/gtp"
 require "oily_png"
+require "net/http"
 require "#{RAILS_ROOT}/lib/game_thumb"
 require "#{RAILS_ROOT}/lib/game_engine"
 
@@ -28,6 +29,8 @@ Stalker.job("Game.move") do |args|
   values = update.map { |col, val| "#{col}='#{mysql.escape(val.to_s)}'" }.join(", ")
   mysql.query("UPDATE games SET #{values} WHERE id=#{id} AND current_player_id IS NULL AND finished_at IS NULL")
   GameThumb.generate(id, game[:board_size], update[:black_positions], update[:white_positions])
+  moves = update[:moves].split("-")
+  Net::HTTP.get("localhost", "/games/#{id}/moves.js?after=#{moves.size-1}", 3000) # just to trigger the AJAX response
 end
 
 Stalker.work
