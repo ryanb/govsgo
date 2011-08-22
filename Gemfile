@@ -12,14 +12,11 @@ gem 'stalker',  '0.5.0'
 gem 'oily_png', '0.1.0'
 gem 'exception_notification', :git => 'git://github.com/rails/exception_notification.git', :require => 'exception_notifier'
 gem 'private_pub', :git => 'git://github.com/ryanb/private_pub.git'
-
+gem 'barista'
 
 group :development, :test do
-  gem 'mocha'
   gem 'rspec-rails', '>= 2.0.1'
-  gem 'factory_girl_rails'
-  gem 'autotest'
-  gem 'autotest-rails'
+  gem 'jasmine'
 end
 
 group :development do
@@ -30,6 +27,8 @@ group :development do
 end
 
 group :test do
+  gem 'mocha'
+  gem 'factory_girl_rails'
   gem 'guard'
   gem 'guard-rspec'
 end
