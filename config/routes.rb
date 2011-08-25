@@ -7,7 +7,8 @@ Govsgo::Application.routes.draw do
   match 'signup' => 'users#new', :as => :signup
   match 'logout' => 'sessions#destroy', :as => :logout
   match 'login' => 'sessions#new', :as => :login
-  match 'go_resources' => 'games#resources', :as => :go_resources
+  match 'go_resources' => redirect("/resources")
+  match 'resources' => 'games#resources', :as => :go_resources
   match 'games/:id.sgf' => 'games#sgf', :format => "sgf", :as => "game_sgf"
   match 'unsubscribe/:token' => 'users#unsubscribe', :as => "unsubscribe"
   match 'publicize' => 'users#publicize', :as => "publicize"
