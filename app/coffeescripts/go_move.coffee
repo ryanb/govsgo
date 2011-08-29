@@ -1,6 +1,6 @@
-class GoMove
-  captures: []
+class @GoMove
   constructor: (@move, @color = "b") ->
+    @captures = []
     if !@isResign() && !@isPass()
       for position, index in @move.match(/../g)
         if index == 0
@@ -13,5 +13,3 @@ class GoMove
 
   isPass: ->
     @move == "PASS"
-
-@GoMove = GoMove

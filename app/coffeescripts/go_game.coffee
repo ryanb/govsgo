@@ -1,4 +1,4 @@
-class GoGame
+class @GoGame
   constructor: ->
     @goban = new Goban
       handicap: $('#board').data('handicap')
@@ -6,5 +6,8 @@ class GoGame
       started: $('#board').data('started')
       finished: $('#board').data('finished')
 
-
-@GoGame = GoGame
+  move: (moveString) ->
+    move = @goban.addMove(moveString)
+    $("\##{move.position}").attr("class", move.color)
+    for capture in move.captures
+      $("\##{capture}").attr("class", "e")

@@ -1,21 +1,26 @@
-class Goban
+class @Goban
   constructor: (options = {}) ->
-    @size = 19
-    @handicap = 0
-    @started = false
-    @finished = false
-    @moves = []
+    @size = options.size || 19
+    @handicap = options.handicap || 0
+    @started = options.started || false
+    @finished = options.finished || false
+    @blackPositions = []
+    @whitePositions = []
     @currentMoveIndex = 0
-    @size = options.size if options.size
-    @handicap = options.handicap if options.handicap
-    @started = options.started if options.started
-    @finished = options.finished if options.finished
-    @addMoves(options.moves) if options.moves
+    @moves = []
+    @addMove(move) for move in options.moves.split("-") if options.moves
 
-  addMoves: (moves) ->
-    for move in moves.split("-")
-      @moves.push new GoMove(move, @currentColor())
-      @currentMoveIndex++
+  addMove: (moveString) ->
+    move = new GoMove(moveString, @currentColor())
+    @moves.push(move)
+    if move.color == "b"
+      @blackPositions.push(move.position)
+      @whitePositions = _.difference(@whitePositions, move.captures)
+    else
+      @whitePositions.push(move.position)
+      @blackPositions = _.difference(@blackPositions, move.captures)
+    @currentMoveIndex++
+    move
 
   currentColor: ->
     if @handicap > 0
@@ -23,4 +28,8 @@ class Goban
     else
       if @currentMoveIndex % 2 then "w" else "b"
 
-@Goban = Goban
+  captured: (color) ->
+    total = 0
+    for move in @moves
+      total += move.captures.length if move.color == color
+    total

@@ -4,6 +4,8 @@ describe "Goban", ->
     expect(goban.size).toEqual(19)
     expect(goban.handicap).toEqual(0)
     expect(goban.moves).toEqual([])
+    expect(goban.blackPositions).toEqual([])
+    expect(goban.whitePositions).toEqual([])
     expect(goban.started).toEqual(false)
     expect(goban.finished).toEqual(false)
 
@@ -14,6 +16,8 @@ describe "Goban", ->
     expect(goban.moves.length).toEqual(2)
     expect(goban.started).toEqual(true)
     expect(goban.finished).toEqual(true)
+    expect(goban.blackPositions).toEqual(["bb"])
+    expect(goban.whitePositions).toEqual(["aa"])
 
   it "sets current move index to last move", ->
     goban = new Goban(moves: "aa-bb-cc")
@@ -35,3 +39,17 @@ describe "Goban", ->
     goban = new Goban(moves: "aa-bb")
     expect(goban.moves.length).toEqual(2)
     expect(goban.moves[0].color).toEqual("b")
+
+  it "updates the board when a move is played", ->
+    goban = new Goban
+    goban.addMove("aa")
+    expect(goban.moves.length).toEqual(1)
+    expect(goban.blackPositions).toEqual(["aa"])
+    goban.addMove("bbaa")
+    expect(goban.whitePositions).toEqual(["bb"])
+    expect(goban.blackPositions).toEqual([])
+
+  it "knows the capture count for white and black", ->
+    goban = new Goban(moves: "aabb-cc-ddee")
+    expect(goban.captured("b")).toEqual(2)
+    expect(goban.captured("w")).toEqual(0)
