@@ -1,0 +1,8 @@
+en:
+  layouts:
+    application:
+      home: Home
+      play_a_game: Play a Game
+      go_resources: Go Resources
+      sign_in: Sign In
+      your_profile: Your Profile

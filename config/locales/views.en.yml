@@ -1,0 +1,16 @@
+en:
+  games:
+    index:
+      welcome: Welcome
+      go_description: Go is a board game invented in China more than 4,000 years ago. It is more popular in the far East than Chess in the West. The rules are simple but mastering the game can take a lifetime.
+      try_a_game: We invite you to <a href="%{link}">try a game</a> against the computer or online with other players.
+
+      looking_for_games: Looking for games
+      remove_yourself_from_list: Remove yourself from list
+      add_yourself_to_list: Add yourself to list
+      guest_add_to_list: To add yourself to this list, first <a href="%{url}">sign in</a>.
+
+
+  users:
+    form:
+      locale: Language

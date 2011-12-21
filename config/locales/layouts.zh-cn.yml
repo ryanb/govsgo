@@ -1,0 +1,8 @@
+zh-cn:
+  layouts:
+    application:
+      home: 首页
+      play_a_game: 玩一盘
+      go_resources: 围棋资源
+      sign_in: 登录
+      your_profile: 个人资料

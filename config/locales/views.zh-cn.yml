@@ -1,0 +1,15 @@
+zh-cn:
+  games:
+    index:
+      welcome: 欢迎
+      go_description: 围棋起源于中国，有超过4000年的历史，在东方它比国际象棋更为流行。它的规则很简单，但是精通它可能需要一生的时间。
+      try_a_game: 我们邀请您和电脑或者其他玩家<a href="%{link}">玩一盘</a>。
+
+      looking_for_games: 和其他人玩一盘
+      remove_yourself_from_list: 将我从列表中移除
+      add_yourself_to_list: 将我加入到列表
+      guest_add_to_list: 您需要先<a href="%{url}">登录</a>，就可以加入到这个列表。
+
+  users:
+    form:
+      locale: 语言
