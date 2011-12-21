@@ -28,6 +28,10 @@
     <%= f.label :time_zone, "Time Zone" %>
     <%= f.time_zone_select :time_zone, nil, :include_blank => true %>
   </p>
+  <p>
+    <%= f.label :locale, t('.locale') %>
+    <%= f.select :locale, [['English', 'en'], ['简体中文', 'zh-cn']] %>
+  </p>
   <p class="field">
     <%= f.check_box :email_on_invitation %>
     <%= f.label :email_on_invitation, "Email me new game invitations", :class => "inline" %>

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_filter :login_required, :except => [:show, :new, :create, :unsubscribe]
+  after_filter :change_locale, :only => [:create, :update]
 
   def show
     @user = User.where(:guest => false).find(params[:id])

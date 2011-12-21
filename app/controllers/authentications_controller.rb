@@ -1,4 +1,6 @@
 class AuthenticationsController < ApplicationController
+  after_filter :change_locale, :only => [:create]
+
   def index
   end
 

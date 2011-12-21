@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  after_filter :change_locale, :only => [:create]
+
   def new
   end
 
