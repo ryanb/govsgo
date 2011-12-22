@@ -9,7 +9,7 @@ module ControllerI18n
   end
 
   def change_locale
-    cookies[:locale] = current_user.locale unless current_user.locale.blank?
+    cookies[:locale] = current_user.locale if logged_in? && current_user.locale.present?
   end
 
   def setup_cookies_locale
