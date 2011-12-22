@@ -6,16 +6,16 @@
 <%= avatar_image_tag(profile.user) %>
 <div class="profile">
   <div class="details">
-    <div class="name"><%= link_to_user(profile.user) %> as <%= profile.color.to_s.titleize %> <%= online_status(profile.user) %></div>
-    <div id="turn_<%= profile.user_id %>" class="turn"<%= raw ' style="display: none;"' unless profile.current && !@game.finished? %>>current player</div>
+    <div class="name"><%= link_to_user(profile.user) %> <%= t(".as_#{profile.color}") %> <%= online_status(profile.user) %></div>
+    <div id="turn_<%= profile.user_id %>" class="turn"<%= raw ' style="display: none;"' unless profile.current && !@game.finished? %>><%= t('.current_player') %></div>
     <div id="<%= profile.color.to_s[0] %>_status" class="status"><%= profile.last_status %></div>
-    <div class="komi_or_handicap"><%= profile.handicap_or_komi %></div>
+    <div class="komi_or_handicap"><%= t(".#{profile.handicap_or_komi.last}", :count => profile.handicap_or_komi.first) %></div>
     <div id="score_<%= profile.user_id %>" class="score"><%= game_score profile.score, @game.finished? %></div>
   </div>
   <% if profile.user && profile.user == current_user %>
     <div id="player_actions">
-      <%= link_to "Pass", '#', :id => "play_pass" %>
-      <%= link_to "Resign", '#', :id => "play_resign" %>
+      <%= link_to t('.pass'), '#', :id => "play_pass" %>
+      <%= link_to t('.resign'), '#', :id => "play_resign" %>
     </div>
   <% end %>
 </div>

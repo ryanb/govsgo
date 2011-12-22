@@ -10,6 +10,30 @@ en:
       add_yourself_to_list: Add yourself to list
       guest_add_to_list: To add yourself to this list, first <a href="%{url}">sign in</a>.
 
+    your_games:
+      your_games: Your Games
+      new_game: New Game
+      no_games: You do not have any games yet.
+      try_a_quick_game: Try a quick game
+      or: or
+      watch_a_video_tour: Watch a video tour
+
+    game:
+      moved_ago: Moved %{time} ago
+
+    profile:
+      as_white: as White
+      as_black: as Black
+      current_player: current player
+      komi: '%{count} komi'
+      handicap: '%{count} handicap'
+      captured_stone: '%{count} captured stone'
+      pass: Pass
+      resign: Resign
+
+    side:
+      private_chat: Private Chat
+      send: Send
 
   users:
     form:

@@ -36,7 +36,7 @@ module ApplicationHelper
   end
 
   def relative_time(time)
-    [relative_date(time.to_date), time.strftime("%I:%M %p")].compact.join(" ")
+    [relative_date(time.to_date), l(time, :format => '%I:%M %p')].compact.join(" ")
   end
 
   def relative_date(date)
@@ -44,11 +44,11 @@ module ApplicationHelper
     if date == today
       nil
     elsif date == today-1
-      "yesterday"
+      t('.yesterday')
     elsif date.year == today.year
-      date.strftime("%b %d")
+      l(date, :format => "%b %d")
     else
-      date.strftime("%b %d, %Y")
+      l(date, :format => "%b %d, %Y")
     end
   end
 end

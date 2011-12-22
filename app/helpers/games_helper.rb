@@ -22,12 +22,12 @@ module GamesHelper
   def game_score(score, finished)
     if finished
       if score.to_f == 1.0
-        "won"
+        t(".won")
       elsif score.to_f > 0
-        "won by #{score}"
+        t(".won_by", :score => score)
       end
     else
-      pluralize(score.to_i, "captured stone")
+      t(".captured_stone", :count => score.to_i)
     end
   end
 
