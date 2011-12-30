@@ -1,10 +1,10 @@
-<% title "Sign Up" %>
+<% title t(".sign_up") %>
 <% stylesheet "authentication" %>
 
 <div id="container" class="two_stones">
   <div id="sign_up">
-    <h2 class="field">Sign Up</h2>
-    <p class="field">Already have an account? <%= link_to "Log in", login_path %>.</p>
+    <h2 class="field"><%= t(".sign_up") %></h2>
+    <p class="field"><%= t(".already_have_an_account") %> <%= link_to t(".log_in"), login_path %>.</p>
     <%= render 'form' %>
   </div>
 </div>

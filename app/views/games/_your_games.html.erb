@@ -1,13 +1,13 @@
 <div id="your_games">
-  <h2>Your Games <%= link_to "New Game", new_game_path(:board_size => 9) %></h2>
+  <h2><%= t '.your_games' %> <%= link_to t('.new_game'), new_game_path(:board_size => 9) %></h2>
   <% if @your_games.blank? %>
     <div class="no_games">
       <div class="details">
-        <strong>You do not have any games yet.</strong><br />
-        <%= link_to "Try a quick game", new_game_path(:board_size => 9) %>
-        or <%= link_to "watch a video tour", "http://media.railscasts.com/videos/govsgo.mov" %>.
+        <strong><%= t('.no_games') %></strong><br />
+        <%= link_to t('.try_a_quick_game'), new_game_path(:board_size => 9) %>
+        <%= t('.or') %> <%= link_to t('.watch_a_video_tour'), "http://media.railscasts.com/videos/govsgo.mov" %>
       </div>
-      <a href="http://media.railscasts.com/videos/govsgo.mov"><%= link_to image_tag("screencast.png", :size => "259x278", :alt => "Watch the Screencast"), "http://media.railscasts.com/videos/govsgo.mov", :class => "screencast" %></a>
+      <a href="http://media.railscasts.com/videos/govsgo.mov"><%= link_to image_tag("screencast.png", :size => "259x278", :alt => t('.watch_a_video_tour')), "http://media.railscasts.com/videos/govsgo.mov", :class => "screencast" %></a>
     </div>
   <% else %>
     <% @your_games.each_with_index do |game, index| %>

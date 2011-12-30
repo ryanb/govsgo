@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ControllerAuthentication
+  include ControllerI18n
   protect_from_forgery
   before_filter :mark_user_request, :if => :logged_in?
   before_filter :set_user_time_zone, :if => :logged_in?

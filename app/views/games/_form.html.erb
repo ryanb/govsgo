@@ -3,22 +3,22 @@
   <% if @game.new_record? %>
     <% if guest? %>
     <p>
-      <strong>Playing against computer (GNU Go).</strong><br />
-      To play against others you must first <%= link_to "sign in", signin_path %>.
+      <strong><%= t('.playing_against_computer') %></strong><br />
+      <%= t('.sign_in', :url => signin_path).html_safe %>
     </p>
     <% else %>
     <p class="play_against">
-      <strong>Play against:</strong><br />
-      <%= f.radio_button :chosen_opponent, "gnugo" %> Computer (GNU Go)<br />
-      <%= f.radio_button :chosen_opponent, "user" %> Username:
+      <strong><%= t('.play_against') %></strong><br />
+      <%= f.radio_button :chosen_opponent, "gnugo" %> <%= t('.computer') %><br />
+      <%= f.radio_button :chosen_opponent, "user" %> <%= t('.username') %>
       <%= f.text_field :opponent_username %>
     </p>
     <% end %>
     <%= div_hidden_if @game.chosen_opponent == "user", :class => "auto_difficulty" do %>
       <p>
         <%= f.check_box :adjust_difficulty %>
-        <%= f.label :adjust_difficulty, "Automatically adjust difficulty", :class => "inline" %>
-        <%= "(Level #{current_user.gnugo_level})" if current_user %>
+        <%= f.label :adjust_difficulty, t('.automatically_adjust_difficulty'), :class => "inline" %>
+        <%= t(".level", :level => current_user.gnugo_level) if current_user %>
       </p>
     <% end %>
   <% else %>
@@ -26,22 +26,22 @@
     <%= f.hidden_field :opponent_username %>
   <% end %>
   <p>
-    <%= f.label :board_size %>
+    <%= f.label :board_size, t(".board_size") %>
     <%= f.select :board_size, [["19 x 19", 19], ["13 x 13", 13], ["9 x 9", 9]] %>
   </p>
   <%= div_hidden_if @game.new_record? && @game.adjust_difficulty? && @game.chosen_opponent != "user", :class => "manual_difficulty" do %>
     <p>
-      <%= f.label :chosen_color, "Play as" %>
-      <%= f.select :chosen_color, [["Random", ""], ["Black", "black"], ["White", "white"]] %>
+      <%= f.label :chosen_color, t(".play_as") %>
+      <%= f.select :chosen_color, [[t(".random"), ""], [t(".black"), "black"], [t(".white"), "white"]] %>
     </p>
     <p>
-      <%= f.label :handicap %>
+      <%= f.label :handicap, t(".handicap") %>
       <%= f.select :handicap, [0, 2, 3, 4, 5, 6, 7, 8, 9] %>
     </p>
     <p>
-      <%= f.label :komi %>
+      <%= f.label :komi, t(".komi") %>
       <%= f.select :komi, [0.5, 5.5, 6.5] %>
     </p>
   <% end %>
-  <p class="field"><%= f.submit (@game.new_record? ? "Start Game" : "Update Game") %></p>
+  <p class="field"><%= f.submit (@game.new_record? ? t(".start_game") : t(".update_game")) %></p>
 <% end %>

@@ -1,0 +1,14 @@
+en:
+  helpers:
+    application:
+      guest: Guest
+      gnu_go: GNU Go
+      yesterday: yesterday
+      
+    games:
+      won: won
+      won_by: won by %{score}
+      captured_stone:
+        zero: 0 captured stone
+        one: 1 captured stone
+        other: '%{count} captured stones'

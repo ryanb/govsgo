@@ -4,9 +4,9 @@
 <div id="container" class="two_stones">
 
   <div id="welcome">
-    <h2>Welcome</h2>
-    <p>Go is a board game invented in China more than 4,000 years ago. It is more popular in the far East than Chess in the West. The rules are simple but mastering the game can take a lifetime.</p>
-    <p>We invite you to <%= link_to "try a game", new_game_path(:board_size => 9) %> against the computer or online with other players.</p>
+    <h2><%= t('.welcome') %></h2>
+    <p><%= t('.go_description') %></p>
+    <p><%= t('.try_a_game', :link => new_game_path(:board_size => 9)).html_safe %></p>
   </div>
 
   <div class="columns">
@@ -22,7 +22,7 @@
     </div>
     <div class="column">
       <div class="column_padding">
-        <h2>Looking for Games</h2>
+        <h2><%= t('.looking_for_games') %></h2>
         <% @users.each_with_index do |user, index| %>
           <% unless index.zero? %>
             <div class="user_divider"></div>
@@ -39,11 +39,11 @@
         <% end %>
         <div class="buttons">
           <% if guest? %>
-            To add yourself to this list, first <%= link_to "sign in", signin_url %>.
+            <%= t('.guest_add_to_list', :url => signin_url).html_safe %>
           <% elsif @users.include? current_user %>
-            <%= link_to "Remove Yourself from List", publicize_path(:remove => true), :method => :put, :class => "button" %>
+            <%= link_to t('.remove_yourself_from_list'), publicize_path(:remove => true), :method => :put, :class => "button" %>
           <% else %>
-            <%= link_to "Add Yourself to List", publicize_path, :method => :put, :class => "button" %>
+            <%= link_to t('.add_yourself_to_list'), publicize_path, :method => :put, :class => "button" %>
           <% end %>
         </div>
       </div>

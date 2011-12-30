@@ -1,0 +1,31 @@
+zh-cn:
+  controllers:
+    authentications:
+      signed_in_as: 作为 %{username} 登录
+      create: 认证成功。
+      destroy: 成功移除认证。
+      login_required: 你必须先登录或者注册才能访问这个页面。
+      user_required: 你必须先登录或者注册才能访问这个页面。
+      
+    games:
+      create: 游戏开始了，点击棋盘上放下你的棋子。
+      
+    moves:
+      illegal_move: 无法在这个位置下子。
+      out_of_turn: 不是你的回合。
+      
+    sessions:
+      create_success: 登录成功。
+      create_fail: 用户名或者密码错误。
+      destroy: 你已经登出。
+      
+    users:
+      new_update: 请更新你的个人资料。
+      new_login: 你好像已经有帐户了，请登录。
+      create: 感谢注册，你已经登录了。
+      update: 你的个人资料已经更新。
+      unsubscribe: 你已经退订了邮件通知。
+      publicize_guest: 你必须先登录才能添加到 寻找棋友 列表。
+      publicize_remove: 你已经从 寻找棋友 列表删除。
+      publicize_add: 你已经被添加到 寻找棋友 列表。
+      

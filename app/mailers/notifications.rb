@@ -3,16 +3,19 @@ class Notifications < ActionMailer::Base
 
   def invitation(game)
     @game = game
-    mail :to => @game.current_player.email, :subject => "[Go vs Go] Invitation from #{@game.opponent.username}"
+    I18n.locale = @game.current_player.locale || I18n.default_locale
+    mail :to => @game.current_player.email, :subject => t("invitation", :username => @game.opponent.username, :scope => "notifications")
   end
 
   def move(game)
     @game = game
-    mail :to => @game.current_player.email, :subject => "[Go vs Go] Move by #{@game.opponent.username}"
+    I18n.locale = @game.current_player.locale || I18n.default_locale
+    mail :to => @game.current_player.email, :subject => t("move", :username => @game.opponent.username, :scope => "notifications")
   end
 
   def chat_message(message)
     @message = message
-    mail :to => @message.recipient.email, :subject => "[Go vs Go] Chat from #{@message.user.username}"
+    I18n.locale = @message.recipient.locale || I18n.default_locale
+    mail :to => @message.recipient.email, :subject => t("chat", :username => @message.user.username, :scope => "notifications")
   end
 end
