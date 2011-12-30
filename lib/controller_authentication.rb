@@ -48,7 +48,7 @@ module ControllerAuthentication
     current_user.nil? || current_user.guest?
   end
 
-  def login_required(message = "You must first log in or sign up before accessing this page.")
+  def login_required(message = t("login_required", :scope => "controllers.authentications"))
     unless logged_in?
       flash[:alert] = message
       store_target_location
@@ -56,7 +56,7 @@ module ControllerAuthentication
     end
   end
 
-  def user_required(message = "You must first log in or sign up before accessing this page.")
+  def user_required(message = t("user_required", :scope => "controllers.authentications"))
     if guest?
       flash[:alert] = message
       store_target_location

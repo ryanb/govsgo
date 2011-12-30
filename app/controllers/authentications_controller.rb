@@ -12,7 +12,7 @@ class AuthenticationsController < ApplicationController
       authentication.user.apply_omniauth(omniauth)
       authentication.user.save!
       remember_user(authentication.user)
-      flash[:notice] = "Signed in as #{authentication.user.username}"
+      flash[:notice] = t("signed_in_as", :username => authentication.user.username, :scope => "controllers.authentications")
       redirect_to_target_or_default root_url
     else
       user = current_user_or_guest
@@ -22,11 +22,11 @@ class AuthenticationsController < ApplicationController
       user.guest = false
       if user.save
         if was_guest
-          flash[:notice] = "Signed in as #{user.username}."
+          flash[:notice] = t("signed_in_as", :username => user.username, :scope => "controllers.authentications")
           remember_user(user)
           redirect_to_target_or_default root_url
         else
-          flash[:notice] = "Authentication successful."
+          flash[:notice] = t("create", :scope => "controllers.authentications")
           redirect_to edit_current_user_url
         end
       else
@@ -39,7 +39,7 @@ class AuthenticationsController < ApplicationController
   def destroy
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
-    flash[:notice] = "Successfully destroyed authentication."
+    flash[:notice] = t("destroy", :scope => "controllers.authentications")
     redirect_to edit_current_user_path
   end
 end

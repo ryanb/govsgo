@@ -8,17 +8,17 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:login], params[:password])
     if user
       remember_user(user)
-      flash[:notice] = "Logged in successfully."
+      flash[:notice] = t("create_success", :scope => "controllers.sessions")
       redirect_to_target_or_default("/")
     else
-      flash.now[:alert] = "Invalid login or password."
+      flash.now[:alert] = t("create_fail", :scope => "controllers.sessions")
       render :action => 'new'
     end
   end
 
   def destroy
     forget_user
-    flash[:notice] = "You have been logged out."
+    flash[:notice] = t("destroy", :scope => "controllers.sessions")
     redirect_to root_url
   end
 end

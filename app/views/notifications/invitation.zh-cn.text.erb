@@ -1,0 +1,14 @@
+Hi <%= @game.current_player.username %>,
+
+<%= @game.opponent.username %> 想和你下一盘围棋在 Go vs Go 网站。
+
+棋局: <%= game_url(@game) %>
+
+这是一封来自govsgo.com自动发送的邮件。
+
+--
+
+如果你不想再收到Go vs Go的邮件，你可以退订。
+
+退订地址: <%= unsubscribe_url(@game.current_player.unsubscribe_token) %>
+

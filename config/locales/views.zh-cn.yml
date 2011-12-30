@@ -9,7 +9,140 @@ zh-cn:
       remove_yourself_from_list: 将我从列表中移除
       add_yourself_to_list: 将我加入到列表
       guest_add_to_list: 您需要先<a href="%{url}">登录</a>，就可以加入到这个列表。
+     
+    new:
+      new_go_game: 新的一盘
+      
+    show:
+      play_go: 下围棋
+      
+    panel:
+      declined: 这盘棋被拒绝了
+      won: 祝贺你，你赢了！
+      play_again: 再来一盘
+      lost: 很遗憾，你输了。
+      need_help: 需要帮助？ 看看相关的 <a href="%{url}">围棋资源</a>吧。
+      guest: 访客
+      winner: '%{winner_name} 赢了！'
+      gnu_go: GNU Go
+      started: 游戏已经开始，<a href="%{url}">刷新一下</a> 开始下棋。
+      challenge_from: 来自 %{username} 的挑战
+      board_size: 棋盘大小
+      playing_as: 作为
+      komi: 贴目
+      handicap: 让子
+      change_settings: 想改一下？ <a href="%{url}">编辑设置</a>
+      accept: 接受
+      decline: 拒绝
+      waiting: 等待对手接受这盘棋。
+
+    your_games:
+      your_games: 你的棋局
+      new_game: 新的棋局
+      no_games: 你还没有任何棋局
+      try_a_quick_game: 快速来一盘
+      or: 或者
+      watch_a_video_tour: 看一下视频
+      
+    other_games:
+      watch_a_game: 看一盘棋
+
+    game:
+      moved_ago: '%{time} 前最后一手'
+
+    profile:
+      as_white: 作为白方
+      as_black: 作为黑方
+      current_player: 当前玩家
+      komi: '%{count} 贴目'
+      handicap: '%{count} 让子'
+      captured_stone: '%{count} 吃子数'
+      pass: 跳过
+      resign: 认输
+
+    form:
+      playing_against_computer: 和电脑对抗 (GNU Go)。
+      sign_in: 你必须先 <a href="%{url}">登录</a> 才能和其他人下棋。
+      play_against: 和谁下
+      computer: 电脑 (GNU Go)
+      username: 用户名
+      automatically_adjust_difficulty: 自动调节难度
+      level: '(等级: %{level})'
+      board_size: 棋盘大小
+      play_as: 作为
+      random: 随机
+      black: 黑方
+      white: 白方
+      handicap: 让子
+      komi: 贴目
+      start_game: 开始游戏
+      update_game: 更新游戏
+
+    side:
+      private_chat: 私聊
+      send: 发送
 
   users:
     form:
+      username: 用户名
+      email: 邮件地址
+      password: 密码
+      password_confirmation: 确认密码
+      rank: 等级
+      rank_hint: 比如 "4k"
+      rank_blank: 如果不了解，可以留空
+      time_zone: 时区
       locale: 语言
+      email_on_invitation: 如果有新的游戏邀请，发邮件给我
+      email_on_move: 如果对手下了一手，发邮件给我
+      email_on_message: 如果对手发送聊天信息，发邮件给我
+      sign_up: 注册
+      update: 更新
+
+    show:
+      currently: 当前
+      online: 在线
+      offline: 离线
+      rank: 围棋等级
+      gnugo_level: GNU Go 自动等级
+      games_with_gnugo: 和GNU Go下过
+      games_with_others: 和其他人下过
+      edit_profile: 编辑个人资料
+      or: 或者
+      log_out: 登出
+      challenge_to_a_game: 挑战一盘
+      his_games: "%{username} 的棋局"
+
+    edit:
+      update_profile: 更新个人资料
+      sign_in_options: 登录选项
+      authentication_services: 你已经使用下列服务登录：
+      remove_authentication_confirm: 你确定要移除这个认证服务吗？
+      add_authentication_service: 添加其他的认证服务
+      
+    new:
+      sign_up: 注册
+      already_have_an_account: 已经有帐号了？
+      log_in: 登录
+
+
+  sessions:
+    new:
+      log_in: 登录
+      no_account: 还没有帐号？
+      sign_up: 注册
+      label_login: 用户名或密码
+      
+  authentications:
+    index:
+      sign_in: 登录
+      sign_in_services: 用下列服务登录：
+      not_services: 不使用这些服务？
+      enter_email: 输入你的邮件地址：
+      email: 邮件地址
+      continue: 继续
+      
+  notifications:
+    invitation: '[Go vs Go] 来自 %{username} 的邀请'
+    move: '[Go vs Go] %{username} 下了一手'
+    chat: '[Go vs Go] 来自 %{username} 的聊天'

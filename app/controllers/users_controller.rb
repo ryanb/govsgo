@@ -10,10 +10,10 @@ class UsersController < ApplicationController
   def new
     if params[:email]
       if logged_in?
-        flash[:notice] = "Please update your profile below."
+        flash[:notice] = t("new_update", :scope => "controllers.users")
         redirect_to edit_current_user_url(:email => params[:email])
       elsif User.find_by_email(params[:email])
-        flash[:notice] = "It appears you already have an account, please login below."
+        flash[:notice] = t("new_login", :scope => "controllers.users")
         redirect_to login_url(:login => params[:email])
       end
     end
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       remember_user(@user)
-      flash[:notice] = "Thank you for signing up! You are now logged in."
+      flash[:notice] = t("create", :scope => "controllers.users")
       redirect_to root_url
     else
       render :action => 'new'
@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     @user.guest = false
     if @user.save
       session[:omniauth] = nil
-      flash[:notice] = "Your profile has been updated."
+      flash[:notice] = t("update", :scope => "controllers.users")
       redirect_to root_url
     else
       render :action => 'edit'
@@ -58,17 +58,17 @@ class UsersController < ApplicationController
   def unsubscribe
     @user = User.find_by_unsubscribe_token!(params[:token])
     @user.update_attributes!(:email_on_invitation => false, :email_on_move => false, :email_on_message => false)
-    flash[:notice] = "You have been unsubscribed from further email notifications."
+    flash[:notice] = t("unsubscribe", :scope => "controllers.users")
     redirect_to root_url
   end
 
   def publicize
     if guest?
-      redirect_to signin_url, :alert => "You must first sign in to be added to the Looking for Games list."
+      redirect_to signin_url, :alert => t("publicize_guest", :scope => "controllers.users")
     else
       @user = current_user
       @user.update_attribute(:publicized_at, (params[:remove] ? nil : Time.now))
-      redirect_to root_url, :notice => "You have been #{params[:remove] ? 'removed from' : 'added to'} the Looking for Games list."
+      redirect_to root_url, :notice => t(params[:remove] ? "publicize_remove" : "publicize_add", :scope => "controllers.users")
     end
   end
 end

@@ -1,28 +1,28 @@
-<% title "Update Profile" %>
+<% title t(".update_profile") %>
 <% stylesheet "authentication" %>
 
 <div id="container">
   <div id="update_profile">
-    <h2 class="field">Update Profile</h2>
+    <h2 class="field"><%= t(".update_profile") %></h2>
     <%= render 'form' %>
   </div>
 
   <div id="authentications">
-    <h2>Sign In Options</h2>
+    <h2><%= t(".sign_in_options") %></h2>
     <% unless current_user.authentications.empty? %>
-      <p><strong>You have signed in with these services:</strong></p>
+      <p><strong><%= t(".authentication_services") %></strong></p>
       <div class="authentications">
         <% for authentication in current_user.authentications %>
           <div class="authentication">
             <%= image_tag "auth/#{authentication.provider}_32.png", :size => "32x32" %>
             <div class="provider"><%= authentication.provider_name %></div>
             <div class="uid"><%= authentication.uid %></div>
-            <%= link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
+            <%= link_to "X", authentication, :confirm => t(".remove_authentication_confirm"), :method => :delete, :class => "remove" %>
           </div>
         <% end %>
       </div>
     <% end %>
-    <p><strong>Add another service to sign in with:</strong></p>
+    <p><strong><%= t(".add_authentication_service") %></strong></p>
 
     <a href="/auth/twitter" class="auth_provider">
       <%= image_tag "auth/twitter_64.png", :size => "64x64", :alt => "Twitter" %>

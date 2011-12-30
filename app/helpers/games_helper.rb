@@ -22,12 +22,12 @@ module GamesHelper
   def game_score(score, finished)
     if finished
       if score.to_f == 1.0
-        t(".won")
+        t("won", :scope => "helpers.games")
       elsif score.to_f > 0
-        t(".won_by", :score => score)
+        t("won_by", :score => score, :scope => "helpers.games")
       end
     else
-      t(".captured_stone", :count => score.to_i)
+      t("captured_stone", :count => score.to_i, :scope => "helpers.games")
     end
   end
 

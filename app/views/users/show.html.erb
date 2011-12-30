@@ -8,34 +8,34 @@
     <div class="clear"></div>
     <div class="details">
       <p>
-        Currently: <%= @user.online? ? "Online" : "Offline" %>
+        <%= t(".currently") %>: <%= @user.online? ? t(".online") : t(".offline") %>
       </p>
       <% if @user.rank.present? %>
       <p>
-        Go Rank: <%= @user.rank %>
+        <%= t(".rank") %>: <%= @user.rank %>
       </p>
       <% end %>
       <p>
-        GNU Go Auto-level:
+        <%= t(".gnugo_level") %>:
         <%= @user.gnugo_level %>
       </p>
       <p>
-        Games with GNU Go:
+        <%= t(".games_with_gnugo") %>:
         <%= @user.games.with_gnugo.size %>
       </p>
       <p>
-        Games with Others:
+        <%= t(".games_with_others") %>:
         <%= @user.games.without_gnugo.size %>
       </p>
     </div>
     <% if @user == current_user %>
-      <h3><%= link_to "Edit Profile", edit_current_user_path %> or <%= link_to "Log Out", logout_path %></h3>
+      <h3><%= link_to t(".edit_profile"), edit_current_user_path %> <%= t(".or") %> <%= link_to t(".log_out"), logout_path %></h3>
     <% else %>
-      <%= link_to "Challenge to a Game", new_game_path(:username => @user.username), :class => "button" %>
+      <%= link_to t(".challenge_to_a_game"), new_game_path(:username => @user.username), :class => "button" %>
     <% end %>
   </div>
   <div class="column">
-    <h2><%= @user.username %>'s Games</h2>
+    <h2><%= t(".his_games", :username => @user.username) %></h2>
     <% @games.each_with_index do |game, index| %>
       <% unless index.zero? %>
         <div class="game_divider"></div>

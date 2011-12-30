@@ -29,9 +29,9 @@ module ApplicationHelper
 
   def link_to_user(user)
     if user
-      user.guest? ? "Guest" : link_to(user.name_with_rank, user, :class => "subtle")
+      user.guest? ? t("guest", :scope => "helpers.application") : link_to(user.name_with_rank, user, :class => "subtle")
     else
-      "GNU Go"
+      t("gnu_go", :scope => "helpers.application")
     end
   end
 
@@ -44,7 +44,7 @@ module ApplicationHelper
     if date == today
       nil
     elsif date == today-1
-      t('.yesterday')
+      t("yesterday", :scope => "helpers.application")
     elsif date.year == today.year
       l(date, :format => "%b %d")
     else
