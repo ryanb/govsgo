@@ -1,20 +1,20 @@
-<% title "Log In" %>
+<% title t(".log_in") %>
 <% stylesheet "authentication" %>
 
 <div id="container" class="two_stones">
   <div id="login_page">
-    <h2 class="field">Log In</h2>
-    <p class="field">Don't have an account? <%= link_to "Sign up!", signup_path %></p>
+    <h2 class="field"><%= t(".log_in") %></h2>
+    <p class="field"><%= t(".no_account") %> <%= link_to t(".sign_up"), signup_path %></p>
     <%= form_tag sessions_path do %>
       <p>
-        <%= label_tag :login, "Username or Email" %>
+        <%= label_tag :login, t(".label_login") %>
         <%= text_field_tag :login, params[:login] || params[:email] %>
       </p>
       <p>
         <%= label_tag :password %>
         <%= password_field_tag :password %>
       </p>
-      <p class="field"><%= submit_tag "Log in" %></p>
+      <p class="field"><%= submit_tag t(".log_in") %></p>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,31 @@
+en:
+  controllers:
+    authentications:
+      signed_in_as: Signed in as %{username}
+      create: Authentication successful.
+      destroy: Successfully destroyed authentication.
+      login_required: You must first log in or sign up before accessing this page.
+      user_required: You must first log in or sign up before accessing this page.
+      
+    games:
+      create: Game started. Click on a point below to place your stone.
+      
+    moves:
+      illegal_move: That is an illegal move.
+      out_of_turn: It is not your turn to move.
+      
+    sessions:
+      create_success: Logged in successfully.
+      create_fail: Invalid login or password.
+      destroy: You have been logged out.
+      
+    users:
+      new_update: Please update your profile below.
+      new_login: It appears you already have an account, please login below.
+      create: Thank you for signing up! You are now logged in.
+      update: Your profile has been updated.
+      unsubscribe: You have been unsubscribed from further email notifications.
+      publicize_guest: You must first sign in to be added to the Looking for Games list.
+      publicize_remove: You have been removed from the Looking for Games list.
+      publicize_add: You have been added to the Looking for Games list.
+      

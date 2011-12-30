@@ -41,8 +41,8 @@ class GamesController < ApplicationController
     @game.prepare
     if @game.save
       @game.queue_computer_move
-      Notifications.invitation(@game).deliver if @game.send_invitation_email?
-      flash[:notice] = "Game started. Click on a point below to place your stone."
+      flash[:notice] = t("create", :scope => "controllers.games")
+      Notifications.invitation(@game).deliver if @game.send_invitation_email?      
       redirect_to @game
     else
       fetch_games

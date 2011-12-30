@@ -1,0 +1,14 @@
+zh-cn:
+  helpers:
+    application:
+      guest: 访客
+      gnu_go: GNU Go
+      yesterday: 昨天
+      
+    games:
+      won: 赢了
+      won_by: 赢了 %{score} 分
+      captured_stone:
+        zero: 0 吃子
+        one: 1 吃子
+        other: '%{count} 吃子'

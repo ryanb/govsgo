@@ -7,3 +7,4 @@ config/private.yml
 config/initializers/development_mail.rb
 db/schema.rb
 public/assets
+/nbproject/*

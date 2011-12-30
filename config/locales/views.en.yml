@@ -1,0 +1,148 @@
+en:
+  games:
+    index:
+      welcome: Welcome
+      go_description: Go is a board game invented in China more than 4,000 years ago. It is more popular in the far East than Chess in the West. The rules are simple but mastering the game can take a lifetime.
+      try_a_game: We invite you to <a href="%{link}">try a game</a> against the computer or online with other players.
+
+      looking_for_games: Looking for games
+      remove_yourself_from_list: Remove yourself from list
+      add_yourself_to_list: Add yourself to list
+      guest_add_to_list: To add yourself to this list, first <a href="%{url}">sign in</a>.
+      
+    new:
+      new_go_game: New Go Game
+      
+    show:
+      play_go: Play Go
+      
+    panel:
+      declined: Game has been declined
+      won: Congratulations, you won!
+      play_again: Play Again
+      lost: Sorry, you lost.
+      need_help: Need some help? Check out the <a href="%{url}">Go Resources</a>.
+      guest: Guest
+      winner: '%{winner_name} won!'
+      gnu_go: GNU Go
+      started: Looks like the game has started, <a href="%{url}">reload</a> to play.
+      challenge_from: Challenge from %{username}
+      board_size: Board size
+      playing_as: Playing as
+      komi: Komi
+      handicap: Handicap
+      change_settings: Want to change something? <a href="%{url}">Edit Settings</a>
+      accept: Accept
+      decline: Decline
+      waiting: Waiting for opponent to accept game.
+
+    your_games:
+      your_games: Your Games
+      new_game: New Game
+      no_games: You do not have any games yet.
+      try_a_quick_game: Try a quick game
+      or: or
+      watch_a_video_tour: Watch a video tour
+      
+    other_games:
+      watch_a_game: Watch a Game
+
+    game:
+      moved_ago: Moved %{time} ago
+
+    profile:
+      as_white: as White
+      as_black: as Black
+      current_player: current player
+      komi: '%{count} komi'
+      handicap: '%{count} handicap'
+      captured_stone: '%{count} captured stone'
+      pass: Pass
+      resign: Resign
+
+    form:
+      playing_against_computer: Playing against computer (GNU Go).
+      sign_in: To play against others you must first <a href="%{url}">sign in</a>.
+      play_against: Play against
+      computer: Computer (GNU Go)
+      username: Username
+      automatically_adjust_difficulty: Automatically adjust difficulty
+      level: '(Level: %{level})'
+      board_size: Board size
+      play_as: Play as
+      random: Random
+      black: Black
+      white: White
+      handicap: Handicap
+      komi: Komi
+      start_game: Start game
+      update_game: Update game
+
+    side:
+      private_chat: Private Chat
+      send: Send
+
+  users:
+    form:
+      username: Username
+      email: Email address
+      password: Password
+      password_confirmation: Password confirmation
+      rank: Rank
+      rank_hint: such as "4k"
+      rank_blank: leave blank if unknown
+      time_zone: Time zone
+      locale: Language
+      email_on_invitation: Email me new game invitations
+      email_on_move: Email me when opponent moves
+      email_on_message: Email me when opponent chats
+      sign_up: Sign up
+      update: Update
+
+    show:
+      currently: Currently
+      online: Online
+      offline: Offline
+      rank: Go Rank
+      gnugo_level: GNU Go Auto-level
+      games_with_gnugo: Games with GNU Go
+      games_with_others: Games with Others
+      edit_profile: Edit Profile
+      or: or
+      log_out: Log Out
+      challenge_to_a_game: Challenge to a Game
+      his_games: "%{username}'s Games"
+
+    edit:
+      update_profile: Update Profile
+      sign_in_options: Sign In Options
+      authentication_services: 'You have signed in with these services:'
+      remove_authentication_confirm: Are you sure you want to remove this authentication option?
+      add_authentication_service: 'Add another service to sign in with:'
+      
+    new:
+      sign_up: Sign Up
+      already_have_an_account: Already have an account?
+      log_in: Log in
+
+
+  sessions:
+    new:
+      log_in: Log In
+      no_account: Don't have an account? 
+      sign_up: Sign Up!
+      label_login: Username or Email
+      
+  authentications:
+    index:
+      sign_in: Sign In
+      sign_in_services: Sign in through one of the following services
+      not_services: Don't use these services?
+      enter_email: 'Just enter your email address:'
+      email: Email Address
+      continue: Continue
+      
+  notifications:
+    invitation: '[Go vs Go] Invitation from %{username}'
+    move: '[Go vs Go] Move by %{username}'
+    chat: '[Go vs Go] Chat from %{username}'

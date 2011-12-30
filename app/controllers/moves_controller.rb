@@ -10,8 +10,8 @@ class MovesController < ApplicationController
     @game.queue_computer_move
     Notifications.move(@game).deliver if @game.current_player && @game.current_player.email.present? && @game.current_player.email_on_move?
   rescue GameEngine::IllegalMove
-    flash[:alert] = "That is an illegal move."
+    flash[:alert] = t("illegal_move", :scope => "controllers.moves")
   rescue GameEngine::OutOfTurn
-    flash[:alert] = "It is not your turn to move."
+    flash[:alert] = t("out_of_turn", :scope => "controllers.moves")
   end
 end
