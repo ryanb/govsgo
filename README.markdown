@@ -29,6 +29,22 @@ In production, the computer moves are handled in a background process because GN
 If you want to test the background process, set `background_process: true` in your `config/private.yml` file. Next run `beanstalkd` and `script/worker`. to start up the processes. Alternatively you can use [god](http://god.rubyforge.org/) to start and monitor it. See the `config/god.rb` file.
 
 
+### Fix GNU Go
+
+If GNU Go seems to be stuck, it may have run into a game or two that it cannot complete. Run the following command in the rails console to clear out any old games that are stuck.
+
+```
+Game.where("current_player_id IS NULL AND finished_at IS NULL and updated_at < ?", 2.days.ago).update_all(:finished_at, Time.zone.now)
+```
+
+Then restart Beanstalkd, the worker, and web server.
+
+```
+sudo /etc/init.d/beanstalkd restart
+god restart govsgo-worker
+touch tmp/restart.txt
+```
+
 ## Credits
 
 This site was originally created for [Rails Rumble 2010](http://r10.railsrumble.com/) by [Ryan Bates](http://railscasts.com/), [James Edward Gray II](http://blog.grayproductions.net/) and [Phil Bates](http://www.prbates.com/).
