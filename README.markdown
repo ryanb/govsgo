@@ -34,7 +34,7 @@ If you want to test the background process, set `background_process: true` in yo
 If GNU Go seems to be stuck, it may have run into a game or two that it cannot complete. Run the following command in the rails console to clear out any old games that are stuck.
 
 ```
-Game.where("current_player_id IS NULL AND finished_at IS NULL and updated_at < ?", 2.days.ago).update_all(:finished_at, Time.zone.now)
+Game.where("current_player_id IS NULL AND finished_at IS NULL and updated_at < ?", 1.day.ago).update_all(:finished_at, Time.zone.now)
 ```
 
 Then restart Beanstalkd, the worker, and web server.

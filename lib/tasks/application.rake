@@ -57,3 +57,9 @@ task :fix_unsubscribe_token => :environment do
     user.save!
   end
 end
+
+# Do this because GNU Go can become stuck on difficult moves
+desc "Clear stuck games"
+task :clear_stuck_games => :environment do
+  Game.where("current_player_id IS NULL AND finished_at IS NULL and updated_at < ?", 1.day.ago).update_all(:finished_at, Time.zone.now)
+end
