@@ -68,7 +68,7 @@ describe Game do
     user = Factory(:user)
     game = Factory(:game, :current_player => user, :black_player => user, :handicap => 4, :black_score => 3)
     profile = game.profile_for(:black)
-    profile.handicap_or_komi.should == "4 handicap"
+    profile.handicap_or_komi.should == [4, "handicap"]
     profile.score.should == 3
     profile.user.should == user
     profile.current.should be_true
@@ -78,7 +78,7 @@ describe Game do
   it "should generate profile for white as GNU Go" do
     game = Factory(:game, :komi => 6.5, :white_player_id => nil, :white_score => 4, :current_player_id => Factory(:user).id, :moves => "PASS")
     profile = game.profile_for(:white)
-    profile.handicap_or_komi.should == "6.5 komi"
+    profile.handicap_or_komi.should == [6.5, "komi"]
     profile.score.should == 4
     profile.captured.should == 4
     profile.user.should be_nil

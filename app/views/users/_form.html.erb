@@ -1,44 +1,48 @@
 <%= form_for @user do |f| %>
   <%= f.error_messages %>
   <p>
-    <%= f.label :username %>
+    <%= f.label :username, t(".username") %>
     <%= f.text_field :username %>
   </p>
   <p>
-    <%= f.label :email, "Email Address" %>
+    <%= f.label :email, t(".email") %>
     <%= f.text_field :email %>
   </p>
   <% unless session[:omniauth] %>
   <p>
-    <%= f.label :password %>
+    <%= f.label :password, t(".password")  %>
     <%= f.password_field :password %>
   </p>
   <p>
-    <%= f.label :password_confirmation, "Confirm Password" %>
+    <%= f.label :password_confirmation, t(".password_confirmation") %>
     <%= f.password_field :password_confirmation %>
   </p>
   <% end %>
   <p>
-    <%= f.label :rank %>
+    <%= f.label :rank, t(".rank") %>
     <%= f.text_field :rank, :size => 10 %>
-    <span class="hint">such as "4k"</span><br>
-    <span class="field hint">leave blank if unknown</span>
+    <span class="hint"><%= t(".rank_hint") %></span><br>
+    <span class="field hint"><%= t(".rank_blank") %></span>
   </p>
   <p>
-    <%= f.label :time_zone, "Time Zone" %>
+    <%= f.label :time_zone, t(".time_zone") %>
     <%= f.time_zone_select :time_zone, nil, :include_blank => true %>
+  </p>
+  <p>
+    <%= f.label :locale, t('.locale') %>
+    <%= f.select :locale, [['English', 'en'], ['简体中文', 'zh-cn']] %>
   </p>
   <p class="field">
     <%= f.check_box :email_on_invitation %>
-    <%= f.label :email_on_invitation, "Email me new game invitations", :class => "inline" %>
+    <%= f.label :email_on_invitation, t(".email_on_invitation"), :class => "inline" %>
   </p>
   <p class="field">
     <%= f.check_box :email_on_move %>
-    <%= f.label :email_on_move, "Email me when opponent moves", :class => "inline" %>
+    <%= f.label :email_on_move, t(".email_on_move"), :class => "inline" %>
   </p>
   <p class="field">
     <%= f.check_box :email_on_message %>
-    <%= f.label :email_on_message, "Email me when opponent chats", :class => "inline" %>
+    <%= f.label :email_on_message, t(".email_on_message"), :class => "inline" %>
   </p>
-  <p class="field"><%= f.submit (@user.new_record? ? "Sign up" : "Update") %></p>
+  <p class="field"><%= f.submit (@user.new_record? ? t(".sign_up") : t(".update")) %></p>
 <% end %>

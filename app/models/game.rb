@@ -155,9 +155,9 @@ class Game < ActiveRecord::Base
   def profile_for(color)
     Profile.new(color).tap do |profile|
       if color.to_sym == :white
-        profile.handicap_or_komi = "#{komi} komi"
+        profile.handicap_or_komi = [komi, 'komi']
       else
-        profile.handicap_or_komi = "#{handicap} handicap"
+        profile.handicap_or_komi = [handicap, 'handicap']
       end
       profile.score = send("#{color}_score")
       profile.captured = captured(color)

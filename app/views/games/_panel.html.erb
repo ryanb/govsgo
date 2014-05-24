@@ -1,39 +1,39 @@
 <% if @game.finished? %>
   <div class="short_panel">
     <% if !@game.started? %>
-      <h2>Game has been declined.</h2>
+      <h2><%= t(".declined") %></h2>
     <% elsif current_user && @game.winner == current_user %>
-      <h2>Congratulations, you won!</h2>
-      <p><%= link_to "Play Again", new_game_path(:board_size => @game.board_size) %></p>
+      <h2><%= t(".won") %></h2>
+      <p><%= link_to t(".play_again"), new_game_path(:board_size => @game.board_size) %></p>
     <% elsif current_user && @game.loser == current_user %>
-      <h2>Sorry, you lost.</h2>
-      <p class="resources">Need some help? Check out the <%= link_to "Go Resources", go_resources_path %>.</p>
-      <p><%= link_to "Play Again", new_game_path(:board_size => @game.board_size) %></p>
+      <h2><%= t(".lost") %></h2>
+      <p class="resources"><%= t(".need_help", :url => go_resources_path).html_safe %></p>
+      <p><%= link_to t(".play_again"), new_game_path(:board_size => @game.board_size) %></p>
     <% else %>
-      <h2><%= @game.winner ? (@game.winner.username || "Guest") : "GNU Go" %> won!</h2>
+      <h2><%= t(".winner", :winner_name => @game.winner ? (@game.winner.username || t(".guest")) : t(".gnu_go")) %></h2>
     <% end %>
   </div>
 <% elsif @game.started? %>
   <div class="short_panel">
-    <p>Looks like the game has started, <%= link_to "reload", @game %> to play.</p>
+    <p><%= t(".started", :url => game_path(@game)).html_safe %></p>
   </div>
 <% elsif @game.current_player == current_user %>
   <div class="tall_panel">
     <%= form_for @game do |f| %>
-      <h2>Challenge from <%= @game.opponent(current_user).username %></h2>
-      <p class="game_setting">Board Size: <%= @game.board_size %></p>
-      <p class="game_setting">Playing as: <%= @game.white_player == current_user ? "White" : "Black" %></p>
-      <p class="game_setting">Komi: <%= @game.komi %></p>
-      <p class="game_setting">Handicap: <%= @game.handicap %></p>
-      <p>Want to change something? <%= link_to "Edit Settings", edit_game_path(@game) %></p>
+      <h2><%= t(".challenge_from", :username => @game.opponent(current_user).username) %></h2>
+      <p class="game_setting"><%= t(".board_size") %>: <%= @game.board_size %></p>
+      <p class="game_setting"><%= t(".playing_as") %>: <%= @game.white_player == current_user ? "White" : "Black" %></p>
+      <p class="game_setting"><%= t(".komi") %>: <%= @game.komi %></p>
+      <p class="game_setting"><%= t(".handicap") %>: <%= @game.handicap %></p>
+      <p><%= t(".change_settings", :url => edit_game_path(@game)).html_safe %></p>
       <p>
-        <%= f.submit "Accept", :name => "invitation_button", :id => "accept_button" %>
-        <%= f.submit "Decline", :name => "invitation_button", :id => "decline_button" %>
+        <%= f.submit t(".accept"), :name => "invitation_button", :id => "accept_button" %>
+        <%= f.submit t(".decline"), :name => "invitation_button", :id => "decline_button" %>
       </p>
     <% end %>
   </div>
 <% else %>
   <div class="short_panel">
-    <p>Waiting for opponent to accept game.</p>
+    <p><%= t(".waiting") %></p>
   </div>
 <% end %>

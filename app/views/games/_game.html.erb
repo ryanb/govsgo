@@ -5,7 +5,7 @@
       <div class="player <%= profile.color %>"><%= link_to_user(profile.user) %> <%= online_status(profile.user) %></div>
     <% end %>
     <% if game.last_move_at %>
-      <div class="status">moved <%= time_ago_in_words(game.last_move_at) %> ago</div>
+      <div class="status"><%= t('.moved_ago', :time => time_ago_in_words(game.last_move_at)) %></div>
     <% end %>
   </div>
   <%= link_to "Go", game, :class => "go_button" %>
